@@ -1,0 +1,26 @@
+name: khaana_design
+description: Shared KhaanaGo colours, type, and components. Provisional values are labelled as awaiting review.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.13.4
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+dependency_overrides:
+  path_provider_foundation: 2.4.1
+
+flutter:
+  assets:
+    - assets/brand/khaanago-logo.png
+    - assets/brand/khaanago-wordmark.png

@@ -1,0 +1,338 @@
+[
+  {
+    "id": "E1-US1",
+    "title": "Customer Registration, Login and Account Security"
+  },
+  {
+    "id": "E1-US2",
+    "title": "Rider Registration and Verification Profile"
+  },
+  {
+    "id": "E1-US3",
+    "title": "Vendor Role-Based Sign-in and Owner-Only Data"
+  },
+  {
+    "id": "E1-US4",
+    "title": "Staff Account, Duties and Deactivation"
+  },
+  {
+    "id": "E1-US5",
+    "title": "Customer Profile and Saved Addresses"
+  },
+  {
+    "id": "E2-US1",
+    "title": "Vendor Business Profile Setup"
+  },
+  {
+    "id": "E2-US2",
+    "title": "Menu Catalogue and Live Item Availability"
+  },
+  {
+    "id": "E2-US3",
+    "title": "Operating Hours and Open/Closed Control"
+  },
+  {
+    "id": "E2-US4",
+    "title": "Item Customization Option Configuration"
+  },
+  {
+    "id": "E3-US1",
+    "title": "Vendor Discovery and Menu Details"
+  },
+  {
+    "id": "E3-US2",
+    "title": "Cart Management and Itemised Checkout Bill"
+  },
+  {
+    "id": "E3-US3",
+    "title": "Supported Local Payment Methods"
+  },
+  {
+    "id": "E3-US4",
+    "title": "Order Placement and Automatic Offers"
+  },
+  {
+    "id": "E4-US1",
+    "title": "Custom Options and Dietary Requests"
+  },
+  {
+    "id": "E4-US2",
+    "title": "Reference Images and Special Instructions"
+  },
+  {
+    "id": "E4-US3",
+    "title": "Vendor Review and Fragile-Order Handling"
+  },
+  {
+    "id": "E5-US1",
+    "title": "Kitchen Capacity Setup and Live Utilisation"
+  },
+  {
+    "id": "E5-US2",
+    "title": "Order Throttling and Automatic Capacity Pauses"
+  },
+  {
+    "id": "E5-US3",
+    "title": "Customer Delivery Slot Selection"
+  },
+  {
+    "id": "E5-US4",
+    "title": "Atomic Slot Reservation and Double-Booking Prevention"
+  },
+  {
+    "id": "E6-US1",
+    "title": "Preparation-Time and Delivery ETA Calculation"
+  },
+  {
+    "id": "E6-US2",
+    "title": "Weather, Ramadan and Peak-Time Buffering"
+  },
+  {
+    "id": "E6-US3",
+    "title": "Administrator Buffer Rule Configuration"
+  },
+  {
+    "id": "E6-US4",
+    "title": "Customer-Facing Delay Explanations"
+  },
+  {
+    "id": "E7-US1",
+    "title": "Real-Time Order Intake and Ticket Details"
+  },
+  {
+    "id": "E7-US2",
+    "title": "Order Acceptance and Rejection"
+  },
+  {
+    "id": "E7-US3",
+    "title": "Live Kitchen Board and Preparation Milestones"
+  },
+  {
+    "id": "E7-US4",
+    "title": "Voice-Assisted Kitchen Updates"
+  },
+  {
+    "id": "E8-US1",
+    "title": "Confidential Recipe Creation and Access Control"
+  },
+  {
+    "id": "E8-US2",
+    "title": "Nutrition Computation and Customer Badges"
+  },
+  {
+    "id": "E8-US3",
+    "title": "Dynamic Allergen Warnings"
+  },
+  {
+    "id": "E8-US4",
+    "title": "Recipe Changes and BOM/Nutrition Consistency"
+  },
+  {
+    "id": "E9-US1",
+    "title": "Ingredient Master Data and BOM Setup"
+  },
+  {
+    "id": "E9-US2",
+    "title": "Automated Stock Movement and Low-Stock Controls"
+  },
+  {
+    "id": "E9-US3",
+    "title": "Wastage, Yield and Variance Analysis"
+  },
+  {
+    "id": "E9-US4",
+    "title": "Rule-Based Material Requirements Planning"
+  },
+  {
+    "id": "E9-US5",
+    "title": "Perishable and Non-Perishable MRP Rules"
+  },
+  {
+    "id": "E10-US1",
+    "title": "Order-to-ERP Invoicing and Customer Invoice Access"
+  },
+  {
+    "id": "E10-US2",
+    "title": "Payment Posting Against Invoices"
+  },
+  {
+    "id": "E10-US3",
+    "title": "Failed Payments and Refund Tracking"
+  },
+  {
+    "id": "E10-US4",
+    "title": "Cash-on-Delivery Reconciliation"
+  },
+  {
+    "id": "E11-US1",
+    "title": "Discount, Voucher and Scheduled Promotion Rules"
+  },
+  {
+    "id": "E11-US2",
+    "title": "Combo Offer Setup and Availability"
+  },
+  {
+    "id": "E11-US3",
+    "title": "Offer Redemption and Performance Reports"
+  },
+  {
+    "id": "E12-US1",
+    "title": "Revenue, Expense and Payout Dashboard"
+  },
+  {
+    "id": "E12-US2",
+    "title": "Net Profit and Dish-Level Margins"
+  },
+  {
+    "id": "E12-US3",
+    "title": "Financial Export and Access Restrictions"
+  },
+  {
+    "id": "E13-US1",
+    "title": "Preparation-Synchronised Dispatch and Pickup Alerts"
+  },
+  {
+    "id": "E13-US2",
+    "title": "Rider Assignment Responses and Shift Availability"
+  },
+  {
+    "id": "E13-US3",
+    "title": "Delivery Status and Customer Verification"
+  },
+  {
+    "id": "E13-US4",
+    "title": "Pickup Waiting-Time Tracking"
+  },
+  {
+    "id": "E13-US5",
+    "title": "Delivery Navigation Preferences"
+  },
+  {
+    "id": "E14-US1",
+    "title": "Pool Eligibility, Item Exclusions and Hold Limits"
+  },
+  {
+    "id": "E14-US2",
+    "title": "Customer Pooling Choice and Parcel Visibility"
+  },
+  {
+    "id": "E14-US3",
+    "title": "Vendor Hybrid-Fleet Selection"
+  },
+  {
+    "id": "E14-US4",
+    "title": "Partner Fleet API and IVR Status Exchange"
+  },
+  {
+    "id": "E15-US1",
+    "title": "Tariff Configuration and Road-Distance Pricing"
+  },
+  {
+    "id": "E15-US2",
+    "title": "Waiting and Weather/Peak Surcharges"
+  },
+  {
+    "id": "E15-US3",
+    "title": "Transparent Rider Shift Earnings Invoice"
+  },
+  {
+    "id": "E16-US1",
+    "title": "Hands-Free Voice and IVR Rider Check-Ins"
+  },
+  {
+    "id": "E16-US2",
+    "title": "Glare-Resistant Low-Distraction Interface"
+  },
+  {
+    "id": "E16-US3",
+    "title": "Low-Bandwidth App Compatibility"
+  },
+  {
+    "id": "E16-US4",
+    "title": "Hands-Free Communication and Precise Drop-Off"
+  },
+  {
+    "id": "E17-US1",
+    "title": "Real-Time Tracking, ETA and Notifications"
+  },
+  {
+    "id": "E17-US2",
+    "title": "Customer Order History"
+  },
+  {
+    "id": "E17-US3",
+    "title": "Repeat Ordering from History"
+  },
+  {
+    "id": "E17-US4",
+    "title": "Rating-Based Vendor Highlights"
+  },
+  {
+    "id": "E18-US1",
+    "title": "Restaurant, Item and Rider Ratings"
+  },
+  {
+    "id": "E18-US2",
+    "title": "Rider Feedback and Vendor Product Insights"
+  },
+  {
+    "id": "E18-US3",
+    "title": "Customer Complaints and Resolution Requests"
+  },
+  {
+    "id": "E19-US1",
+    "title": "Assistant Natural-Language Search and Order Status"
+  },
+  {
+    "id": "E19-US2",
+    "title": "Voice-Based Customer Ordering"
+  },
+  {
+    "id": "E19-US3",
+    "title": "Vendor and Rider Operational Assistance"
+  },
+  {
+    "id": "E19-US4",
+    "title": "AI Assistant Permissions and Safety Guardrails"
+  },
+  {
+    "id": "E20-US1",
+    "title": "Vendor, Rider and Fleet Verification"
+  },
+  {
+    "id": "E20-US2",
+    "title": "Platform Commission Rule Management"
+  },
+  {
+    "id": "E20-US3",
+    "title": "User Administration and Dispute Resolution"
+  },
+  {
+    "id": "E20-US4",
+    "title": "Platform Performance Monitoring and Reports"
+  },
+  {
+    "id": "E21-US1",
+    "title": "Immutable Audit Events and User Attribution"
+  },
+  {
+    "id": "E21-US2",
+    "title": "Vendor Owner Audit Viewer"
+  },
+  {
+    "id": "E21-US3",
+    "title": "Administrator Audit Investigations and Exports"
+  },
+  {
+    "id": "E22-US1",
+    "title": "Customer and Rider Mobile/Web Access"
+  },
+  {
+    "id": "E22-US2",
+    "title": "Vendor and Admin Browser/PWA Compatibility"
+  },
+  {
+    "id": "E22-US3",
+    "title": "Connectivity Recovery, Security and Live Updates"
+  }
+]

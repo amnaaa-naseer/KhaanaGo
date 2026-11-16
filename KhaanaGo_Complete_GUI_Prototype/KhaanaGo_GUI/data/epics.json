@@ -1,0 +1,90 @@
+[
+  {
+    "id": "E1",
+    "title": "User Accounts, Authentication and Role-Based Access"
+  },
+  {
+    "id": "E2",
+    "title": "Vendor Onboarding, Menu and Catalogue Management"
+  },
+  {
+    "id": "E3",
+    "title": "Customer Discovery, Cart and Checkout"
+  },
+  {
+    "id": "E4",
+    "title": "Structured Order Customization"
+  },
+  {
+    "id": "E5",
+    "title": "Kitchen Capacity Management and Delivery Slots"
+  },
+  {
+    "id": "E6",
+    "title": "Preparation-Time Engine and Weather/Peak-Aware Buffers"
+  },
+  {
+    "id": "E7",
+    "title": "Kitchen Order Management and Live Order Board"
+  },
+  {
+    "id": "E8",
+    "title": "Recipe Privacy, Nutrition and Allergen Transparency"
+  },
+  {
+    "id": "E9",
+    "title": "Inventory, Bill of Materials, Wastage and Material Requirement Planning"
+  },
+  {
+    "id": "E10",
+    "title": "Sales Invoicing and Payment Recording"
+  },
+  {
+    "id": "E11",
+    "title": "Marketing Offers, Vouchers and Discounts"
+  },
+  {
+    "id": "E12",
+    "title": "Financial Tracking and Reporting"
+  },
+  {
+    "id": "E13",
+    "title": "Preparation-Synchronized Dispatch and Rider Fulfilment"
+  },
+  {
+    "id": "E14",
+    "title": "Delivery Pooling and Hybrid Fleet Integration"
+  },
+  {
+    "id": "E15",
+    "title": "Transparent Delivery Tariffs and Rider Earnings"
+  },
+  {
+    "id": "E16",
+    "title": "Rider Safety, Voice-Assisted Check-ins and Field Usability"
+  },
+  {
+    "id": "E17",
+    "title": "Live Order Tracking, Notifications and Order History"
+  },
+  {
+    "id": "E18",
+    "title": "Ratings, Feedback and Product Insights"
+  },
+  {
+    "id": "E19",
+    "title": "Multi-Role Conversational AI Assistant"
+  },
+  {
+    "id": "E20",
+    "title": "Platform Administration and Governance"
+  },
+  {
+    "id": "E21",
+    "title": "Audit Trail and Accountability"
+  },
+  {
+    "id": "E22",
+    "title": "Cross-Platform Access, Performance and Reliability"
+  }
+]

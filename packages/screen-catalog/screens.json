@@ -1,0 +1,3130 @@
+[
+  {
+    "id": "E22-US3-UI1",
+    "title": "Offline banner and pending-sync badge",
+    "role": "shared",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "",
+    "family": "overlay",
+    "requirements": "Offline banner; each queued status action marked Pending; ordered sync after reconnection; do not show unsynced actions as confirmed.",
+    "stories": "E22-US3",
+    "tests": "E22-US3-TC1, E22-US3-TC2, E22-US3-TC3, E22-US3-TC4, E22-US3-TC5, E22-US3-TC6",
+    "clauses": [
+      "Offline banner",
+      "each queued status action marked Pending",
+      "ordered sync after reconnection",
+      "do not show unsynced actions as confirmed"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E22-US3-UI2",
+    "title": "Sync conflict message",
+    "role": "shared",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "",
+    "family": "overlay",
+    "requirements": "What changed while offline and which version was kept (AC2)",
+    "stories": "E22-US3",
+    "tests": "E22-US3-TC1, E22-US3-TC2, E22-US3-TC3, E22-US3-TC4, E22-US3-TC5, E22-US3-TC6",
+    "clauses": [
+      "What changed while offline and which version was kept (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E22-US3-UI3",
+    "title": "Something went wrong",
+    "role": "shared",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "",
+    "family": "form",
+    "requirements": "Plain reason, \"Try again\" button, no technical codes",
+    "stories": "E22-US3",
+    "tests": "E22-US3-TC1, E22-US3-TC2, E22-US3-TC3, E22-US3-TC4, E22-US3-TC5, E22-US3-TC6",
+    "clauses": [
+      "Plain reason, \"Try again\" button, no technical codes"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E22-US1-UI2",
+    "title": "Page not found (web)",
+    "role": "shared",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "",
+    "family": "dashboard",
+    "requirements": "Message and a link back to Home or the dashboard",
+    "stories": "E22-US1",
+    "tests": "E22-US1-TC1, E22-US1-TC2, E22-US1-TC3, E22-US1-TC4, E22-US1-TC5, E22-US1-TC6",
+    "clauses": [
+      "Message and a link back to Home or the dashboard"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US1-UI6",
+    "title": "App launch",
+    "role": "customer",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "auth",
+    "requirements": "Logo and loading; goes to Home if signed in, otherwise Login",
+    "stories": "E1-US1",
+    "tests": "E1-US1-TC1, E1-US1-TC2, E1-US1-TC3, E1-US1-TC4, E1-US1-TC5, E1-US1-TC6",
+    "clauses": [
+      "Logo and loading",
+      "goes to Home if signed in, otherwise Login"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US1-UI1",
+    "title": "Registration",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "auth",
+    "requirements": "Name, mobile, email, password strength rules; duplicate email/number, invalid inputs and minimum-password boundary states (E1-US1).",
+    "stories": "E1-US1",
+    "tests": "E1-US1-TC1, E1-US1-TC2, E1-US1-TC3, E1-US1-TC4, E1-US1-TC5, E1-US1-TC6",
+    "clauses": [
+      "Name, mobile, email, password strength rules",
+      "duplicate email/number, invalid inputs and minimum-password boundary states (E1-US1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US1-UI2",
+    "title": "Verification code",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "auth",
+    "requirements": "Verification input and resend; wrong, expired and reused code states; no session before successful verification.",
+    "stories": "E1-US1",
+    "tests": "E1-US1-TC1, E1-US1-TC2, E1-US1-TC3, E1-US1-TC4, E1-US1-TC5, E1-US1-TC6",
+    "clauses": [
+      "Verification input and resend",
+      "wrong, expired and reused code states",
+      "no session before successful verification"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US1-UI3",
+    "title": "Login",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "auth",
+    "requirements": "Mobile or email, password, \"Forgot password?\"; session-expired message (AC4)",
+    "stories": "E1-US1",
+    "tests": "E1-US1-TC1, E1-US1-TC2, E1-US1-TC3, E1-US1-TC4, E1-US1-TC5, E1-US1-TC6",
+    "clauses": [
+      "Mobile or email, password, \"Forgot password?\"",
+      "session-expired message (AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US1-UI4",
+    "title": "Reset password: request",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "auth",
+    "requirements": "Registered email or mobile; confirmation that a code was sent (AC3)",
+    "stories": "E1-US1",
+    "tests": "E1-US1-TC1, E1-US1-TC2, E1-US1-TC3, E1-US1-TC4, E1-US1-TC5, E1-US1-TC6",
+    "clauses": [
+      "Registered email or mobile",
+      "confirmation that a code was sent (AC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US1-UI5",
+    "title": "Reset password: code and new password",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "auth",
+    "requirements": "Code, new password, rules checklist, success state",
+    "stories": "E1-US1",
+    "tests": "E1-US1-TC1, E1-US1-TC2, E1-US1-TC3, E1-US1-TC4, E1-US1-TC5, E1-US1-TC6",
+    "clauses": [
+      "Code, new password, rules checklist, success state"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US5-UI6",
+    "title": "Location permission",
+    "role": "customer",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Account and Profile",
+    "family": "overlay",
+    "requirements": "Why the app needs location, then the system prompt",
+    "stories": "E1-US5",
+    "tests": "E1-US5-TC1, E1-US5-TC2, E1-US5-TC3",
+    "clauses": [
+      "Why the app needs location, then the system prompt"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E17-US1-UI3",
+    "title": "Notification permission",
+    "role": "customer",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Account and Profile",
+    "family": "overlay",
+    "requirements": "Why order updates matter, then the system prompt",
+    "stories": "E17-US1",
+    "tests": "E17-US1-TC1, E17-US1-TC2, E17-US1-TC3, E17-US1-TC4, E17-US1-TC5, E17-US1-TC6, E17-US1-TC7",
+    "clauses": [
+      "Why order updates matter, then the system prompt"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US5-UI1",
+    "title": "Profile",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "form",
+    "requirements": "Name, mobile, email; links to addresses, orders, sign out",
+    "stories": "E1-US5",
+    "tests": "E1-US5-TC1, E1-US5-TC2, E1-US5-TC3",
+    "clauses": [
+      "Name, mobile, email",
+      "links to addresses, orders, sign out"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US5-UI4",
+    "title": "Edit profile",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "form",
+    "requirements": "Editable name and mobile; change applies to notifications (AC2)",
+    "stories": "E1-US5",
+    "tests": "E1-US5-TC1, E1-US5-TC2, E1-US5-TC3",
+    "clauses": [
+      "Editable name and mobile",
+      "change applies to notifications (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US5-UI2",
+    "title": "Saved addresses",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "form",
+    "requirements": "Address cards with default marker, edit, delete, add (AC1)",
+    "stories": "E1-US5",
+    "tests": "E1-US5-TC1, E1-US5-TC2, E1-US5-TC3",
+    "clauses": [
+      "Address cards with default marker, edit, delete, add (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US5-UI3",
+    "title": "Add or edit address",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Account and Profile",
+    "family": "map",
+    "requirements": "Map with draggable pin, search, current location, label, address line",
+    "stories": "E1-US5",
+    "tests": "E1-US5-TC1, E1-US5-TC2, E1-US5-TC3",
+    "clauses": [
+      "Map with draggable pin, search, current location, label, address line"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US5-UI5",
+    "title": "Delete address confirmation",
+    "role": "customer",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Account and Profile",
+    "family": "overlay",
+    "requirements": "Which address, \"Delete\" and \"Keep\"",
+    "stories": "E1-US5",
+    "tests": "E1-US5-TC1, E1-US5-TC2, E1-US5-TC3",
+    "clauses": [
+      "Which address, \"Delete\" and \"Keep\""
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US1-UI1",
+    "title": "Home",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Discovery and Customization",
+    "family": "dashboard",
+    "requirements": "Address selector, search, filter chips, top-rated row, vendor cards with open and capacity state",
+    "stories": "E2-US3, E3-US1, E17-US3",
+    "tests": "E2-US3-TC1, E2-US3-TC2, E2-US3-TC3, E2-US3-TC4, E3-US1-TC1, E3-US1-TC2, E3-US1-TC3, E3-US1-TC4, E3-US1-TC5, E3-US1-TC6, E17-US3-TC1, E17-US3-TC2, E17-US3-TC3, E17-US3-TC4",
+    "clauses": [
+      "Address selector, search, filter chips, top-rated row, vendor cards with open and capacity state"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US1-UI4",
+    "title": "Search results",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Discovery and Customization",
+    "family": "list",
+    "requirements": "Results for typed search and filters; \"no match\" state with suggestions (AC2)",
+    "stories": "E3-US1",
+    "tests": "E3-US1-TC1, E3-US1-TC2, E3-US1-TC3, E3-US1-TC4, E3-US1-TC5, E3-US1-TC6",
+    "clauses": [
+      "Results for typed search and filters",
+      "\"no match\" state with suggestions (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US1-UI5",
+    "title": "Filter sheet",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Discovery and Customization",
+    "family": "overlay",
+    "requirements": "Cuisine, dietary tags, open now; \"Show N restaurants\"",
+    "stories": "E3-US1",
+    "tests": "E3-US1-TC1, E3-US1-TC2, E3-US1-TC3, E3-US1-TC4, E3-US1-TC5, E3-US1-TC6",
+    "clauses": [
+      "Cuisine, dietary tags, open now",
+      "\"Show N restaurants\""
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US1-UI2",
+    "title": "Vendor menu",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Discovery and Customization",
+    "family": "list",
+    "requirements": "Hours and status, categories, item rows with nutrition badge, unavailable items greyed (AC4), cart bar",
+    "stories": "E2-US2, E3-US1",
+    "tests": "E2-US2-TC1, E2-US2-TC2, E2-US2-TC3, E2-US2-TC4, E2-US2-TC5, E3-US1-TC1, E3-US1-TC2, E3-US1-TC3, E3-US1-TC4, E3-US1-TC5, E3-US1-TC6",
+    "clauses": [
+      "Hours and status, categories, item rows with nutrition badge, unavailable items greyed (AC4), cart bar"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US1-UI6",
+    "title": "Vendor info and reviews",
+    "role": "customer",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Discovery and Customization",
+    "family": "form",
+    "requirements": "Address, hours, rating summary, recent reviews",
+    "stories": "E3-US1",
+    "tests": "E3-US1-TC1, E3-US1-TC2, E3-US1-TC3, E3-US1-TC4, E3-US1-TC5, E3-US1-TC6",
+    "clauses": [
+      "Address, hours, rating summary, recent reviews"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US1-UI3",
+    "title": "Item detail",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Discovery and Customization",
+    "family": "form",
+    "requirements": "Price, add-ons, nutrition badge, allergen warning, \"Customize\" or \"Add to cart\" (AC3)",
+    "stories": "E3-US1, E8-US2, E8-US3",
+    "tests": "E3-US1-TC1, E3-US1-TC2, E3-US1-TC3, E3-US1-TC4, E3-US1-TC5, E3-US1-TC6, E8-US2-TC1, E8-US2-TC2, E8-US2-TC3, E8-US2-TC4, E8-US2-TC5, E8-US3-TC1, E8-US3-TC2, E8-US3-TC3, E8-US3-TC4",
+    "clauses": [
+      "Price, add-ons, nutrition badge, allergen warning, \"Customize\" or \"Add to cart\" (AC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E4-US1-UI1",
+    "title": "Customization builder",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Discovery and Customization",
+    "family": "form",
+    "requirements": "Size, flavour, add-ons, custom text, exclusions and swaps; live price and prep time",
+    "stories": "E2-US4, E4-US1",
+    "tests": "E2-US4-TC1, E2-US4-TC2, E2-US4-TC3, E2-US4-TC4, E4-US1-TC1, E4-US1-TC2, E4-US1-TC3, E4-US1-TC4, E4-US1-TC5",
+    "clauses": [
+      "Size, flavour, add-ons, custom text, exclusions and swaps",
+      "live price and prep time"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E4-US2-UI1",
+    "title": "Reference image and instructions",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Discovery and Customization",
+    "family": "overlay",
+    "requirements": "Camera or gallery, thumbnail, instructions with counter, upload errors",
+    "stories": "E4-US2",
+    "tests": "E4-US2-TC1, E4-US2-TC2, E4-US2-TC3",
+    "clauses": [
+      "Camera or gallery, thumbnail, instructions with counter, upload errors"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E4-US3-UI1",
+    "title": "Revised quote approval",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Discovery and Customization",
+    "family": "form",
+    "requirements": "Original and revised price and lead time, vendor note, Approve or Cancel (AC2); decline reason",
+    "stories": "E4-US3",
+    "tests": "E4-US3-TC1, E4-US3-TC2, E4-US3-TC3, E4-US3-TC4",
+    "clauses": [
+      "Original and revised price and lead time, vendor note, Approve or Cancel (AC2)",
+      "decline reason"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US2-UI1",
+    "title": "Cart",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "form",
+    "requirements": "Items, quantities, remove and subtotal; empty cart and invalid quantity states; revalidate unavailable items before checkout.",
+    "stories": "E2-US2, E3-US2, E9-US2",
+    "tests": "E2-US2-TC1, E2-US2-TC2, E2-US2-TC3, E2-US2-TC4, E2-US2-TC5, E3-US2-TC1, E3-US2-TC2, E3-US2-TC3, E3-US2-TC4, E3-US2-TC5, E3-US2-TC6, E9-US2-TC1, E9-US2-TC2, E9-US2-TC3, E9-US2-TC4, E9-US2-TC5, E9-US2-TC6",
+    "clauses": [
+      "Items, quantities, remove and subtotal",
+      "empty cart and invalid quantity states",
+      "revalidate unavailable items before checkout"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US2-UI3",
+    "title": "Different-restaurant dialog",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Cart and Checkout",
+    "family": "overlay",
+    "requirements": "\"Keep current cart\" or \"Start new cart\" (AC2)",
+    "stories": "E3-US2",
+    "tests": "E3-US2-TC1, E3-US2-TC2, E3-US2-TC3, E3-US2-TC4, E3-US2-TC5, E3-US2-TC6",
+    "clauses": [
+      "\"Keep current cart\" or \"Start new cart\" (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E14-US2-UI1",
+    "title": "Delivery type",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "form",
+    "requirements": "Pooled discount and added time versus Express prices; fragile cake or spillable items excluded; Express never pooled; eligible options return when fragile items are removed.",
+    "stories": "E2-US4, E4-US3, E14-US2",
+    "tests": "E2-US4-TC1, E2-US4-TC2, E2-US4-TC3, E2-US4-TC4, E4-US3-TC1, E4-US3-TC2, E4-US3-TC3, E4-US3-TC4, E14-US2-TC1, E14-US2-TC2, E14-US2-TC3, E14-US2-TC4, E14-US2-TC5",
+    "clauses": [
+      "Pooled discount and added time versus Express prices",
+      "fragile cake or spillable items excluded",
+      "Express never pooled",
+      "eligible options return when fragile items are removed"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E5-US3-UI1",
+    "title": "Slot selector",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "list",
+    "requirements": "Today and upcoming slots, Available/Limited/Full, realistic arrival window and weather note; no immediate order at full capacity; refreshed availability after cancellation.",
+    "stories": "E5-US2, E5-US3, E6-US1, E6-US2",
+    "tests": "E5-US2-TC1, E5-US2-TC2, E5-US2-TC3, E5-US2-TC4, E5-US2-TC5, E5-US3-TC1, E5-US3-TC2, E5-US3-TC3, E5-US3-TC4, E6-US1-TC1, E6-US1-TC2, E6-US1-TC3, E6-US1-TC4, E6-US1-TC5, E6-US1-TC6, E6-US2-TC1, E6-US2-TC2, E6-US2-TC3, E6-US2-TC4, E6-US2-TC5, E6-US2-TC6",
+    "clauses": [
+      "Today and upcoming slots, Available/Limited/Full, realistic arrival window and weather note",
+      "no immediate order at full capacity",
+      "refreshed availability after cancellation"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E5-US4-UI1",
+    "title": "Slot taken dialog",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Overlay",
+    "module": "Cart and Checkout",
+    "family": "overlay",
+    "requirements": "\"That slot was just taken\" with nearest free windows (AC1)",
+    "stories": "E5-US4",
+    "tests": "E5-US4-TC1, E5-US4-TC2, E5-US4-TC3",
+    "clauses": [
+      "\"That slot was just taken\" with nearest free windows (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E5-US4-UI2",
+    "title": "Slot released dialog",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Cart and Checkout",
+    "family": "overlay",
+    "requirements": "Hold expired, back to the selector (AC2)",
+    "stories": "E5-US4",
+    "tests": "E5-US4-TC1, E5-US4-TC2, E5-US4-TC3",
+    "clauses": [
+      "Hold expired, back to the selector (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US3-UI1",
+    "title": "Payment method",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "form",
+    "requirements": "Cash on delivery, JazzCash, Easypaisa, card",
+    "stories": "E3-US3",
+    "tests": "E3-US3-TC1, E3-US3-TC2, E3-US3-TC3, E3-US3-TC4",
+    "clauses": [
+      "Cash on delivery, JazzCash, Easypaisa, card"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US3-UI2",
+    "title": "Payment gateway handoff",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "form",
+    "requirements": "Loading and return states around the gateway's own page",
+    "stories": "E3-US3",
+    "tests": "E3-US3-TC1, E3-US3-TC2, E3-US3-TC3, E3-US3-TC4",
+    "clauses": [
+      "Loading and return states around the gateway's own page"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US4-UI1",
+    "title": "Voucher and offers sheet",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Cart and Checkout",
+    "family": "overlay",
+    "requirements": "Code field, auto-applied offers, rejection reason (AC2)",
+    "stories": "E3-US4",
+    "tests": "E3-US4-TC1, E3-US4-TC2, E3-US4-TC3",
+    "clauses": [
+      "Code field, auto-applied offers, rejection reason (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US2-UI2",
+    "title": "Review order",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "form",
+    "requirements": "Address, held slot and countdown, delivery and payment; separate food, base fare, road-distance charge, surcharges, discount and total; prevent duplicate submission.",
+    "stories": "E2-US3, E3-US2",
+    "tests": "E2-US3-TC1, E2-US3-TC2, E2-US3-TC3, E2-US3-TC4, E3-US2-TC1, E3-US2-TC2, E3-US2-TC3, E3-US2-TC4, E3-US2-TC5, E3-US2-TC6",
+    "clauses": [
+      "Address, held slot and countdown, delivery and payment",
+      "separate food, base fare, road-distance charge, surcharges, discount and total",
+      "prevent duplicate submission"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E10-US3-UI1",
+    "title": "Payment failed",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "form",
+    "requirements": "\"Order not placed\", Try again, Choose another method",
+    "stories": "E10-US3",
+    "tests": "E10-US3-TC1, E10-US3-TC2, E10-US3-TC3, E10-US3-TC4",
+    "clauses": [
+      "\"Order not placed\", Try again, Choose another method"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E3-US4-UI2",
+    "title": "Order placed",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Cart and Checkout",
+    "family": "form",
+    "requirements": "Order number, slot, estimate, \"Track order\"",
+    "stories": "E3-US4",
+    "tests": "E3-US4-TC1, E3-US4-TC2, E3-US4-TC3",
+    "clauses": [
+      "Order number, slot, estimate, \"Track order\""
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E17-US1-UI1",
+    "title": "Live tracking",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Tracking, History and Feedback",
+    "family": "map",
+    "requirements": "Preparation stage/ready time or live rider map, current arrival window, timeline, pooled sequence, delivery code and refund status; replace stale ETA and retain in-app updates when notifications are disabled.",
+    "stories": "E6-US1, E14-US2, E17-US1",
+    "tests": "E6-US1-TC1, E6-US1-TC2, E6-US1-TC3, E6-US1-TC4, E6-US1-TC5, E6-US1-TC6, E14-US2-TC1, E14-US2-TC2, E14-US2-TC3, E14-US2-TC4, E14-US2-TC5, E17-US1-TC1, E17-US1-TC2, E17-US1-TC3, E17-US1-TC4, E17-US1-TC5, E17-US1-TC6, E17-US1-TC7",
+    "clauses": [
+      "Preparation stage/ready time or live rider map, current arrival window, timeline, pooled sequence, delivery code and refund status",
+      "replace stale ETA and retain in-app updates when notifications are disabled"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E6-US4-UI1",
+    "title": "Delay explanation",
+    "role": "customer",
+    "priority": "P1",
+    "kind": "Overlay",
+    "module": "Tracking, History and Feedback",
+    "family": "overlay",
+    "requirements": "Banner and push with the reason, naming the weather (AC1, AC2)",
+    "stories": "E6-US4",
+    "tests": "E6-US4-TC1, E6-US4-TC2, E6-US4-TC3, E6-US4-TC4",
+    "clauses": [
+      "Banner and push with the reason, naming the weather (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E16-US4-UI1",
+    "title": "Confirm corrected drop-off pin",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Tracking, History and Feedback",
+    "family": "overlay",
+    "requirements": "Map with the rider's proposed pin; confirm or adjust",
+    "stories": "E16-US4",
+    "tests": "E16-US4-TC1, E16-US4-TC2, E16-US4-TC3, E16-US4-TC4",
+    "clauses": [
+      "Map with the rider's proposed pin",
+      "confirm or adjust"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E10-US1-UI1",
+    "title": "Cancel order",
+    "role": "customer",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Tracking, History and Feedback",
+    "family": "overlay",
+    "requirements": "Reason, what is refunded, confirm (before preparation only)",
+    "stories": "E9-US2, E10-US1",
+    "tests": "E9-US2-TC1, E9-US2-TC2, E9-US2-TC3, E9-US2-TC4, E9-US2-TC5, E9-US2-TC6, E10-US1-TC1, E10-US1-TC2, E10-US1-TC3, E10-US1-TC4, E10-US1-TC5, E10-US1-TC6, E10-US1-TC7, E10-US1-TC8",
+    "clauses": [
+      "Reason, what is refunded, confirm (before preparation only)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E17-US1-UI2",
+    "title": "Notification centre",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Tracking, History and Feedback",
+    "family": "map",
+    "requirements": "Updates grouped by order, newest first (AC6)",
+    "stories": "E17-US1",
+    "tests": "E17-US1-TC1, E17-US1-TC2, E17-US1-TC3, E17-US1-TC4, E17-US1-TC5, E17-US1-TC6, E17-US1-TC7",
+    "clauses": [
+      "Updates grouped by order, newest first (AC6)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E17-US2-UI1",
+    "title": "Order history",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Tracking, History and Feedback",
+    "family": "map",
+    "requirements": "Orders newest first; empty state (AC2)",
+    "stories": "E17-US2",
+    "tests": "E17-US2-TC1, E17-US2-TC2, E17-US2-TC3, E17-US2-TC4, E17-US2-TC5, E17-US2-TC6, E17-US2-TC7",
+    "clauses": [
+      "Orders newest first",
+      "empty state (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E17-US2-UI2",
+    "title": "Order detail and invoice",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Tracking, History and Feedback",
+    "family": "map",
+    "requirements": "Items and options, bill, payment status, Download invoice, Reorder, Rate, Report a problem",
+    "stories": "E10-US1, E17-US2",
+    "tests": "E10-US1-TC1, E10-US1-TC2, E10-US1-TC3, E10-US1-TC4, E10-US1-TC5, E10-US1-TC6, E10-US1-TC7, E10-US1-TC8, E17-US2-TC1, E17-US2-TC2, E17-US2-TC3, E17-US2-TC4, E17-US2-TC5, E17-US2-TC6, E17-US2-TC7",
+    "clauses": [
+      "Items and options, bill, payment status, Download invoice, Reorder, Rate, Report a problem"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E17-US2-UI3",
+    "title": "Reorder summary",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Tracking, History and Feedback",
+    "family": "overlay",
+    "requirements": "Reorder with original options and current prices; available items added, unavailable items skipped with explanation (E17-US2 AC3, AC4).",
+    "stories": "E17-US2",
+    "tests": "E17-US2-TC1, E17-US2-TC2, E17-US2-TC3, E17-US2-TC4, E17-US2-TC5, E17-US2-TC6, E17-US2-TC7",
+    "clauses": [
+      "Reorder with original options and current prices",
+      "available items added, unavailable items skipped with explanation (E17-US2 AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US1-UI1",
+    "title": "Rating",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Tracking, History and Feedback",
+    "family": "map",
+    "requirements": "Restaurant, item and rider ratings kept separate",
+    "stories": "E18-US1",
+    "tests": "E18-US1-TC1, E18-US1-TC2, E18-US1-TC3, E18-US1-TC4",
+    "clauses": [
+      "Restaurant, item and rider ratings kept separate"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US3-UI1",
+    "title": "Complaint form",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Tracking, History and Feedback",
+    "family": "map",
+    "requirements": "Order read-only, category, description Include optional attachment upload with configured type/size limits; reject unsupported or oversized files and duplicate submission.",
+    "stories": "E18-US3",
+    "tests": "E18-US3-TC1, E18-US3-TC2, E18-US3-TC3, E18-US3-TC4",
+    "clauses": [
+      "Order read-only, category, description Include optional attachment upload with configured type/size limits",
+      "reject unsupported or oversized files and duplicate submission"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US3-UI2",
+    "title": "Complaint status",
+    "role": "customer",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Tracking, History and Feedback",
+    "family": "board",
+    "requirements": "Ticket reference, progress, outcome when resolved",
+    "stories": "E18-US3",
+    "tests": "E18-US3-TC1, E18-US3-TC2, E18-US3-TC3, E18-US3-TC4",
+    "clauses": [
+      "Ticket reference, progress, outcome when resolved"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E19-US1-UI1",
+    "title": "Assistant chat",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Assistant and Web",
+    "family": "chat",
+    "requirements": "Text/mic input, results respecting exclusions, no-match alternatives, current order ETA or no-active-order reply; unsupported and cross-role requests refused (E19-US4).",
+    "stories": "E19-US1, E19-US4",
+    "tests": "E19-US1-TC1, E19-US1-TC2, E19-US1-TC3, E19-US1-TC4, E19-US1-TC5, E19-US1-TC6, E19-US4-TC1, E19-US4-TC2, E19-US4-TC3, E19-US4-TC4",
+    "clauses": [
+      "Text/mic input, results respecting exclusions, no-match alternatives, current order ETA or no-active-order reply",
+      "unsupported and cross-role requests refused (E19-US4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E19-US2-UI1",
+    "title": "Voice order",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Assistant and Web",
+    "family": "chat",
+    "requirements": "Live transcript, read-back card, Confirm and Cancel Ambiguous or low-confidence speech asks for clarification; no checkout until explicit confirmation.",
+    "stories": "E19-US2",
+    "tests": "E19-US2-TC1, E19-US2-TC2, E19-US2-TC3, E19-US2-TC4",
+    "clauses": [
+      "Live transcript, read-back card, Confirm and Cancel Ambiguous or low-confidence speech asks for clarification",
+      "no checkout until explicit confirmation"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E22-US1-UI1",
+    "title": "Responsive web layouts",
+    "role": "customer",
+    "priority": "P2",
+    "kind": "Layout set",
+    "module": "Assistant and Web",
+    "family": "layout",
+    "requirements": "Home, Menu with cart panel and Checkout at 360, 768 and 1280 px Include graceful unsupported-device guidance and breakpoint boundary layouts; verify rider Android/iOS layouts as well as customer web.",
+    "stories": "E22-US1",
+    "tests": "E22-US1-TC1, E22-US1-TC2, E22-US1-TC3, E22-US1-TC4, E22-US1-TC5, E22-US1-TC6",
+    "clauses": [
+      "Home, Menu with cart panel and Checkout at 360, 768 and 1280 px Include graceful unsupported-device guidance and breakpoint boundary layouts",
+      "verify rider Android/iOS layouts as well as customer web"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI1",
+    "title": "App launch",
+    "role": "rider",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Logo and loading",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Logo and loading"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI2",
+    "title": "Sign in",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Mobile and password, \"Forgot password?\"",
+    "stories": "E1-US2, E22-US1",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4, E22-US1-TC1, E22-US1-TC2, E22-US1-TC3, E22-US1-TC4, E22-US1-TC5, E22-US1-TC6",
+    "clauses": [
+      "Mobile and password, \"Forgot password?\""
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI3",
+    "title": "Registration 1: personal details",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Name, CNIC, phone, password",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Name, CNIC, phone, password"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI4",
+    "title": "Registration 2: vehicle and phone",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Motorbike, car or van; phone operating system",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Motorbike, car or van",
+      "phone operating system"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI5",
+    "title": "Registration 3: documents",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Licence and CNIC upload, field errors for missing items (TC3)",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Licence and CNIC upload, field errors for missing items (TC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI6",
+    "title": "Pending verification",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "\"Under review\"; cannot go online until approved (AC1)",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "\"Under review\"",
+      "cannot go online until approved (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI7",
+    "title": "Application rejected or more information needed",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Reason and what to resubmit (E20-US1 AC3, AC4)",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Reason and what to resubmit (E20-US1 AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI8",
+    "title": "Verification code",
+    "role": "rider",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Code entry and resend",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Code entry and resend"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI9",
+    "title": "Reset password",
+    "role": "rider",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Sign-in and Registration",
+    "family": "auth",
+    "requirements": "Request, then code and new password, same pattern as the customer app",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Request, then code and new password, same pattern as the customer app"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US2-UI1",
+    "title": "Location permission",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Sign-in and Registration",
+    "family": "overlay",
+    "requirements": "Why location is needed while online, then the system prompt",
+    "stories": "E13-US2, E13-US5",
+    "tests": "E13-US2-TC1, E13-US2-TC2, E13-US2-TC3, E13-US2-TC4, E13-US2-TC5, E13-US2-TC6, E13-US5-TC1, E13-US5-TC2, E13-US5-TC3, E13-US5-TC4",
+    "clauses": [
+      "Why location is needed while online, then the system prompt"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US1-UI4",
+    "title": "Notification and sound permission",
+    "role": "rider",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Sign-in and Registration",
+    "family": "overlay",
+    "requirements": "Why alerts matter for pickups",
+    "stories": "E13-US1",
+    "tests": "E13-US1-TC1, E13-US1-TC2, E13-US1-TC3, E13-US1-TC4, E13-US1-TC5",
+    "clauses": [
+      "Why alerts matter for pickups"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US2-UI2",
+    "title": "Home: offline and online",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Home and Offers",
+    "family": "dashboard",
+    "requirements": "Online toggle, vehicle type, today's deliveries and earnings (E1-US2 AC2)",
+    "stories": "E13-US2, E22-US1",
+    "tests": "E13-US2-TC1, E13-US2-TC2, E13-US2-TC3, E13-US2-TC4, E13-US2-TC5, E13-US2-TC6, E22-US1-TC1, E22-US1-TC2, E22-US1-TC3, E22-US1-TC4, E22-US1-TC5, E22-US1-TC6",
+    "clauses": [
+      "Online toggle, vehicle type, today's deliveries and earnings (E1-US2 AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US2-UI3",
+    "title": "Outside service area",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Home and Offers",
+    "family": "overlay",
+    "requirements": "Why no offers arrive and where to go (AC3)",
+    "stories": "E13-US2",
+    "tests": "E13-US2-TC1, E13-US2-TC2, E13-US2-TC3, E13-US2-TC4, E13-US2-TC5, E13-US2-TC6",
+    "clauses": [
+      "Why no offers arrive and where to go (AC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US2-UI4",
+    "title": "Delivery offer",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Home and Offers",
+    "family": "dashboard",
+    "requirements": "Vendor, drop-off area, distance, pay, countdown, Accept and Decline (AC1)",
+    "stories": "E13-US2",
+    "tests": "E13-US2-TC1, E13-US2-TC2, E13-US2-TC3, E13-US2-TC4, E13-US2-TC5, E13-US2-TC6",
+    "clauses": [
+      "Vendor, drop-off area, distance, pay, countdown, Accept and Decline (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E14-US1-UI1",
+    "title": "Pooled trip offer",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Home and Offers",
+    "family": "dashboard",
+    "requirements": "Two pickups/drop-offs, maximum two orders and combined pay; eligibility distances/corridor and hold limit; exclude fragile and spillable items; no third order.",
+    "stories": "E14-US1",
+    "tests": "E14-US1-TC1, E14-US1-TC2, E14-US1-TC3, E14-US1-TC4, E14-US1-TC5, E14-US1-TC6, E14-US1-TC7",
+    "clauses": [
+      "Two pickups/drop-offs, maximum two orders and combined pay",
+      "eligibility distances/corridor and hold limit",
+      "exclude fragile and spillable items",
+      "no third order"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US2-UI5",
+    "title": "Offer expired",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Home and Offers",
+    "family": "overlay",
+    "requirements": "Offer passed to another rider (AC2)",
+    "stories": "E13-US2",
+    "tests": "E13-US2-TC1, E13-US2-TC2, E13-US2-TC3, E13-US2-TC4, E13-US2-TC5, E13-US2-TC6",
+    "clauses": [
+      "Offer passed to another rider (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US1-UI1",
+    "title": "Head to pickup",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "map",
+    "requirements": "Pickup route, vendor and preparation progress; dispatch only after 80% or Ready signal; nearest suitable rider assignment; no early assignment.",
+    "stories": "E13-US1, E13-US5",
+    "tests": "E13-US1-TC1, E13-US1-TC2, E13-US1-TC3, E13-US1-TC4, E13-US1-TC5, E13-US5-TC1, E13-US5-TC2, E13-US5-TC3, E13-US5-TC4",
+    "clauses": [
+      "Pickup route, vendor and preparation progress",
+      "dispatch only after 80% or Ready signal",
+      "nearest suitable rider assignment",
+      "no early assignment"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US1-UI2",
+    "title": "Order ready alert",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Overlay",
+    "module": "Active Delivery",
+    "family": "overlay",
+    "requirements": "Full-screen alert with sound, vibration and text (AC3)",
+    "stories": "E13-US1, E16-US1",
+    "tests": "E13-US1-TC1, E13-US1-TC2, E13-US1-TC3, E13-US1-TC4, E13-US1-TC5, E16-US1-TC1, E16-US1-TC2, E16-US1-TC3, E16-US1-TC4, E16-US1-TC5, E16-US1-TC6, E16-US1-TC7, E16-US1-TC8",
+    "clauses": [
+      "Full-screen alert with sound, vibration and text (AC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US4-UI1",
+    "title": "At the store",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "map",
+    "requirements": "Arrival timestamp, waiting timer and configured threshold; fee only for excess minutes at pickup, zero below or exactly at threshold.",
+    "stories": "E13-US4, E15-US2",
+    "tests": "E13-US4-TC1, E13-US4-TC2, E13-US4-TC3, E15-US2-TC1, E15-US2-TC2, E15-US2-TC3, E15-US2-TC4, E15-US2-TC5",
+    "clauses": [
+      "Arrival timestamp, waiting timer and configured threshold",
+      "fee only for excess minutes at pickup, zero below or exactly at threshold"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US1-UI3",
+    "title": "Pickup handover",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "map",
+    "requirements": "Order number and items to check, hold to confirm \"Picked up\"",
+    "stories": "E13-US1, E16-US2",
+    "tests": "E13-US1-TC1, E13-US1-TC2, E13-US1-TC3, E13-US1-TC4, E13-US1-TC5, E16-US2-TC1, E16-US2-TC2, E16-US2-TC3, E16-US2-TC4",
+    "clauses": [
+      "Order number and items to check, hold to confirm \"Picked up\""
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E14-US2-UI2",
+    "title": "Pooled parcels and labels",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "map",
+    "requirements": "Each parcel's label to match at drop-off, stop order (AC4)",
+    "stories": "E14-US2",
+    "tests": "E14-US2-TC1, E14-US2-TC2, E14-US2-TC3, E14-US2-TC4, E14-US2-TC5",
+    "clauses": [
+      "Each parcel's label to match at drop-off, stop order (AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E14-US1-UI2",
+    "title": "Second pickup hold",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Active Delivery",
+    "family": "overlay",
+    "requirements": "Countdown, then \"Order uncoupled, continue with the first\" (AC3, AC4)",
+    "stories": "E14-US1",
+    "tests": "E14-US1-TC1, E14-US1-TC2, E14-US1-TC3, E14-US1-TC4, E14-US1-TC5, E14-US1-TC6, E14-US1-TC7",
+    "clauses": [
+      "Countdown, then \"Order uncoupled, continue with the first\" (AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US3-UI1",
+    "title": "Head to drop-off",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "map",
+    "requirements": "Route, customer area, call and quick messages",
+    "stories": "E13-US3, E13-US5, E22-US1",
+    "tests": "E13-US3-TC1, E13-US3-TC2, E13-US3-TC3, E13-US3-TC4, E13-US3-TC5, E13-US5-TC1, E13-US5-TC2, E13-US5-TC3, E13-US5-TC4, E22-US1-TC1, E22-US1-TC2, E22-US1-TC3, E22-US1-TC4, E22-US1-TC5, E22-US1-TC6",
+    "clauses": [
+      "Route, customer area, call and quick messages"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US3-UI2",
+    "title": "Delivery code entry",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "form",
+    "requirements": "Customer delivery-code entry; wrong code leaves delivery incomplete with Retry and Contact support; hold-to-confirm for critical transitions. Code format follows configured verification rules.",
+    "stories": "E13-US3, E16-US2",
+    "tests": "E13-US3-TC1, E13-US3-TC2, E13-US3-TC3, E13-US3-TC4, E13-US3-TC5, E16-US2-TC1, E16-US2-TC2, E16-US2-TC3, E16-US2-TC4",
+    "clauses": [
+      "Customer delivery-code entry",
+      "wrong code leaves delivery incomplete with Retry and Contact support",
+      "hold-to-confirm for critical transitions",
+      "Code format follows configured verification rules"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US3-UI3",
+    "title": "Out-of-sequence prompt",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Active Delivery",
+    "family": "overlay",
+    "requirements": "Why the tap was blocked and what to do next (AC2)",
+    "stories": "E13-US3",
+    "tests": "E13-US3-TC1, E13-US3-TC2, E13-US3-TC3, E13-US3-TC4, E13-US3-TC5",
+    "clauses": [
+      "Why the tap was blocked and what to do next (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E10-US2-UI2",
+    "title": "Collect cash",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "form",
+    "requirements": "Amount due, confirm cash collected (COD, AC2)",
+    "stories": "E10-US2",
+    "tests": "E10-US2-TC1, E10-US2-TC2, E10-US2-TC3, E10-US2-TC4",
+    "clauses": [
+      "Amount due, confirm cash collected (COD, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US3-UI4",
+    "title": "Delivered",
+    "role": "rider",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "finance",
+    "requirements": "Earnings for this delivery: base, distance, waiting, surcharge",
+    "stories": "E13-US3, E15-US2",
+    "tests": "E13-US3-TC1, E13-US3-TC2, E13-US3-TC3, E13-US3-TC4, E13-US3-TC5, E15-US2-TC1, E15-US2-TC2, E15-US2-TC3, E15-US2-TC4, E15-US2-TC5",
+    "clauses": [
+      "Earnings for this delivery: base, distance, waiting, surcharge"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E16-US4-UI2",
+    "title": "Quick messages",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Active Delivery",
+    "family": "overlay",
+    "requirements": "Preset messages for arrival and delay, one tap or voice (AC1)",
+    "stories": "E16-US4",
+    "tests": "E16-US4-TC1, E16-US4-TC2, E16-US4-TC3, E16-US4-TC4",
+    "clauses": [
+      "Preset messages for arrival and delay, one tap or voice (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E16-US4-UI3",
+    "title": "Request corrected pin",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Active Delivery",
+    "family": "overlay",
+    "requirements": "Ask the customer to confirm a new pin (AC2)",
+    "stories": "E16-US4",
+    "tests": "E16-US4-TC1, E16-US4-TC2, E16-US4-TC3, E16-US4-TC4",
+    "clauses": [
+      "Ask the customer to confirm a new pin (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E16-US1-UI1",
+    "title": "Voice check-in",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Active Delivery",
+    "family": "overlay",
+    "requirements": "\"Confirm arrival at customer\", say \"Confirm\" or press the headset button; repeats once (AC1, AC2)",
+    "stories": "E16-US1",
+    "tests": "E16-US1-TC1, E16-US1-TC2, E16-US1-TC3, E16-US1-TC4, E16-US1-TC5, E16-US1-TC6, E16-US1-TC7, E16-US1-TC8",
+    "clauses": [
+      "\"Confirm arrival at customer\", say \"Confirm\" or press the headset button",
+      "repeats once (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E19-US3-UI1",
+    "title": "Rider voice assistant",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Active Delivery",
+    "family": "overlay",
+    "requirements": "Next pickup, readiness, spoken answer shown as text",
+    "stories": "E19-US3, E19-US4",
+    "tests": "E19-US3-TC1, E19-US3-TC2, E19-US3-TC3, E19-US3-TC4, E19-US3-TC5, E19-US3-TC6, E19-US4-TC1, E19-US4-TC2, E19-US4-TC3, E19-US4-TC4",
+    "clauses": [
+      "Next pickup, readiness, spoken answer shown as text"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US3-UI3",
+    "title": "Report a problem",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Active Delivery",
+    "family": "list",
+    "requirements": "Order, category, description",
+    "stories": "E18-US3",
+    "tests": "E18-US3-TC1, E18-US3-TC2, E18-US3-TC3, E18-US3-TC4",
+    "clauses": [
+      "Order, category, description"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US2-UI6",
+    "title": "Shift summary",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Earnings and History",
+    "family": "finance",
+    "requirements": "Deliveries, distance, waiting time, earnings (AC4)",
+    "stories": "E13-US2",
+    "tests": "E13-US2-TC1, E13-US2-TC2, E13-US2-TC3, E13-US2-TC4, E13-US2-TC5, E13-US2-TC6",
+    "clauses": [
+      "Deliveries, distance, waiting time, earnings (AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E15-US3-UI1",
+    "title": "Shift earnings invoice",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Earnings and History",
+    "family": "finance",
+    "requirements": "Per delivery: base fee, per-km, waiting fee, surcharges, total (AC1)",
+    "stories": "E15-US2, E15-US3",
+    "tests": "E15-US2-TC1, E15-US2-TC2, E15-US2-TC3, E15-US2-TC4, E15-US2-TC5, E15-US3-TC1, E15-US3-TC2, E15-US3-TC3, E15-US3-TC4",
+    "clauses": [
+      "Per delivery: base fee, per-km, waiting fee, surcharges, total (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E15-US3-UI2",
+    "title": "Delivery earnings detail",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Earnings and History",
+    "family": "finance",
+    "requirements": "One delivery; pooled orders shown separately (AC2)",
+    "stories": "E15-US2, E15-US3",
+    "tests": "E15-US2-TC1, E15-US2-TC2, E15-US2-TC3, E15-US2-TC4, E15-US2-TC5, E15-US3-TC1, E15-US3-TC2, E15-US3-TC3, E15-US3-TC4",
+    "clauses": [
+      "One delivery",
+      "pooled orders shown separately (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI10",
+    "title": "Delivery history",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Earnings and History",
+    "family": "finance",
+    "requirements": "Past deliveries, newest first",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Past deliveries, newest first"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US2-UI1",
+    "title": "My ratings",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Earnings and History",
+    "family": "finance",
+    "requirements": "Average and recent comments (AC1)",
+    "stories": "E18-US2",
+    "tests": "E18-US2-TC1, E18-US2-TC2, E18-US2-TC3, E18-US2-TC4, E18-US2-TC5, E18-US2-TC6",
+    "clauses": [
+      "Average and recent comments (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI11",
+    "title": "Rider profile",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Profile and Settings",
+    "family": "form",
+    "requirements": "Details, vehicle type, document status",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "Details, vehicle type, document status"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US2-UI12",
+    "title": "Settings",
+    "role": "rider",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Profile and Settings",
+    "family": "list",
+    "requirements": "List of the settings below, sign out",
+    "stories": "E1-US2",
+    "tests": "E1-US2-TC1, E1-US2-TC2, E1-US2-TC3, E1-US2-TC4",
+    "clauses": [
+      "List of the settings below, sign out"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E13-US5-UI1",
+    "title": "Navigation preference",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Profile and Settings",
+    "family": "map",
+    "requirements": "Open external maps, or use the in-app map (AC1, AC2) Location-permission withdrawal shows a recovery prompt; invalid route coordinates do not launch navigation.",
+    "stories": "E13-US5",
+    "tests": "E13-US5-TC1, E13-US5-TC2, E13-US5-TC3, E13-US5-TC4",
+    "clauses": [
+      "Open external maps, or use the in-app map (AC1, AC2) Location-permission withdrawal shows a recovery prompt",
+      "invalid route coordinates do not launch navigation"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E16-US2-UI1",
+    "title": "Display and alerts",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Profile and Settings",
+    "family": "form",
+    "requirements": "High-contrast mode, audio mute with vibration fallback (E16-US1 AC4)",
+    "stories": "E16-US1, E16-US2",
+    "tests": "E16-US1-TC1, E16-US1-TC2, E16-US1-TC3, E16-US1-TC4, E16-US1-TC5, E16-US1-TC6, E16-US1-TC7, E16-US1-TC8, E16-US2-TC1, E16-US2-TC2, E16-US2-TC3, E16-US2-TC4",
+    "clauses": [
+      "High-contrast mode, audio mute with vibration fallback (E16-US1 AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E16-US3-UI1",
+    "title": "Data saver",
+    "role": "rider",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Profile and Settings",
+    "family": "map",
+    "requirements": "Low-data display, lighter map and GPS disconnected/recovering states; resume tracking without losing the trip when GPS returns.",
+    "stories": "E16-US3",
+    "tests": "E16-US3-TC1, E16-US3-TC2, E16-US3-TC3, E16-US3-TC4",
+    "clauses": [
+      "Low-data display, lighter map and GPS disconnected/recovering states",
+      "resume tracking without losing the trip when GPS returns"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E15-US1-UI1",
+    "title": "Tariff settings",
+    "role": "rider",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Profile and Settings",
+    "family": "map",
+    "requirements": "Base fare and per-kilometre rate, negative-rate validation; routed road distance; defined maps-service fallback flagged for review.",
+    "stories": "E15-US1",
+    "tests": "E15-US1-TC1, E15-US1-TC2, E15-US1-TC3, E15-US1-TC4, E15-US1-TC5, E15-US1-TC6",
+    "clauses": [
+      "Base fare and per-kilometre rate, negative-rate validation",
+      "routed road distance",
+      "defined maps-service fallback flagged for review"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI1",
+    "title": "Vendor application 1: business details",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Business name, type (restaurant, cloud kitchen, home baker), contact, area",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Business name, type (restaurant, cloud kitchen, home baker), contact, area"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI2",
+    "title": "Vendor application 2: documents",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Required document uploads with format and size rules",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Required document uploads with format and size rules"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI3",
+    "title": "Vendor application 3: bank details",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Payout account entry, review and submit",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Payout account entry, review and submit"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI4",
+    "title": "Application status",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Pending, more information needed, rejected with reason, approved",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Pending, more information needed, rejected with reason, approved"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI1",
+    "title": "Vendor sign-in",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Credentials; routes owner and staff to their own dashboards (AC1)",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "Credentials",
+      "routes owner and staff to their own dashboards (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI2",
+    "title": "Account locked",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Locked after five failed attempts; owner informed (AC2)",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "Locked after five failed attempts",
+      "owner informed (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI4",
+    "title": "Reset password",
+    "role": "vendor",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Request, then code and new password",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "Request, then code and new password"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI3",
+    "title": "No access",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "\"You do not have access to this page\", back to dashboard (AC3)",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "\"You do not have access to this page\", back to dashboard (AC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI5",
+    "title": "Owner dashboard",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Today's orders and revenue, capacity now, low-stock count, pending custom orders",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "Today's orders and revenue, capacity now, low-stock count, pending custom orders"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI6",
+    "title": "Staff home",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Application, Sign-in and Access",
+    "family": "auth",
+    "requirements": "Kitchen-operation view only: board link and duties assigned",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "Kitchen-operation view only: board link and duties assigned"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US4-UI1",
+    "title": "Staff list",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Staff and Business Setup",
+    "family": "list",
+    "requirements": "Staff with duties and status",
+    "stories": "E1-US4",
+    "tests": "E1-US4-TC1, E1-US4-TC2, E1-US4-TC3, E1-US4-TC4",
+    "clauses": [
+      "Staff with duties and status"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US4-UI2",
+    "title": "Add or edit staff",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Staff and Business Setup",
+    "family": "list",
+    "requirements": "Name, employee ID, duty set (take orders, prepare, edit stock)",
+    "stories": "E1-US4",
+    "tests": "E1-US4-TC1, E1-US4-TC2, E1-US4-TC3, E1-US4-TC4",
+    "clauses": [
+      "Name, employee ID, duty set (take orders, prepare, edit stock)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US4-UI3",
+    "title": "Deactivate staff",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Staff and Business Setup",
+    "family": "overlay",
+    "requirements": "What changes; audit history is kept (AC2)",
+    "stories": "E1-US4",
+    "tests": "E1-US4-TC1, E1-US4-TC2, E1-US4-TC3, E1-US4-TC4",
+    "clauses": [
+      "What changes",
+      "audit history is kept (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E2-US1-UI1",
+    "title": "Business profile",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Staff and Business Setup",
+    "family": "form",
+    "requirements": "Type, service area, cuisine, dietary tags, preferred transport (bike or car)",
+    "stories": "E2-US1",
+    "tests": "E2-US1-TC1, E2-US1-TC2, E2-US1-TC3, E2-US1-TC4",
+    "clauses": [
+      "Type, service area, cuisine, dietary tags, preferred transport (bike or car)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E2-US3-UI1",
+    "title": "Operating hours and open/closed",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Staff and Business Setup",
+    "family": "form",
+    "requirements": "Weekly hours, manual close and reopen (AC1, AC2)",
+    "stories": "E2-US3",
+    "tests": "E2-US3-TC1, E2-US3-TC2, E2-US3-TC3, E2-US3-TC4",
+    "clauses": [
+      "Weekly hours, manual close and reopen (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E14-US3-UI1",
+    "title": "Delivery settings",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Staff and Business Setup",
+    "family": "form",
+    "requirements": "Own riders, independent riders, partner fleet; fallback behaviour (AC1, AC2)",
+    "stories": "E14-US3",
+    "tests": "E14-US3-TC1, E14-US3-TC2, E14-US3-TC3, E14-US3-TC4",
+    "clauses": [
+      "Own riders, independent riders, partner fleet",
+      "fallback behaviour (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E15-US1-UI2",
+    "title": "Tariff settings",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Staff and Business Setup",
+    "family": "map",
+    "requirements": "Base fare and per-kilometre rate, negative-rate validation; routed road distance; defined maps-service fallback flagged for review.",
+    "stories": "E15-US1",
+    "tests": "E15-US1-TC1, E15-US1-TC2, E15-US1-TC3, E15-US1-TC4, E15-US1-TC5, E15-US1-TC6",
+    "clauses": [
+      "Base fare and per-kilometre rate, negative-rate validation",
+      "routed road distance",
+      "defined maps-service fallback flagged for review"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI7",
+    "title": "Bank details and payout account",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Staff and Business Setup",
+    "family": "finance",
+    "requirements": "Owner-only account and payout schedule",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "Owner-only account and payout schedule"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E2-US2-UI1",
+    "title": "Menu list",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Menu",
+    "family": "list",
+    "requirements": "Items by category, availability toggle, search",
+    "stories": "E2-US2",
+    "tests": "E2-US2-TC1, E2-US2-TC2, E2-US2-TC3, E2-US2-TC4, E2-US2-TC5",
+    "clauses": [
+      "Items by category, availability toggle, search"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E2-US2-UI2",
+    "title": "Add or edit item",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Menu",
+    "family": "list",
+    "requirements": "Name, price, category, photo, description, add-ons; invalid price error (AC2)",
+    "stories": "E2-US2",
+    "tests": "E2-US2-TC1, E2-US2-TC2, E2-US2-TC3, E2-US2-TC4, E2-US2-TC5",
+    "clauses": [
+      "Name, price, category, photo, description, add-ons",
+      "invalid price error (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E2-US2-UI3",
+    "title": "Remove item",
+    "role": "vendor",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Menu",
+    "family": "overlay",
+    "requirements": "Confirm; note for items in customers' carts (AC4)",
+    "stories": "E2-US2",
+    "tests": "E2-US2-TC1, E2-US2-TC2, E2-US2-TC3, E2-US2-TC4, E2-US2-TC5",
+    "clauses": [
+      "note for items in customers' carts (AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E2-US4-UI1",
+    "title": "Customization options",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Menu",
+    "family": "list",
+    "requirements": "Sizes, flavours, text and image fields with price differences, lead time, fragile flag",
+    "stories": "E2-US4",
+    "tests": "E2-US4-TC1, E2-US4-TC2, E2-US4-TC3, E2-US4-TC4",
+    "clauses": [
+      "Sizes, flavours, text and image fields with price differences, lead time, fragile flag"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E5-US1-UI1",
+    "title": "Kitchen capacity setup",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Capacity",
+    "family": "form",
+    "requirements": "Orders per hour, per-item prep times, resource limits; zero rejected (AC2)",
+    "stories": "E5-US1",
+    "tests": "E5-US1-TC1, E5-US1-TC2, E5-US1-TC3, E5-US1-TC4, E5-US1-TC5, E5-US1-TC6",
+    "clauses": [
+      "Orders per hour, per-item prep times, resource limits",
+      "zero rejected (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E5-US1-UI2",
+    "title": "Temporary capacity change",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Capacity",
+    "family": "overlay",
+    "requirements": "New limit, duration, automatic return to default (AC3, AC4)",
+    "stories": "E5-US1",
+    "tests": "E5-US1-TC1, E5-US1-TC2, E5-US1-TC3, E5-US1-TC4, E5-US1-TC5, E5-US1-TC6",
+    "clauses": [
+      "New limit, duration, automatic return to default (AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E5-US1-UI3",
+    "title": "Live utilisation",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Capacity",
+    "family": "form",
+    "requirements": "Capacity meter, current load, remaining capacity, upcoming slot occupancy (AC6)",
+    "stories": "E5-US1",
+    "tests": "E5-US1-TC1, E5-US1-TC2, E5-US1-TC3, E5-US1-TC4, E5-US1-TC5, E5-US1-TC6",
+    "clauses": [
+      "Capacity meter, current load, remaining capacity, upcoming slot occupancy (AC6)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E5-US2-UI1",
+    "title": "Intake paused",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Overlay",
+    "module": "Capacity",
+    "family": "overlay",
+    "requirements": "Banner with queue size and Resume (AC3, AC4)",
+    "stories": "E5-US2",
+    "tests": "E5-US2-TC1, E5-US2-TC2, E5-US2-TC3, E5-US2-TC4, E5-US2-TC5",
+    "clauses": [
+      "Banner with queue size and Resume (AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E6-US2-UI1",
+    "title": "Buffers and overrides",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Capacity",
+    "family": "form",
+    "requirements": "Weather and peak buffers in force, vendor override with audit note (AC4) Weather-service failure shows the fallback or last-known-condition state; never invent a weather reason.",
+    "stories": "E6-US2",
+    "tests": "E6-US2-TC1, E6-US2-TC2, E6-US2-TC3, E6-US2-TC4, E6-US2-TC5, E6-US2-TC6",
+    "clauses": [
+      "Weather and peak buffers in force, vendor override with audit note (AC4) Weather-service failure shows the fallback or last-known-condition state",
+      "never invent a weather reason"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E7-US1-UI1",
+    "title": "New order alert",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Overlay",
+    "module": "Kitchen and Orders",
+    "family": "overlay",
+    "requirements": "Sound, visual alert, tab-title flash (AC1, AC2)",
+    "stories": "E7-US1",
+    "tests": "E7-US1-TC1, E7-US1-TC2, E7-US1-TC3, E7-US1-TC4, E7-US1-TC5, E7-US1-TC6",
+    "clauses": [
+      "Sound, visual alert, tab-title flash (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E7-US1-UI2",
+    "title": "Order ticket",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Overlay",
+    "module": "Kitchen and Orders",
+    "family": "overlay",
+    "requirements": "Items, custom text, swaps, reference image and prominent allergen exclusions; Accept moves to Preparing and notifies customer (E7-US2 AC1); reject opens reason dialog.",
+    "stories": "E7-US1, E7-US2",
+    "tests": "E7-US1-TC1, E7-US1-TC2, E7-US1-TC3, E7-US1-TC4, E7-US1-TC5, E7-US1-TC6, E7-US2-TC1, E7-US2-TC2, E7-US2-TC3, E7-US2-TC4",
+    "clauses": [
+      "Items, custom text, swaps, reference image and prominent allergen exclusions",
+      "Accept moves to Preparing and notifies customer (E7-US2 AC1)",
+      "reject opens reason dialog"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E7-US2-UI1",
+    "title": "Reject order",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Kitchen and Orders",
+    "family": "overlay",
+    "requirements": "Reason list; refund flag for prepaid orders (AC2)",
+    "stories": "E7-US2",
+    "tests": "E7-US2-TC1, E7-US2-TC2, E7-US2-TC3, E7-US2-TC4",
+    "clauses": [
+      "Reason list",
+      "refund flag for prepaid orders (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E7-US3-UI1",
+    "title": "Live kitchen board",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Kitchen and Orders",
+    "family": "board",
+    "requirements": "New, Preparing, Ready, Handed Over columns with timers; 80% prepared and Ready actions",
+    "stories": "E7-US2, E7-US3",
+    "tests": "E7-US2-TC1, E7-US2-TC2, E7-US2-TC3, E7-US2-TC4, E7-US3-TC1, E7-US3-TC2, E7-US3-TC3, E7-US3-TC4, E7-US3-TC5, E7-US3-TC6",
+    "clauses": [
+      "New, Preparing, Ready, Handed Over columns with timers",
+      "80% prepared and Ready actions"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E7-US3-UI2",
+    "title": "Order history",
+    "role": "vendor",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Kitchen and Orders",
+    "family": "list",
+    "requirements": "Searchable list of past orders with status",
+    "stories": "E7-US3",
+    "tests": "E7-US3-TC1, E7-US3-TC2, E7-US3-TC3, E7-US3-TC4, E7-US3-TC5, E7-US3-TC6",
+    "clauses": [
+      "Searchable list of past orders with status"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E7-US4-UI1",
+    "title": "Voice commands",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Kitchen and Orders",
+    "family": "overlay",
+    "requirements": "Heard command, confirmation, \"repeat\" prompt (AC1, AC2)",
+    "stories": "E7-US4",
+    "tests": "E7-US4-TC1, E7-US4-TC2, E7-US4-TC3",
+    "clauses": [
+      "Heard command, confirmation, \"repeat\" prompt (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E4-US3-UI2",
+    "title": "Custom order review",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Kitchen and Orders",
+    "family": "form",
+    "requirements": "Accept, propose new price or time, or decline with a reason (AC1)",
+    "stories": "E4-US3",
+    "tests": "E4-US3-TC1, E4-US3-TC2, E4-US3-TC3, E4-US3-TC4",
+    "clauses": [
+      "Accept, propose new price or time, or decline with a reason (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E8-US1-UI1",
+    "title": "Recipe list",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Recipes and Nutrition (owner only)",
+    "family": "list",
+    "requirements": "Dishes with recipe status; hidden from staff (AC4)",
+    "stories": "E8-US1",
+    "tests": "E8-US1-TC1, E8-US1-TC2, E8-US1-TC3, E8-US1-TC4, E8-US1-TC5",
+    "clauses": [
+      "Dishes with recipe status",
+      "hidden from staff (AC4)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E8-US1-UI2",
+    "title": "Recipe editor",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Recipes and Nutrition (owner only)",
+    "family": "form",
+    "requirements": "Ingredients, quantities, units; blank or invalid unit rejected (AC2)",
+    "stories": "E8-US1",
+    "tests": "E8-US1-TC1, E8-US1-TC2, E8-US1-TC3, E8-US1-TC4, E8-US1-TC5",
+    "clauses": [
+      "Ingredients, quantities, units",
+      "blank or invalid unit rejected (AC2)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E8-US2-UI1",
+    "title": "Nutrition and allergen review",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Recipes and Nutrition (owner only)",
+    "family": "form",
+    "requirements": "Calculated values per serving, retry flag when the API is unreachable (E8-US2 AC1, AC2)",
+    "stories": "E8-US2, E8-US3",
+    "tests": "E8-US2-TC1, E8-US2-TC2, E8-US2-TC3, E8-US2-TC4, E8-US2-TC5, E8-US3-TC1, E8-US3-TC2, E8-US3-TC3, E8-US3-TC4",
+    "clauses": [
+      "Calculated values per serving, retry flag when the API is unreachable (E8-US2 AC1, AC2)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E8-US4-UI1",
+    "title": "Recipe change impact",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Recipes and Nutrition (owner only)",
+    "family": "overlay",
+    "requirements": "Nutrition and BOM will refresh; active orders keep the old recipe (AC1, AC2) Failed recalculation shows a recoverable pending/error state; do not expose inconsistent BOM and nutrition versions.",
+    "stories": "E8-US4",
+    "tests": "E8-US4-TC1, E8-US4-TC2, E8-US4-TC3",
+    "clauses": [
+      "Nutrition and BOM will refresh",
+      "active orders keep the old recipe (AC1, AC2) Failed recalculation shows a recoverable pending/error state",
+      "do not expose inconsistent BOM and nutrition versions"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E9-US1-UI1",
+    "title": "Stock list",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Inventory and Planning",
+    "family": "list",
+    "requirements": "Ingredient units, quantity, reorder level, storage type and low-stock highlight; automatic BOM deduction on confirmation and restoration after cancellation before preparation.",
+    "stories": "E9-US1, E9-US2, E9-US4, E10-US1",
+    "tests": "E9-US1-TC1, E9-US1-TC2, E9-US1-TC3, E9-US1-TC4, E9-US1-TC5, E9-US2-TC1, E9-US2-TC2, E9-US2-TC3, E9-US2-TC4, E9-US2-TC5, E9-US2-TC6, E9-US4-TC1, E9-US4-TC2, E9-US4-TC3, E9-US4-TC4, E9-US4-TC5, E9-US4-TC6, E9-US4-TC7, E9-US4-TC8, E10-US1-TC1, E10-US1-TC2, E10-US1-TC3, E10-US1-TC4, E10-US1-TC5, E10-US1-TC6, E10-US1-TC7, E10-US1-TC8",
+    "clauses": [
+      "Ingredient units, quantity, reorder level, storage type and low-stock highlight",
+      "automatic BOM deduction on confirmation and restoration after cancellation before preparation"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US1-UI2",
+    "title": "Add or edit ingredient",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Inventory and Planning",
+    "family": "list",
+    "requirements": "Name, unit, opening stock, reorder level and perishable/non-perishable type; valid quantity/unit checks; storage type feeds E9-US4 planning. Include expiry date or batch expiry where needed to distinguish usable and expired stock (E9-US4-TC7).",
+    "stories": "E9-US1, E9-US4",
+    "tests": "E9-US1-TC1, E9-US1-TC2, E9-US1-TC3, E9-US1-TC4, E9-US1-TC5, E9-US4-TC1, E9-US4-TC2, E9-US4-TC3, E9-US4-TC4, E9-US4-TC5, E9-US4-TC6, E9-US4-TC7, E9-US4-TC8",
+    "clauses": [
+      "Name, unit, opening stock, reorder level and perishable/non-perishable type",
+      "valid quantity/unit checks",
+      "storage type feeds E9-US4 planning",
+      "Include expiry date or batch expiry where needed to distinguish usable and expired stock (E9-US4-TC7)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US1-UI3",
+    "title": "Stock intake",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Inventory and Planning",
+    "family": "overlay",
+    "requirements": "Purchase quantity; entry logged with the user's name (AC2)",
+    "stories": "E9-US1",
+    "tests": "E9-US1-TC1, E9-US1-TC2, E9-US1-TC3, E9-US1-TC4, E9-US1-TC5",
+    "clauses": [
+      "Purchase quantity",
+      "entry logged with the user's name (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US1-UI4",
+    "title": "Dish BOM",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Inventory and Planning",
+    "family": "form",
+    "requirements": "Ingredients and quantity per serving for one dish (AC3)",
+    "stories": "E9-US1",
+    "tests": "E9-US1-TC1, E9-US1-TC2, E9-US1-TC3, E9-US1-TC4, E9-US1-TC5",
+    "clauses": [
+      "Ingredients and quantity per serving for one dish (AC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US1-UI5",
+    "title": "Bulk BOM entry",
+    "role": "vendor",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Inventory and Planning",
+    "family": "form",
+    "requirements": "Many dishes at once, shared ingredients not re-entered (AC4)",
+    "stories": "E9-US1",
+    "tests": "E9-US1-TC1, E9-US1-TC2, E9-US1-TC3, E9-US1-TC4, E9-US1-TC5",
+    "clauses": [
+      "Many dishes at once, shared ingredients not re-entered (AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US2-UI1",
+    "title": "Low-stock alerts",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Inventory and Planning",
+    "family": "list",
+    "requirements": "Ingredients under reorder level, dishes made unavailable at zero stock (AC3, AC4)",
+    "stories": "E9-US2",
+    "tests": "E9-US2-TC1, E9-US2-TC2, E9-US2-TC3, E9-US2-TC4, E9-US2-TC5, E9-US2-TC6",
+    "clauses": [
+      "Ingredients under reorder level, dishes made unavailable at zero stock (AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US2-UI2",
+    "title": "Notification panel",
+    "role": "vendor",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Inventory and Planning",
+    "family": "overlay",
+    "requirements": "Low stock, new orders, discrepancies, newest first",
+    "stories": "E9-US2",
+    "tests": "E9-US2-TC1, E9-US2-TC2, E9-US2-TC3, E9-US2-TC4, E9-US2-TC5, E9-US2-TC6",
+    "clauses": [
+      "Low stock, new orders, discrepancies, newest first"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US3-UI1",
+    "title": "Log wastage",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Inventory and Planning",
+    "family": "overlay",
+    "requirements": "Ingredient, quantity, reason; over-stock quantity rejected (AC2)",
+    "stories": "E9-US3",
+    "tests": "E9-US3-TC1, E9-US3-TC2, E9-US3-TC3, E9-US3-TC4, E9-US3-TC5",
+    "clauses": [
+      "Ingredient, quantity, reason",
+      "over-stock quantity rejected (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US3-UI2",
+    "title": "Variance report",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Inventory and Planning",
+    "family": "list",
+    "requirements": "Expected, actual, variance per ingredient; over-threshold rows highlighted (AC3, AC4) Provide physical stock-count input and configurable variance threshold; show below, equal and above-threshold states.",
+    "stories": "E9-US3",
+    "tests": "E9-US3-TC1, E9-US3-TC2, E9-US3-TC3, E9-US3-TC4, E9-US3-TC5",
+    "clauses": [
+      "Expected, actual, variance per ingredient",
+      "over-threshold rows highlighted (AC3, AC4) Provide physical stock-count input and configurable variance threshold",
+      "show below, equal and above-threshold states"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E9-US4-UI1",
+    "title": "Material requirements planner",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Inventory and Planning",
+    "family": "list",
+    "requirements": "Look-back period, requirements, current stock and shortfall; perishable needs from confirmed upcoming orders, non-perishable needs from historical sales and stock-holding buffer; insufficient-history state (AC1-AC4).",
+    "stories": "E9-US4",
+    "tests": "E9-US4-TC1, E9-US4-TC2, E9-US4-TC3, E9-US4-TC4, E9-US4-TC5, E9-US4-TC6, E9-US4-TC7, E9-US4-TC8",
+    "clauses": [
+      "Look-back period, requirements, current stock and shortfall",
+      "perishable needs from confirmed upcoming orders, non-perishable needs from historical sales and stock-holding buffer",
+      "insufficient-history state (AC1-AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E10-US1-UI2",
+    "title": "Invoice list",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Invoice number, order, total, payment state, date filter",
+    "stories": "E10-US1",
+    "tests": "E10-US1-TC1, E10-US1-TC2, E10-US1-TC3, E10-US1-TC4, E10-US1-TC5, E10-US1-TC6, E10-US1-TC7, E10-US1-TC8",
+    "clauses": [
+      "Invoice number, order, total, payment state, date filter"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E10-US1-UI3",
+    "title": "Invoice detail",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Lines, discounts, delivery, total; earlier revisions kept (AC1, AC2); void state (AC6)",
+    "stories": "E10-US1",
+    "tests": "E10-US1-TC1, E10-US1-TC2, E10-US1-TC3, E10-US1-TC4, E10-US1-TC5, E10-US1-TC6, E10-US1-TC7, E10-US1-TC8",
+    "clauses": [
+      "Lines, discounts, delivery, total",
+      "earlier revisions kept (AC1, AC2)",
+      "void state (AC6)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E10-US2-UI1",
+    "title": "Payments",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Online and COD payments against invoices; method and reference (AC1, AC2) Show partial, exact and excess-payment outcomes according to the Chapter 2 test; duplicate references must not change totals.",
+    "stories": "E10-US2",
+    "tests": "E10-US2-TC1, E10-US2-TC2, E10-US2-TC3, E10-US2-TC4",
+    "clauses": [
+      "Online and COD payments against invoices",
+      "method and reference (AC1, AC2) Show partial, exact and excess-payment outcomes according to the Chapter 2 test",
+      "duplicate references must not change totals"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E10-US3-UI2",
+    "title": "Refunds",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Rejected prepaid orders flagged for refund and their status",
+    "stories": "E10-US3",
+    "tests": "E10-US3-TC1, E10-US3-TC2, E10-US3-TC3, E10-US3-TC4",
+    "clauses": [
+      "Rejected prepaid orders flagged for refund and their status"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E10-US4-UI1",
+    "title": "COD reconciliation",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Cash collected per rider against COD invoices, unmatched differences (AC1)",
+    "stories": "E10-US4",
+    "tests": "E10-US4-TC1, E10-US4-TC2, E10-US4-TC3, E10-US4-TC4",
+    "clauses": [
+      "Cash collected per rider against COD invoices, unmatched differences (AC1)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E10-US4-UI2",
+    "title": "Flag discrepancy",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "overlay",
+    "requirements": "Note sent to the administrator (AC2)",
+    "stories": "E10-US4",
+    "tests": "E10-US4-TC1, E10-US4-TC2, E10-US4-TC3, E10-US4-TC4",
+    "clauses": [
+      "Note sent to the administrator (AC2)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E12-US1-UI1",
+    "title": "Finance dashboard",
+    "role": "vendor",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "dashboard",
+    "requirements": "Revenue, commission, payouts, expenses with date-range filter (AC3, AC4)",
+    "stories": "E10-US1, E12-US1",
+    "tests": "E10-US1-TC1, E10-US1-TC2, E10-US1-TC3, E10-US1-TC4, E10-US1-TC5, E10-US1-TC6, E10-US1-TC7, E10-US1-TC8, E12-US1-TC1, E12-US1-TC2, E12-US1-TC3, E12-US1-TC4, E12-US1-TC5, E12-US1-TC6",
+    "clauses": [
+      "Revenue, commission, payouts, expenses with date-range filter (AC3, AC4)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E12-US1-UI2",
+    "title": "Commission and payouts",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Deductions per order and payout history",
+    "stories": "E12-US1",
+    "tests": "E12-US1-TC1, E12-US1-TC2, E12-US1-TC3, E12-US1-TC4, E12-US1-TC5, E12-US1-TC6",
+    "clauses": [
+      "Deductions per order and payout history"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E12-US1-UI3",
+    "title": "Expenses",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Expense list by category and date",
+    "stories": "E12-US1",
+    "tests": "E12-US1-TC1, E12-US1-TC2, E12-US1-TC3, E12-US1-TC4, E12-US1-TC5, E12-US1-TC6",
+    "clauses": [
+      "Expense list by category and date"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E12-US1-UI4",
+    "title": "Add expense",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "overlay",
+    "requirements": "Category, amount, date (AC1)",
+    "stories": "E12-US1",
+    "tests": "E12-US1-TC1, E12-US1-TC2, E12-US1-TC3, E12-US1-TC4, E12-US1-TC5, E12-US1-TC6",
+    "clauses": [
+      "Category, amount, date (AC1)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E12-US2-UI1",
+    "title": "Net profit and dish margins",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "finance",
+    "requirements": "Revenue minus commission and costs; margin per dish (AC1, AC2) Missing BOM cost shows an unavailable margin rather than fabricated profit; display negative, zero and positive results.",
+    "stories": "E12-US2",
+    "tests": "E12-US2-TC1, E12-US2-TC2, E12-US2-TC3, E12-US2-TC4",
+    "clauses": [
+      "Revenue minus commission and costs",
+      "margin per dish (AC1, AC2) Missing BOM cost shows an unavailable margin rather than fabricated profit",
+      "display negative, zero and positive results"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E12-US3-UI1",
+    "title": "Export report",
+    "role": "vendor",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Invoices, Payments and Finance (owner only except invoices)",
+    "family": "overlay",
+    "requirements": "Period and contents; download link (AC1)",
+    "stories": "E12-US3",
+    "tests": "E12-US3-TC1, E12-US3-TC2, E12-US3-TC3, E12-US3-TC4",
+    "clauses": [
+      "Period and contents",
+      "download link (AC1)"
+    ],
+    "ownerOnly": true
+  },
+  {
+    "id": "E11-US1-UI1",
+    "title": "Offers list",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Marketing",
+    "family": "list",
+    "requirements": "Active, scheduled and expired offers and vouchers",
+    "stories": "E11-US1",
+    "tests": "E11-US1-TC1, E11-US1-TC2, E11-US1-TC3, E11-US1-TC4, E11-US1-TC5, E11-US1-TC6",
+    "clauses": [
+      "Active, scheduled and expired offers and vouchers"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E11-US1-UI2",
+    "title": "Create or edit offer",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Marketing",
+    "family": "form",
+    "requirements": "Percentage or fixed, code, minimum order, usage limit, schedule; end-before-start error (AC2)",
+    "stories": "E11-US1",
+    "tests": "E11-US1-TC1, E11-US1-TC2, E11-US1-TC3, E11-US1-TC4, E11-US1-TC5, E11-US1-TC6",
+    "clauses": [
+      "Percentage or fixed, code, minimum order, usage limit, schedule",
+      "end-before-start error (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E11-US2-UI1",
+    "title": "Combo builder",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Marketing",
+    "family": "form",
+    "requirements": "Choose items, set bundle price, availability follows items (AC1, AC2)",
+    "stories": "E11-US2",
+    "tests": "E11-US2-TC1, E11-US2-TC2, E11-US2-TC3",
+    "clauses": [
+      "Choose items, set bundle price, availability follows items (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E11-US3-UI1",
+    "title": "Offer performance",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Marketing",
+    "family": "form",
+    "requirements": "Uses, discount given and sales per offer; zero values not errors (AC1, AC2)",
+    "stories": "E11-US3",
+    "tests": "E11-US3-TC1, E11-US3-TC2, E11-US3-TC3, E11-US3-TC4",
+    "clauses": [
+      "Uses, discount given and sales per offer",
+      "zero values not errors (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US2-UI2",
+    "title": "Product feedback",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Feedback, Assistant and Audit",
+    "family": "chat",
+    "requirements": "Average, count and recent comments per item; date filter (AC3, AC4)",
+    "stories": "E18-US2",
+    "tests": "E18-US2-TC1, E18-US2-TC2, E18-US2-TC3, E18-US2-TC4, E18-US2-TC5, E18-US2-TC6",
+    "clauses": [
+      "Average, count and recent comments per item",
+      "date filter (AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US3-UI4",
+    "title": "Report a problem",
+    "role": "vendor",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Feedback, Assistant and Audit",
+    "family": "chat",
+    "requirements": "Order, category, description",
+    "stories": "E18-US3",
+    "tests": "E18-US3-TC1, E18-US3-TC2, E18-US3-TC3, E18-US3-TC4",
+    "clauses": [
+      "Order, category, description"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E19-US3-UI2",
+    "title": "Vendor assistant",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Feedback, Assistant and Audit",
+    "family": "overlay",
+    "requirements": "Docked chat: pending orders, stock, capacity; refuses owner-only data for staff (AC1, AC2)",
+    "stories": "E19-US3, E19-US4",
+    "tests": "E19-US3-TC1, E19-US3-TC2, E19-US3-TC3, E19-US3-TC4, E19-US3-TC5, E19-US3-TC6, E19-US4-TC1, E19-US4-TC2, E19-US4-TC3, E19-US4-TC4",
+    "clauses": [
+      "Docked chat: pending orders, stock, capacity",
+      "refuses owner-only data for staff (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E21-US2-UI1",
+    "title": "Audit log (owner only)",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Feedback, Assistant and Audit",
+    "family": "chat",
+    "requirements": "Read-only entries with timestamp, named employee, task and reason; employee/date filters and no-results state; staff access denied; no edit/delete controls.",
+    "stories": "E6-US2, E21-US1, E21-US2",
+    "tests": "E6-US2-TC1, E6-US2-TC2, E6-US2-TC3, E6-US2-TC4, E6-US2-TC5, E6-US2-TC6, E21-US1-TC1, E21-US1-TC2, E21-US1-TC3, E21-US1-TC4, E21-US1-TC5, E21-US2-TC1, E21-US2-TC2, E21-US2-TC3, E21-US2-TC4",
+    "clauses": [
+      "Read-only entries with timestamp, named employee, task and reason",
+      "employee/date filters and no-results state",
+      "staff access denied",
+      "no edit/delete controls"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E22-US2-UI1",
+    "title": "Responsive portal layouts",
+    "role": "vendor",
+    "priority": "P2",
+    "kind": "Layout set",
+    "module": "Feedback, Assistant and Audit",
+    "family": "layout",
+    "requirements": "Dashboard, board and tables on phone, tablet and laptop; PWA standalone launch",
+    "stories": "E22-US2",
+    "tests": "E22-US2-TC1, E22-US2-TC2, E22-US2-TC3, E22-US2-TC4",
+    "clauses": [
+      "Dashboard, board and tables on phone, tablet and laptop",
+      "PWA standalone launch"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E1-US3-UI8",
+    "title": "Admin sign-in",
+    "role": "admin",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Access, Verification and Fleets",
+    "family": "auth",
+    "requirements": "Credentials, lockout message",
+    "stories": "E1-US3",
+    "tests": "E1-US3-TC1, E1-US3-TC2, E1-US3-TC3, E1-US3-TC4",
+    "clauses": [
+      "Credentials, lockout message"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI5",
+    "title": "Verification queue",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Access, Verification and Fleets",
+    "family": "list",
+    "requirements": "Vendors, riders and fleet partners awaiting review, oldest first",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Vendors, riders and fleet partners awaiting review, oldest first"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI6",
+    "title": "Vendor application review",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Access, Verification and Fleets",
+    "family": "form",
+    "requirements": "Business details and documents; approve, reject with reason, or request more information (AC1)",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Business details and documents",
+      "approve, reject with reason, or request more information (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI7",
+    "title": "Rider verification review",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Access, Verification and Fleets",
+    "family": "form",
+    "requirements": "Documents, vehicle type; approve or reject (AC3, AC4)",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Documents, vehicle type",
+      "approve or reject (AC3, AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI9",
+    "title": "Fleet partner review",
+    "role": "admin",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Access, Verification and Fleets",
+    "family": "form",
+    "requirements": "Partner details and documents; approve or reject",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Partner details and documents",
+      "approve or reject"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US1-UI8",
+    "title": "Decision dialog",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Access, Verification and Fleets",
+    "family": "overlay",
+    "requirements": "Required reason on rejection; message sent to the applicant",
+    "stories": "E20-US1",
+    "tests": "E20-US1-TC1, E20-US1-TC2, E20-US1-TC3, E20-US1-TC4, E20-US1-TC5, E20-US1-TC6",
+    "clauses": [
+      "Required reason on rejection",
+      "message sent to the applicant"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E14-US4-UI1",
+    "title": "Partner fleets",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Access, Verification and Fleets",
+    "family": "form",
+    "requirements": "Partners, API connection status, active deliveries",
+    "stories": "E14-US4",
+    "tests": "E14-US4-TC1, E14-US4-TC2, E14-US4-TC3, E14-US4-TC4",
+    "clauses": [
+      "Partners, API connection status, active deliveries"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E14-US4-UI2",
+    "title": "Partner details and status log",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Access, Verification and Fleets",
+    "family": "form",
+    "requirements": "Acknowledgements, status updates and IVR confirmations per delivery (AC1, AC2)",
+    "stories": "E14-US4, E16-US1",
+    "tests": "E14-US4-TC1, E14-US4-TC2, E14-US4-TC3, E14-US4-TC4, E16-US1-TC1, E16-US1-TC2, E16-US1-TC3, E16-US1-TC4, E16-US1-TC5, E16-US1-TC6, E16-US1-TC7, E16-US1-TC8",
+    "clauses": [
+      "Acknowledgements, status updates and IVR confirmations per delivery (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US2-UI1",
+    "title": "Commission settings",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Rules",
+    "family": "finance",
+    "requirements": "Global and per-vendor rate within the 8 to 12 percent range; out-of-range error (AC1, AC2) Include effective date/time and show the rate applicable to new orders; preserve the rate on existing orders.",
+    "stories": "E20-US2",
+    "tests": "E20-US2-TC1, E20-US2-TC2, E20-US2-TC3, E20-US2-TC4",
+    "clauses": [
+      "Global and per-vendor rate within the 8 to 12 percent range",
+      "out-of-range error (AC1, AC2) Include effective date/time and show the rate applicable to new orders",
+      "preserve the rate on existing orders"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E6-US3-UI1",
+    "title": "Buffer rules",
+    "role": "admin",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Rules",
+    "family": "form",
+    "requirements": "Weather and peak rules with period, area and percentage",
+    "stories": "E6-US3",
+    "tests": "E6-US3-TC1, E6-US3-TC2, E6-US3-TC3, E6-US3-TC4",
+    "clauses": [
+      "Weather and peak rules with period, area and percentage"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E6-US3-UI2",
+    "title": "Create or edit buffer rule",
+    "role": "admin",
+    "priority": "P1",
+    "kind": "Overlay",
+    "module": "Rules",
+    "family": "overlay",
+    "requirements": "Period, affected area, buffer percentage; effect applies within a minute (AC1, AC2)",
+    "stories": "E6-US3",
+    "tests": "E6-US3-TC1, E6-US3-TC2, E6-US3-TC3, E6-US3-TC4",
+    "clauses": [
+      "Period, affected area, buffer percentage",
+      "effect applies within a minute (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E19-US4-UI1",
+    "title": "Assistant scope and permissions",
+    "role": "admin",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Rules",
+    "family": "chat",
+    "requirements": "Role scope and permission information; preview unsupported-action reply directing to complaints and cross-role refusal. Supporting design for guardrails, not a required settings editor.",
+    "stories": "E19-US4",
+    "tests": "E19-US4-TC1, E19-US4-TC2, E19-US4-TC3, E19-US4-TC4",
+    "clauses": [
+      "Role scope and permission information",
+      "preview unsupported-action reply directing to complaints and cross-role refusal",
+      "Supporting design for guardrails, not a required settings editor"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US3-UI1",
+    "title": "Users",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Users, Complaints and Ratings",
+    "family": "list",
+    "requirements": "Search across customers, vendors, riders and staff",
+    "stories": "E20-US3",
+    "tests": "E20-US3-TC1, E20-US3-TC2, E20-US3-TC3, E20-US3-TC4, E20-US3-TC5, E20-US3-TC6",
+    "clauses": [
+      "Search across customers, vendors, riders and staff"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US3-UI2",
+    "title": "User detail",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Users, Complaints and Ratings",
+    "family": "list",
+    "requirements": "Profile, status, history, Suspend or Reactivate (AC1, AC2)",
+    "stories": "E20-US3",
+    "tests": "E20-US3-TC1, E20-US3-TC2, E20-US3-TC3, E20-US3-TC4, E20-US3-TC5, E20-US3-TC6",
+    "clauses": [
+      "Profile, status, history, Suspend or Reactivate (AC1, AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US3-UI3",
+    "title": "Suspend user",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Users, Complaints and Ratings",
+    "family": "overlay",
+    "requirements": "Consequence (sessions end) and confirm",
+    "stories": "E20-US3",
+    "tests": "E20-US3-TC1, E20-US3-TC2, E20-US3-TC3, E20-US3-TC4, E20-US3-TC5, E20-US3-TC6",
+    "clauses": [
+      "Consequence (sessions end) and confirm"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US3-UI4",
+    "title": "Complaints queue",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Users, Complaints and Ratings",
+    "family": "board",
+    "requirements": "Open tickets by age and parties",
+    "stories": "E20-US3",
+    "tests": "E20-US3-TC1, E20-US3-TC2, E20-US3-TC3, E20-US3-TC4, E20-US3-TC5, E20-US3-TC6",
+    "clauses": [
+      "Open tickets by age and parties"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US3-UI5",
+    "title": "Complaint detail",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Users, Complaints and Ratings",
+    "family": "form",
+    "requirements": "Order, timeline and parties involved (AC3)",
+    "stories": "E20-US3",
+    "tests": "E20-US3-TC1, E20-US3-TC2, E20-US3-TC3, E20-US3-TC4, E20-US3-TC5, E20-US3-TC6",
+    "clauses": [
+      "Order, timeline and parties involved (AC3)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US3-UI6",
+    "title": "Resolve complaint",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Overlay",
+    "module": "Users, Complaints and Ratings",
+    "family": "overlay",
+    "requirements": "Outcome text; all parties notified, case closed (AC4)",
+    "stories": "E20-US3",
+    "tests": "E20-US3-TC1, E20-US3-TC2, E20-US3-TC3, E20-US3-TC4, E20-US3-TC5, E20-US3-TC6",
+    "clauses": [
+      "Outcome text",
+      "all parties notified, case closed (AC4)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E18-US2-UI3",
+    "title": "Rating review",
+    "role": "admin",
+    "priority": "P3",
+    "kind": "Screen",
+    "module": "Users, Complaints and Ratings",
+    "family": "form",
+    "requirements": "Mark a low rating as vendor-attributed so it leaves the rider's average (AC2)",
+    "stories": "E18-US2",
+    "tests": "E18-US2-TC1, E18-US2-TC2, E18-US2-TC3, E18-US2-TC4, E18-US2-TC5, E18-US2-TC6",
+    "clauses": [
+      "Mark a low rating as vendor-attributed so it leaves the rider's average (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US4-UI1",
+    "title": "Live dashboard",
+    "role": "admin",
+    "priority": "P1",
+    "kind": "Screen",
+    "module": "Monitoring, Safety and Audit",
+    "family": "dashboard",
+    "requirements": "Active orders, delayed orders, riders online, slot utilisation (AC2)",
+    "stories": "E20-US4",
+    "tests": "E20-US4-TC1, E20-US4-TC2, E20-US4-TC3, E20-US4-TC4",
+    "clauses": [
+      "Active orders, delayed orders, riders online, slot utilisation (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E20-US4-UI2",
+    "title": "Reports",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Monitoring, Safety and Audit",
+    "family": "dashboard",
+    "requirements": "Orders, revenue, commission, slot utilisation for a date range (AC1) Include report export with private-field exclusion; valid, empty and invalid date-range states.",
+    "stories": "E20-US4",
+    "tests": "E20-US4-TC1, E20-US4-TC2, E20-US4-TC3, E20-US4-TC4",
+    "clauses": [
+      "Orders, revenue, commission, slot utilisation for a date range (AC1) Include report export with private-field exclusion",
+      "valid, empty and invalid date-range states"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E16-US1-UI3",
+    "title": "Safety escalations",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Monitoring, Safety and Audit",
+    "family": "dashboard",
+    "requirements": "Missed rider check-ins past the grace period, with rider and order (AC6)",
+    "stories": "E16-US1",
+    "tests": "E16-US1-TC1, E16-US1-TC2, E16-US1-TC3, E16-US1-TC4, E16-US1-TC5, E16-US1-TC6, E16-US1-TC7, E16-US1-TC8",
+    "clauses": [
+      "Missed rider check-ins past the grace period, with rider and order (AC6)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E21-US3-UI1",
+    "title": "Audit investigation",
+    "role": "admin",
+    "priority": "P2",
+    "kind": "Screen",
+    "module": "Monitoring, Safety and Audit",
+    "family": "dashboard",
+    "requirements": "Cross-vendor log for a dispute, recipe quantities hidden (AC1)",
+    "stories": "E21-US1, E21-US3",
+    "tests": "E21-US1-TC1, E21-US1-TC2, E21-US1-TC3, E21-US1-TC4, E21-US1-TC5, E21-US3-TC1, E21-US3-TC2, E21-US3-TC3, E21-US3-TC4",
+    "clauses": [
+      "Cross-vendor log for a dispute, recipe quantities hidden (AC1)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E21-US3-UI2",
+    "title": "Export audit log",
+    "role": "admin",
+    "priority": "P3",
+    "kind": "Overlay",
+    "module": "Monitoring, Safety and Audit",
+    "family": "overlay",
+    "requirements": "Range and format; the export is itself logged (AC2)",
+    "stories": "E21-US3",
+    "tests": "E21-US3-TC1, E21-US3-TC2, E21-US3-TC3, E21-US3-TC4",
+    "clauses": [
+      "Range and format",
+      "the export is itself logged (AC2)"
+    ],
+    "ownerOnly": false
+  },
+  {
+    "id": "E22-US2-UI2",
+    "title": "Responsive admin layouts",
+    "role": "admin",
+    "priority": "P3",
+    "kind": "Layout set",
+    "module": "Monitoring, Safety and Audit",
+    "family": "layout",
+    "requirements": "Queues, tables and dashboard on tablet and laptop",
+    "stories": "E22-US2",
+    "tests": "E22-US2-TC1, E22-US2-TC2, E22-US2-TC3, E22-US2-TC4",
+    "clauses": [
+      "Queues, tables and dashboard on tablet and laptop"
+    ],
+    "ownerOnly": false
+  }
+]

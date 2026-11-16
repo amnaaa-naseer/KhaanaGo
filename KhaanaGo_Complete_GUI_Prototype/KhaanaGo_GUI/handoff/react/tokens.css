@@ -1,0 +1,33 @@
+/* KhaanaGo design tokens — port directly into React vendor/admin portals */
+:root {
+  --kg-bg: #FFF8EF;
+  --kg-surface: #FFFFFF;
+  --kg-surface-alt: #FBF0E2;
+  --kg-charcoal: #242424;
+  --kg-muted: #6B635B;
+  --kg-border: #EADBC8;
+  --kg-orange: #F97316;
+  --kg-orange-text: #C2410C;
+  --kg-orange-tint: #FFEDD5;
+  --kg-ok: #15803D;
+  --kg-ok-tint: #DCFCE7;
+  --kg-limited: #854D0E;
+  --kg-limited-tint: #FEF3C7;
+  --kg-full: #B91C1C;
+  --kg-full-tint: #FEE2E2;
+  --kg-info: #0369A1;
+  --kg-info-tint: #E0F2FE;
+  --kg-radius-card: 16px;
+  --kg-radius-control: 12px;
+  --kg-action-min-height: 48px;
+  --kg-rider-hold-min-height: 64px;
+}
+.kg-kitchen-dark {
+  --kg-bg: #1A1A1A;
+  --kg-surface: #242424;
+  --kg-surface-alt: #2E2E2E;
+  --kg-charcoal: #FFF8EF;
+  --kg-muted: #B8AEA3;
+  --kg-border: #3A3835;
+  --kg-orange-text: #FB923C;
+}

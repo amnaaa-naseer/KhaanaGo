@@ -1,0 +1,5 @@
+package com.khaanago.khaana_rider
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()

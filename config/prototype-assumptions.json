@@ -1,0 +1,73 @@
+{
+  "status": "provisional",
+  "review": "Prototype assumptions for the KhaanaGo GUI. They are not Chapter 2 requirements. Team and supervisor confirmation is still required. Do not treat these values as verified product rules.",
+  "decisionsDocument": "docs/requirements-decisions.md",
+  "password": {
+    "minCharacters": 8,
+    "maxCharacters": 128,
+    "showClientValidation": true,
+    "backendPolicyStatus": "pending_review"
+  },
+  "customizationInstructions": {
+    "maxCharacters": 500,
+    "showCharacterCounter": true,
+    "showValidationMessage": true
+  },
+  "referenceImage": {
+    "allowedTypes": ["jpg", "jpeg", "png"],
+    "maxBytes": 5242880,
+    "maxMegabytes": 5,
+    "showUnsupportedFormatState": true,
+    "showOversizedFileState": true
+  },
+  "deliverySlot": {
+    "holdSeconds": 300,
+    "holdLabel": "5 minutes",
+    "onExpiry": "show_expiry_message_and_return_to_slot_selection",
+    "availability": {
+      "availableBelowPercent": 60,
+      "limitedFromPercentInclusive": 60,
+      "limitedBelowPercent": 85,
+      "fullAtOrAbovePercent": 85,
+      "thresholdsConfigurable": true,
+      "interpretation": "intake_rule_not_physical_occupancy"
+    }
+  },
+  "deliveryVerification": {
+    "codeLength": 6,
+    "characterSet": "digits"
+  },
+  "riderCheckIn": {
+    "gracePeriodSeconds": 120,
+    "gracePeriodLabel": "2 minutes"
+  },
+  "secondPickupHold": {
+    "maxHoldSeconds": 300,
+    "maxHoldLabel": "5 minutes"
+  },
+  "waitingPay": {
+    "freeWaitingSeconds": 480,
+    "freeWaitingLabel": "8 minutes",
+    "chargeOnlyBeyondThreshold": true,
+    "ratePerMinute": null,
+    "rateStatus": "not_decided",
+    "rateConfigurable": true
+  },
+  "pooledDelivery": {
+    "deliveryFeeDiscountPercent": 30,
+    "additionalMinutesMin": 10,
+    "additionalMinutesMax": 15,
+    "estimateIsGuaranteedDeliveryTime": false
+  },
+  "maps": {
+    "integrationStatus": "simulated",
+    "liveTrackingIntegrated": false,
+    "unavailableFallback": ["readable_text_address", "retry"],
+    "allowManualAddressEntry": true
+  },
+  "androidSupport": {
+    "minimumVersionResolved": false,
+    "chapter2Wording": "Android 10 or older",
+    "designSystemAndInventoryWording": "Android 10 and up"
+  }
+}

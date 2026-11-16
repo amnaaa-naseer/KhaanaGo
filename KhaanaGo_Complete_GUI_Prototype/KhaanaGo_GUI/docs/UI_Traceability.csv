@@ -1,0 +1,190 @@
+﻿id,role,section,title,kind,priority,story,epic,requirements
+E22-US3-UI1,Shared,Shared utilities,Offline banner and pending-sync badge,Overlay,P2,E22-US3,E22,"""You are offline"" banner; each queued action marked Pending; syncs in order when back online (AC1, AC2)"
+E22-US3-UI2,Shared,Shared utilities,Sync conflict message,Overlay,P2,E22-US3,E22,What changed while offline and which version was kept (AC2)
+E22-US3-UI3,Shared,Shared utilities,Something went wrong,Screen,P3,E22-US3,E22,"Plain reason, ""Try again"" button, no technical codes"
+E22-US1-UI2,Shared,Shared utilities,Page not found (web),Screen,P3,E22-US1,E22,Message and a link back to Home or the dashboard
+E1-US1-UI6,Customer,Account and profile,App launch,Screen,P3,E1-US1,E1,"Logo and loading; goes to Home if signed in, otherwise Login"
+E1-US1-UI1,Customer,Account and profile,Registration,Screen,P2,E1-US1,E1,"Name, mobile, email, password with strength meter; duplicate-number error (AC2)"
+E1-US1-UI2,Customer,Account and profile,Verification code,Screen,P2,E1-US1,E1,"Six boxes, resend countdown, wrong or expired code error"
+E1-US1-UI3,Customer,Account and profile,Login,Screen,P1,E1-US1,E1,"Mobile or email, password, ""Forgot password?""; session-expired message (AC4)"
+E1-US1-UI4,Customer,Account and profile,Reset password: request,Screen,P2,E1-US1,E1,Registered email or mobile; confirmation that a code was sent (AC3)
+E1-US1-UI5,Customer,Account and profile,Reset password: code and new password,Screen,P2,E1-US1,E1,"Code, new password, rules checklist, success state"
+E1-US5-UI6,Customer,Account and profile,Location permission,Overlay,P3,E1-US5,E1,"Why the app needs location, then the system prompt"
+E17-US1-UI3,Customer,Account and profile,Notification permission,Overlay,P3,E17-US1,E17,"Why order updates matter, then the system prompt"
+E1-US5-UI1,Customer,Account and profile,Profile,Screen,P2,E1-US5,E1,"Name, mobile, email; links to addresses, orders, sign out"
+E1-US5-UI4,Customer,Account and profile,Edit profile,Screen,P2,E1-US5,E1,Editable name and mobile; change applies to notifications (AC2)
+E1-US5-UI2,Customer,Account and profile,Saved addresses,Screen,P2,E1-US5,E1,"Address cards with default marker, edit, delete, add (AC1)"
+E1-US5-UI3,Customer,Account and profile,Add or edit address,Screen,P2,E1-US5,E1,"Map with draggable pin, search, current location, label, address line"
+E1-US5-UI5,Customer,Account and profile,Delete address confirmation,Overlay,P3,E1-US5,E1,"Which address, ""Delete"" and ""Keep"""
+E3-US1-UI1,Customer,Discovery and customization,Home,Screen,P1,E3-US1,E3,"Address selector, search, filter chips, top-rated row, vendor cards with open and capacity state"
+E3-US1-UI4,Customer,Discovery and customization,Search results,Screen,P2,E3-US1,E3,"Results for typed search and filters; ""no match"" state with suggestions (AC2)"
+E3-US1-UI5,Customer,Discovery and customization,Filter sheet,Overlay,P2,E3-US1,E3,"Cuisine, dietary tags, open now; ""Show N restaurants"""
+E3-US1-UI2,Customer,Discovery and customization,Vendor menu,Screen,P1,E3-US1,E3,"Hours and status, categories, item rows with nutrition badge, unavailable items greyed (AC4), cart bar"
+E3-US1-UI6,Customer,Discovery and customization,Vendor info and reviews,Screen,P3,E3-US1,E3,"Address, hours, rating summary, recent reviews"
+E3-US1-UI3,Customer,Discovery and customization,Item detail,Screen,P1,E3-US1,E3,"Price, add-ons, nutrition badge, allergen warning, ""Customize"" or ""Add to cart"" (AC3)"
+E4-US1-UI1,Customer,Discovery and customization,Customization builder,Screen,P1,E4-US1,E4,"Size, flavour, add-ons, custom text, exclusions and swaps; live price and prep time"
+E4-US2-UI1,Customer,Discovery and customization,Reference image and instructions,Overlay,P2,E4-US2,E4,"Camera or gallery, thumbnail, instructions with counter, upload errors"
+E4-US3-UI1,Customer,Discovery and customization,Revised quote approval,Screen,P2,E4-US3,E4,"Original and revised price and lead time, vendor note, Approve or Cancel (AC2); decline reason"
+E3-US2-UI1,Customer,Cart and checkout,Cart,Screen,P1,E3-US2,E3,"Items with steppers, remove, subtotal, proceed to checkout"
+E3-US2-UI3,Customer,Cart and checkout,Different-restaurant dialog,Overlay,P2,E3-US2,E3,"""Keep current cart"" or ""Start new cart"" (AC2)"
+E14-US2-UI1,Customer,Cart and checkout,Delivery type,Screen,P1,E14-US2,E14,"Pooled (discount, extra minutes) and Express with prices; pooled disabled for fragile items"
+E5-US3-UI1,Customer,Cart and checkout,Slot selector,Screen,P1,E5-US3,E5,"Day tabs, slot grid with Available, Limited, Full; arrival window with weather note"
+E5-US4-UI1,Customer,Cart and checkout,Slot taken dialog,Overlay,P1,E5-US4,E5,"""That slot was just taken"" with nearest free windows (AC1)"
+E5-US4-UI2,Customer,Cart and checkout,Slot released dialog,Overlay,P2,E5-US4,E5,"Hold expired, back to the selector (AC2)"
+E3-US3-UI1,Customer,Cart and checkout,Payment method,Screen,P1,E3-US3,E3,"Cash on delivery, JazzCash, Easypaisa, card"
+E3-US3-UI2,Customer,Cart and checkout,Payment gateway handoff,Screen,P2,E3-US3,E3,Loading and return states around the gateway's own page
+E3-US4-UI1,Customer,Cart and checkout,Voucher and offers sheet,Overlay,P2,E3-US4,E3,"Code field, auto-applied offers, rejection reason (AC2)"
+E3-US2-UI2,Customer,Cart and checkout,Review order,Screen,P1,E3-US2,E3,"Address, slot, delivery, payment; itemised bill; Place order with total"
+E10-US3-UI1,Customer,Cart and checkout,Payment failed,Screen,P2,E10-US3,E10,"""Order not placed"", Try again, Choose another method"
+E3-US4-UI2,Customer,Cart and checkout,Order placed,Screen,P1,E3-US4,E3,"Order number, slot, estimate, ""Track order"""
+E17-US1-UI1,Customer,"Tracking, history and feedback",Live tracking,Screen,P1,E17-US1,E17,"Arrival window, timeline, prep stage or live map, pooled position, delivery code, refund status"
+E6-US4-UI1,Customer,"Tracking, history and feedback",Delay explanation,Overlay,P1,E6-US4,E6,"Banner and push with the reason, naming the weather (AC1, AC2)"
+E16-US4-UI1,Customer,"Tracking, history and feedback",Confirm corrected drop-off pin,Overlay,P2,E16-US4,E16,Map with the rider's proposed pin; confirm or adjust
+E10-US1-UI1,Customer,"Tracking, history and feedback",Cancel order,Overlay,P3,E10-US1,E10,"Reason, what is refunded, confirm (before preparation only)"
+E17-US1-UI2,Customer,"Tracking, history and feedback",Notification centre,Screen,P2,E17-US1,E17,"Updates grouped by order, newest first (AC6)"
+E17-US2-UI1,Customer,"Tracking, history and feedback",Order history,Screen,P2,E17-US2,E17,Orders newest first; empty state (AC2)
+E17-US2-UI2,Customer,"Tracking, history and feedback",Order detail and invoice,Screen,P2,E17-US2,E17,"Items and options, bill, payment status, Download invoice, Reorder, Rate, Report a problem"
+E17-US3-UI1,Customer,"Tracking, history and feedback",Reorder summary,Overlay,P2,E17-US3,E17,"Items added at current prices, items skipped (AC2)"
+E18-US1-UI1,Customer,"Tracking, history and feedback",Rating,Screen,P2,E18-US1,E18,"Restaurant, item and rider ratings kept separate"
+E18-US3-UI1,Customer,"Tracking, history and feedback",Complaint form,Screen,P2,E18-US3,E18,"Order read-only, category, description"
+E18-US3-UI2,Customer,"Tracking, history and feedback",Complaint status,Screen,P3,E18-US3,E18,"Ticket reference, progress, outcome when resolved"
+E19-US1-UI1,Customer,Assistant and web,Assistant chat,Screen,P2,E19-US1,E19,"Text and mic input, result cards, order status reply, out-of-scope reply"
+E19-US2-UI1,Customer,Assistant and web,Voice order,Screen,P2,E19-US2,E19,"Live transcript, read-back card, Confirm and Cancel"
+E22-US1-UI1,Customer,Assistant and web,Responsive web layouts,Layout set,P2,E22-US1,E22,"Home, Menu with cart panel and Checkout at 360, 768 and 1280 px"
+E1-US2-UI1,Rider,Sign-in and registration,App launch,Screen,P3,E1-US2,E1,Logo and loading
+E1-US2-UI2,Rider,Sign-in and registration,Sign in,Screen,P1,E1-US2,E1,"Mobile and password, ""Forgot password?"""
+E1-US2-UI3,Rider,Sign-in and registration,Registration 1: personal details,Screen,P2,E1-US2,E1,"Name, CNIC, phone, password"
+E1-US2-UI4,Rider,Sign-in and registration,Registration 2: vehicle and phone,Screen,P2,E1-US2,E1,"Motorbike, car or van; phone operating system"
+E1-US2-UI5,Rider,Sign-in and registration,Registration 3: documents,Screen,P2,E1-US2,E1,"Licence and CNIC upload, field errors for missing items (TC3)"
+E1-US2-UI6,Rider,Sign-in and registration,Pending verification,Screen,P2,E1-US2,E1,"""Under review""; cannot go online until approved (AC1)"
+E1-US2-UI7,Rider,Sign-in and registration,Application rejected or more information needed,Screen,P2,E1-US2,E1,"Reason and what to resubmit (E20-US1 AC3, AC4)"
+E1-US2-UI8,Rider,Sign-in and registration,Verification code,Screen,P3,E1-US2,E1,Code entry and resend
+E1-US2-UI9,Rider,Sign-in and registration,Reset password,Screen,P3,E1-US2,E1,"Request, then code and new password, same pattern as the customer app"
+E13-US2-UI1,Rider,Sign-in and registration,Location permission,Overlay,P2,E13-US2,E13,"Why location is needed while online, then the system prompt"
+E13-US1-UI4,Rider,Sign-in and registration,Notification and sound permission,Overlay,P3,E13-US1,E13,Why alerts matter for pickups
+E13-US2-UI2,Rider,Home and offers,Home: offline and online,Screen,P1,E13-US2,E13,"Online toggle, vehicle type, today's deliveries and earnings (E1-US2 AC2)"
+E13-US2-UI3,Rider,Home and offers,Outside service area,Overlay,P2,E13-US2,E13,Why no offers arrive and where to go (AC3)
+E13-US2-UI4,Rider,Home and offers,Delivery offer,Screen,P1,E13-US2,E13,"Vendor, drop-off area, distance, pay, countdown, Accept and Decline (AC1)"
+E14-US1-UI1,Rider,Home and offers,Pooled trip offer,Screen,P2,E14-US1,E14,"Two pickups and drop-offs, order limit of 2, combined pay"
+E13-US2-UI5,Rider,Home and offers,Offer expired,Overlay,P2,E13-US2,E13,Offer passed to another rider (AC2)
+E13-US1-UI1,Rider,Active delivery,Head to pickup,Screen,P1,E13-US1,E13,"Route, vendor address, kitchen progress (preparing, 80%, ready)"
+E13-US1-UI2,Rider,Active delivery,Order ready alert,Overlay,P1,E13-US1,E13,"Full-screen alert with sound, vibration and text (AC3)"
+E13-US4-UI1,Rider,Active delivery,At the store,Screen,P1,E13-US4,E13,"Arrival time, waiting timer, waiting-fee threshold (E15-US2)"
+E13-US1-UI3,Rider,Active delivery,Pickup handover,Screen,P1,E13-US1,E13,"Order number and items to check, hold to confirm ""Picked up"""
+E14-US2-UI2,Rider,Active delivery,Pooled parcels and labels,Screen,P2,E14-US2,E14,"Each parcel's label to match at drop-off, stop order (AC4)"
+E14-US1-UI2,Rider,Active delivery,Second pickup hold,Overlay,P2,E14-US1,E14,"Countdown, then ""Order uncoupled, continue with the first"" (AC3, AC4)"
+E13-US3-UI1,Rider,Active delivery,Head to drop-off,Screen,P1,E13-US3,E13,"Route, customer area, call and quick messages"
+E13-US3-UI2,Rider,Active delivery,Delivery code entry,Screen,P1,E13-US3,E13,Four-digit code; wrong-code state with Retry and Contact support (AC4)
+E13-US3-UI3,Rider,Active delivery,Out-of-sequence prompt,Overlay,P2,E13-US3,E13,Why the tap was blocked and what to do next (AC2)
+E10-US2-UI2,Rider,Active delivery,Collect cash,Screen,P2,E10-US2,E10,"Amount due, confirm cash collected (COD, AC2)"
+E13-US3-UI4,Rider,Active delivery,Delivered,Screen,P1,E13-US3,E13,"Earnings for this delivery: base, distance, waiting, surcharge"
+E16-US4-UI2,Rider,Active delivery,Quick messages,Overlay,P2,E16-US4,E16,"Preset messages for arrival and delay, one tap or voice (AC1)"
+E16-US4-UI3,Rider,Active delivery,Request corrected pin,Overlay,P2,E16-US4,E16,Ask the customer to confirm a new pin (AC2)
+E16-US1-UI1,Rider,Active delivery,Voice check-in,Overlay,P2,E16-US1,E16,"""Confirm arrival at customer"", say ""Confirm"" or press the headset button; repeats once (AC1, AC2)"
+E19-US3-UI1,Rider,Active delivery,Rider voice assistant,Overlay,P2,E19-US3,E19,"Next pickup, readiness, spoken answer shown as text"
+E18-US3-UI3,Rider,Active delivery,Report a problem,Screen,P2,E18-US3,E18,"Order, category, description"
+E13-US2-UI6,Rider,Earnings and history,Shift summary,Screen,P2,E13-US2,E13,"Deliveries, distance, waiting time, earnings (AC4)"
+E15-US3-UI1,Rider,Earnings and history,Shift earnings invoice,Screen,P2,E15-US3,E15,"Per delivery: base fee, per-km, waiting fee, surcharges, total (AC1)"
+E15-US3-UI2,Rider,Earnings and history,Delivery earnings detail,Screen,P2,E15-US3,E15,One delivery; pooled orders shown separately (AC2)
+E1-US2-UI10,Rider,Earnings and history,Delivery history,Screen,P2,E1-US2,E1,"Past deliveries, newest first"
+E18-US2-UI1,Rider,Earnings and history,My ratings,Screen,P2,E18-US2,E18,Average and recent comments (AC1)
+E1-US2-UI11,Rider,Profile and settings,Rider profile,Screen,P2,E1-US2,E1,"Details, vehicle type, document status"
+E1-US2-UI12,Rider,Profile and settings,Settings,Screen,P3,E1-US2,E1,"List of the settings below, sign out"
+E13-US5-UI1,Rider,Profile and settings,Navigation preference,Screen,P2,E13-US5,E13,"Open external maps, or use the in-app map (AC1, AC2)"
+E16-US2-UI1,Rider,Profile and settings,Display and alerts,Screen,P2,E16-US2,E16,"High-contrast mode, audio mute with vibration fallback (E16-US1 AC4)"
+E16-US3-UI1,Rider,Profile and settings,Data saver,Screen,P3,E16-US3,E16,"Low-data mode, lighter map, GPS recovery note"
+E15-US1-UI1,Rider,Profile and settings,Tariff settings,Screen,P2,E15-US1,E15,"Base fare and per-km rate, negative values rejected (AC2)"
+E20-US1-UI1,Vendor,"Application, sign-in and access",Vendor application 1: business details,Screen,P2,E20-US1,E20,"Business name, type (restaurant, cloud kitchen, home baker), contact, area"
+E20-US1-UI2,Vendor,"Application, sign-in and access",Vendor application 2: documents,Screen,P2,E20-US1,E20,Required document uploads with format and size rules
+E20-US1-UI3,Vendor,"Application, sign-in and access",Vendor application 3: bank details,Screen,P2,E20-US1,E20,"Payout account entry, review and submit"
+E20-US1-UI4,Vendor,"Application, sign-in and access",Application status,Screen,P2,E20-US1,E20,"Pending, more information needed, rejected with reason, approved"
+E1-US3-UI1,Vendor,"Application, sign-in and access",Vendor sign-in,Screen,P1,E1-US3,E1,Credentials; routes owner and staff to their own dashboards (AC1)
+E1-US3-UI2,Vendor,"Application, sign-in and access",Account locked,Screen,P2,E1-US3,E1,Locked after five failed attempts; owner informed (AC2)
+E1-US3-UI4,Vendor,"Application, sign-in and access",Reset password,Screen,P3,E1-US3,E1,"Request, then code and new password"
+E1-US3-UI3,Vendor,"Application, sign-in and access",No access,Screen,P2,E1-US3,E1,"""You do not have access to this page"", back to dashboard (AC3)"
+E1-US3-UI5,Vendor,"Application, sign-in and access",Owner dashboard,Screen,P1,E1-US3,E1,"Today's orders and revenue, capacity now, low-stock count, pending custom orders"
+E1-US3-UI6,Vendor,"Application, sign-in and access",Staff home,Screen,P2,E1-US3,E1,Kitchen-operation view only: board link and duties assigned
+E1-US4-UI1,Vendor,Staff and business setup,Staff list,Screen,P2,E1-US4,E1,Staff with duties and status
+E1-US4-UI2,Vendor,Staff and business setup,Add or edit staff,Screen,P2,E1-US4,E1,"Name, employee ID, duty set (take orders, prepare, edit stock)"
+E1-US4-UI3,Vendor,Staff and business setup,Deactivate staff,Overlay,P2,E1-US4,E1,What changes; audit history is kept (AC2)
+E2-US1-UI1,Vendor,Staff and business setup,Business profile,Screen,P2,E2-US1,E2,"Type, service area, cuisine, dietary tags, preferred transport (bike or car)"
+E2-US3-UI1,Vendor,Staff and business setup,Operating hours and open/closed,Screen,P2,E2-US3,E2,"Weekly hours, manual close and reopen (AC1, AC2)"
+E14-US3-UI1,Vendor,Staff and business setup,Delivery settings,Screen,P2,E14-US3,E14,"Own riders, independent riders, partner fleet; fallback behaviour (AC1, AC2)"
+E15-US1-UI2,Vendor,Staff and business setup,Tariff settings,Screen,P2,E15-US1,E15,"Base fare, per-km rate, validation, maps-unavailable fallback note"
+E1-US3-UI7,Vendor,Staff and business setup,Bank details and payout account,Screen,P2,E1-US3,E1,Owner-only account and payout schedule
+E2-US2-UI1,Vendor,Menu,Menu list,Screen,P1,E2-US2,E2,"Items by category, availability toggle, search"
+E2-US2-UI2,Vendor,Menu,Add or edit item,Screen,P1,E2-US2,E2,"Name, price, category, photo, description, add-ons; invalid price error (AC2)"
+E2-US2-UI3,Vendor,Menu,Remove item,Overlay,P3,E2-US2,E2,Confirm; note for items in customers' carts (AC4)
+E2-US4-UI1,Vendor,Menu,Customization options,Screen,P2,E2-US4,E2,"Sizes, flavours, text and image fields with price differences, lead time, fragile flag"
+E5-US1-UI1,Vendor,Capacity,Kitchen capacity setup,Screen,P1,E5-US1,E5,"Orders per hour, per-item prep times, resource limits; zero rejected (AC2)"
+E5-US1-UI2,Vendor,Capacity,Temporary capacity change,Overlay,P2,E5-US1,E5,"New limit, duration, automatic return to default (AC3, AC4)"
+E5-US1-UI3,Vendor,Capacity,Live utilisation,Screen,P1,E5-US1,E5,"Capacity meter, current load, remaining capacity, upcoming slot occupancy (AC6)"
+E5-US2-UI1,Vendor,Capacity,Intake paused,Overlay,P1,E5-US2,E5,"Banner with queue size and Resume (AC3, AC4)"
+E6-US2-UI1,Vendor,Capacity,Buffers and overrides,Screen,P2,E6-US2,E6,"Weather and peak buffers in force, vendor override with audit note (AC4)"
+E7-US1-UI1,Vendor,Kitchen and orders,New order alert,Overlay,P1,E7-US1,E7,"Sound, visual alert, tab-title flash (AC1, AC2)"
+E7-US1-UI2,Vendor,Kitchen and orders,Order ticket,Overlay,P1,E7-US1,E7,"Items, custom text, swaps, reference image, highlighted allergen exclusions (AC3, AC4)"
+E7-US2-UI1,Vendor,Kitchen and orders,Reject order,Overlay,P2,E7-US2,E7,Reason list; refund flag for prepaid orders (AC2)
+E7-US3-UI1,Vendor,Kitchen and orders,Live kitchen board,Screen,P1,E7-US3,E7,"New, Preparing, Ready, Handed Over columns with timers; 80% prepared and Ready actions"
+E7-US3-UI2,Vendor,Kitchen and orders,Order history,Screen,P3,E7-US3,E7,Searchable list of past orders with status
+E7-US4-UI1,Vendor,Kitchen and orders,Voice commands,Overlay,P2,E7-US4,E7,"Heard command, confirmation, ""repeat"" prompt (AC1, AC2)"
+E4-US3-UI2,Vendor,Kitchen and orders,Custom order review,Screen,P2,E4-US3,E4,"Accept, propose new price or time, or decline with a reason (AC1)"
+E8-US1-UI1,Vendor,Recipes and nutrition,Recipe list,Screen,P2,E8-US1,E8,Dishes with recipe status; hidden from staff (AC4)
+E8-US1-UI2,Vendor,Recipes and nutrition,Recipe editor,Screen,P1,E8-US1,E8,"Ingredients, quantities, units; blank or invalid unit rejected (AC2)"
+E8-US2-UI1,Vendor,Recipes and nutrition,Nutrition and allergen review,Screen,P1,E8-US2,E8,"Calculated values per serving, retry flag when the API is unreachable (E8-US2 AC1, AC2)"
+E8-US4-UI1,Vendor,Recipes and nutrition,Recipe change impact,Overlay,P2,E8-US4,E8,"Nutrition and BOM will refresh; active orders keep the old recipe (AC1, AC2)"
+E9-US1-UI1,Vendor,Inventory and planning,Stock list,Screen,P1,E9-US1,E9,"Ingredients, unit, quantity, reorder level, perishable flag, low-stock highlight"
+E9-US1-UI2,Vendor,Inventory and planning,Add or edit ingredient,Screen,P2,E9-US1,E9,"Name, unit, opening stock, reorder level, perishable or non-perishable (E9-US5)"
+E9-US1-UI3,Vendor,Inventory and planning,Stock intake,Overlay,P2,E9-US1,E9,Purchase quantity; entry logged with the user's name (AC2)
+E9-US1-UI4,Vendor,Inventory and planning,Dish BOM,Screen,P1,E9-US1,E9,Ingredients and quantity per serving for one dish (AC3)
+E9-US1-UI5,Vendor,Inventory and planning,Bulk BOM entry,Screen,P3,E9-US1,E9,"Many dishes at once, shared ingredients not re-entered (AC4)"
+E9-US2-UI1,Vendor,Inventory and planning,Low-stock alerts,Screen,P2,E9-US2,E9,"Ingredients under reorder level, dishes made unavailable at zero stock (AC3, AC4)"
+E9-US2-UI2,Vendor,Inventory and planning,Notification panel,Overlay,P3,E9-US2,E9,"Low stock, new orders, discrepancies, newest first"
+E9-US3-UI1,Vendor,Inventory and planning,Log wastage,Overlay,P2,E9-US3,E9,"Ingredient, quantity, reason; over-stock quantity rejected (AC2)"
+E9-US3-UI2,Vendor,Inventory and planning,Variance report,Screen,P2,E9-US3,E9,"Expected, actual, variance per ingredient; over-threshold rows highlighted (AC3, AC4)"
+E9-US4-UI1,Vendor,Inventory and planning,Material requirements planner,Screen,P2,E9-US4,E9,"Look-back period, required, in stock and shortfall; ""not enough data"" state (E9-US4 AC1, AC2)"
+E10-US1-UI2,Vendor,"Invoices, payments and finance",Invoice list,Screen,P2,E10-US1,E10,"Invoice number, order, total, payment state, date filter"
+E10-US1-UI3,Vendor,"Invoices, payments and finance",Invoice detail,Screen,P1,E10-US1,E10,"Lines, discounts, delivery, total; earlier revisions kept (AC1, AC2); void state (AC6)"
+E10-US2-UI1,Vendor,"Invoices, payments and finance",Payments,Screen,P2,E10-US2,E10,"Online and COD payments against invoices; method and reference (AC1, AC2)"
+E10-US3-UI2,Vendor,"Invoices, payments and finance",Refunds,Screen,P2,E10-US3,E10,Rejected prepaid orders flagged for refund and their status
+E10-US4-UI1,Vendor,"Invoices, payments and finance",COD reconciliation,Screen,P2,E10-US4,E10,"Cash collected per rider against COD invoices, unmatched differences (AC1)"
+E10-US4-UI2,Vendor,"Invoices, payments and finance",Flag discrepancy,Overlay,P2,E10-US4,E10,Note sent to the administrator (AC2)
+E12-US1-UI1,Vendor,"Invoices, payments and finance",Finance dashboard,Screen,P1,E12-US1,E12,"Revenue, commission, payouts, expenses with date-range filter (AC3, AC4)"
+E12-US1-UI2,Vendor,"Invoices, payments and finance",Commission and payouts,Screen,P2,E12-US1,E12,Deductions per order and payout history
+E12-US1-UI3,Vendor,"Invoices, payments and finance",Expenses,Screen,P2,E12-US1,E12,Expense list by category and date
+E12-US1-UI4,Vendor,"Invoices, payments and finance",Add expense,Overlay,P2,E12-US1,E12,"Category, amount, date (AC1)"
+E12-US2-UI1,Vendor,"Invoices, payments and finance",Net profit and dish margins,Screen,P2,E12-US2,E12,"Revenue minus commission and costs; margin per dish (AC1, AC2)"
+E12-US3-UI1,Vendor,"Invoices, payments and finance",Export report,Overlay,P3,E12-US3,E12,Period and contents; download link (AC1)
+E11-US1-UI1,Vendor,Marketing,Offers list,Screen,P2,E11-US1,E11,"Active, scheduled and expired offers and vouchers"
+E11-US1-UI2,Vendor,Marketing,Create or edit offer,Screen,P2,E11-US1,E11,"Percentage or fixed, code, minimum order, usage limit, schedule; end-before-start error (AC2)"
+E11-US2-UI1,Vendor,Marketing,Combo builder,Screen,P2,E11-US2,E11,"Choose items, set bundle price, availability follows items (AC1, AC2)"
+E11-US3-UI1,Vendor,Marketing,Offer performance,Screen,P2,E11-US3,E11,"Uses, discount given and sales per offer; zero values not errors (AC1, AC2)"
+E18-US2-UI2,Vendor,"Feedback, assistant and audit",Product feedback,Screen,P2,E18-US2,E18,"Average, count and recent comments per item; date filter (AC3, AC4)"
+E18-US3-UI4,Vendor,"Feedback, assistant and audit",Report a problem,Screen,P3,E18-US3,E18,"Order, category, description"
+E19-US3-UI2,Vendor,"Feedback, assistant and audit",Vendor assistant,Overlay,P2,E19-US3,E19,"Docked chat: pending orders, stock, capacity; refuses owner-only data for staff (AC1, AC2)"
+E21-US2-UI1,Vendor,"Feedback, assistant and audit",Audit log (owner only),Screen,P2,E21-US2,E21,"Filter by date, employee and task; denied for staff (AC1, AC2)"
+E22-US2-UI1,Vendor,"Feedback, assistant and audit",Responsive portal layouts,Layout set,P2,E22-US2,E22,"Dashboard, board and tables on phone, tablet and laptop; PWA standalone launch"
+E1-US3-UI8,Admin,"Access, verification and fleets",Admin sign-in,Screen,P1,E1-US3,E1,"Credentials, lockout message"
+E20-US1-UI5,Admin,"Access, verification and fleets",Verification queue,Screen,P2,E20-US1,E20,"Vendors, riders and fleet partners awaiting review, oldest first"
+E20-US1-UI6,Admin,"Access, verification and fleets",Vendor application review,Screen,P2,E20-US1,E20,"Business details and documents; approve, reject with reason, or request more information (AC1)"
+E20-US1-UI7,Admin,"Access, verification and fleets",Rider verification review,Screen,P2,E20-US1,E20,"Documents, vehicle type; approve or reject (AC3, AC4)"
+E20-US1-UI9,Admin,"Access, verification and fleets",Fleet partner review,Screen,P3,E20-US1,E20,Partner details and documents; approve or reject
+E20-US1-UI8,Admin,"Access, verification and fleets",Decision dialog,Overlay,P2,E20-US1,E20,Required reason on rejection; message sent to the applicant
+E14-US4-UI1,Admin,"Access, verification and fleets",Partner fleets,Screen,P2,E14-US4,E14,"Partners, API connection status, active deliveries"
+E14-US4-UI2,Admin,"Access, verification and fleets",Partner details and status log,Screen,P2,E14-US4,E14,"Acknowledgements, status updates and IVR confirmations per delivery (AC1, AC2)"
+E20-US2-UI1,Admin,Rules,Commission settings,Screen,P2,E20-US2,E20,"Global and per-vendor rate within the 8 to 12 percent range; out-of-range error (AC1, AC2)"
+E6-US3-UI1,Admin,Rules,Buffer rules,Screen,P1,E6-US3,E6,"Weather and peak rules with period, area and percentage"
+E6-US3-UI2,Admin,Rules,Create or edit buffer rule,Overlay,P1,E6-US3,E6,"Period, affected area, buffer percentage; effect applies within a minute (AC1, AC2)"
+E19-US4-UI1,Admin,Rules,Assistant scope and permissions,Screen,P3,E19-US4,E19,What the assistant may do per role and the out-of-scope reply
+E20-US3-UI1,Admin,"Users, complaints and ratings",Users,Screen,P2,E20-US3,E20,"Search across customers, vendors, riders and staff"
+E20-US3-UI2,Admin,"Users, complaints and ratings",User detail,Screen,P2,E20-US3,E20,"Profile, status, history, Suspend or Reactivate (AC1, AC2)"
+E20-US3-UI3,Admin,"Users, complaints and ratings",Suspend user,Overlay,P2,E20-US3,E20,Consequence (sessions end) and confirm
+E20-US3-UI4,Admin,"Users, complaints and ratings",Complaints queue,Screen,P2,E20-US3,E20,Open tickets by age and parties
+E20-US3-UI5,Admin,"Users, complaints and ratings",Complaint detail,Screen,P2,E20-US3,E20,"Order, timeline and parties involved (AC3)"
+E20-US3-UI6,Admin,"Users, complaints and ratings",Resolve complaint,Overlay,P2,E20-US3,E20,"Outcome text; all parties notified, case closed (AC4)"
+E18-US2-UI3,Admin,"Users, complaints and ratings",Rating review,Screen,P3,E18-US2,E18,Mark a low rating as vendor-attributed so it leaves the rider's average (AC2)
+E20-US4-UI1,Admin,"Monitoring, safety and audit",Live dashboard,Screen,P1,E20-US4,E20,"Active orders, delayed orders, riders online, slot utilisation (AC2)"
+E20-US4-UI2,Admin,"Monitoring, safety and audit",Reports,Screen,P2,E20-US4,E20,"Orders, revenue, commission, slot utilisation for a date range (AC1)"
+E16-US1-UI3,Admin,"Monitoring, safety and audit",Safety escalations,Screen,P2,E16-US1,E16,"Missed rider check-ins past the grace period, with rider and order (AC6)"
+E21-US3-UI1,Admin,"Monitoring, safety and audit",Audit investigation,Screen,P2,E21-US3,E21,"Cross-vendor log for a dispute, recipe quantities hidden (AC1)"
+E21-US3-UI2,Admin,"Monitoring, safety and audit",Export audit log,Overlay,P3,E21-US3,E21,Range and format; the export is itself logged (AC2)
+E22-US2-UI2,Admin,"Monitoring, safety and audit",Responsive admin layouts,Layout set,P3,E22-US2,E22,"Queues, tables and dashboard on tablet and laptop"

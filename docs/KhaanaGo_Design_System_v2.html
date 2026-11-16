@@ -1,0 +1,1201 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style id="v2-overrides">
+/* v2 experience system — namespaced to preserve original v1 component specimens */
+.v2-kicker{font:800 11px/1.4 var(--font);text-transform:uppercase;letter-spacing:.11em;color:var(--brand-text)}
+.v2-muted{color:var(--fg-muted)}.v2-tip{padding:14px 16px;background:var(--surface-2);border-left:3px solid var(--brand-text);border-radius:0 10px 10px 0;font-size:13px;color:var(--fg-muted);margin-top:16px}
+.v2-lead{font-size:15px;color:var(--fg-muted);margin-bottom:20px;max-width:80ch}
+.v2-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.v2-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;background:var(--surface);border:1px solid var(--line);border-radius:999px;font:700 11px/1.4 var(--font);color:var(--fg-muted)}
+.v2-pill.v2-hot{background:var(--brand-tint);color:var(--on-brand-tint);border-color:var(--brand)}
+.v2-strategy{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.v2-strategy article{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;min-height:230px}
+.v2-strategy .v2-num{font:800 12px/1.4 var(--font);color:var(--brand-text)}
+.v2-strategy h3{font:800 20px/1.25 var(--font);margin:12px 0 8px}
+.v2-strategy p{font-size:13px;color:var(--fg-muted);line-height:1.65}
+.v2-strategy .v2-icon{width:42px;height:42px;border-radius:12px;background:var(--brand-tint);color:var(--brand-text);display:grid;place-items:center;font-size:23px}
+.v2-tabbar{display:flex;flex-wrap:wrap;gap:8px;padding:5px;border-radius:14px;background:var(--surface-2);border:1px solid var(--line);width:fit-content;margin:8px 0 22px}
+.v2-tabbar button{padding:10px 16px;border:0;background:transparent;color:var(--fg);font:800 13px/1.2 var(--font);border-radius:10px;cursor:pointer;min-height:44px}
+.v2-tabbar button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);box-shadow:var(--shadow-1)}
+.v2-preview{display:none}.v2-preview[data-active="true"]{display:block}
+.v2-preview-grid{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:28px;align-items:start}
+.v2-demo-caption{font-size:12px;line-height:1.6;color:var(--fg-muted);margin:16px 0 0}
+.v2-feature-list{display:grid;gap:10px}
+.v2-feature{display:flex;gap:12px;padding:13px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:13px;color:var(--fg-muted)}
+.v2-feature b{display:block;color:var(--fg);font-size:14px;margin-bottom:3px}
+.v2-feature>span:first-child{font:800 14px/1.4 var(--font);color:var(--brand-text);width:23px;flex:none}
+.v2-phone{width:min(100%,365px);margin:auto;background:#FFF8EF;color:#242424;border:8px solid #242424;border-radius:36px;overflow:hidden;box-shadow:0 16px 50px rgba(20,14,7,.18);min-height:684px;display:flex;flex-direction:column;position:relative;font-family:var(--font)}
+.v2-phone *{box-sizing:border-box}.v2-phone .v2-statusbar{height:24px;font:800 11px/24px var(--font);padding:0 18px;display:flex;justify-content:space-between}
+.v2-phone .v2-mobile-head{padding:12px 17px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.v2-phone h3{font:800 21px/1.2 var(--font);color:inherit}.v2-phone .v2-small{font-size:11px;color:#6B635B}
+.v2-avatar{display:grid;place-items:center;width:39px;height:39px;flex:none;border-radius:50%;background:#FFE5CD;color:#873400;font-weight:800}
+.v2-mobile-body{padding:0 15px 17px;flex:1;min-height:518px}.v2-demo-search{width:100%;height:43px;border:1px solid #EADBC8;border-radius:12px;padding:0 12px;background:#FFF;color:#57534E;font:600 12px var(--font);display:flex;align-items:center;gap:9px}
+.v2-category-row{display:flex;gap:7px;overflow:hidden;margin:15px 0}.v2-category{border:1px solid #EADBC8;background:white;border-radius:999px;padding:7px 12px;white-space:nowrap;font:700 11px var(--font);color:#242424}
+.v2-category.v2-selected{background:#FFEDD5;border-color:#F97316;color:#7C2D12}
+.v2-mobile-h{font:800 15px/1.3 var(--font);margin:17px 0 10px;color:#242424;display:flex;justify-content:space-between;align-items:center}.v2-mobile-h em{font:700 10px var(--font);color:#C2410C;font-style:normal}
+.v2-restaurant{background:white;border:1px solid #EADBC8;border-radius:15px;overflow:hidden;margin-bottom:10px;display:flex;align-items:stretch;min-height:100px}
+.v2-foodart{background:linear-gradient(140deg,#F9C98F,#F17932 55%,#C3561C);width:108px;flex:none;display:grid;place-items:center;font-size:48px;position:relative}
+.v2-foodart.v2-green{background:linear-gradient(135deg,#FFECCF,#D9C1A0)}
+.v2-rest-body{padding:12px 10px;min-width:0;flex:1}.v2-rest-body strong{font:800 12px/1.3 var(--font);display:block}.v2-rest-body small{font:600 10px/1.5 var(--font);color:#6B635B}.v2-rest-body .v2-rest-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font:800 10px var(--font)}
+.v2-status{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:4px 7px;font:800 10px/1.2 var(--font)}.v2-status.good{background:#DCFCE7;color:#166534}.v2-status.warn{background:#FEF3C7;color:#854D0E}.v2-status.bad{background:#FEE2E2;color:#991B1B}.v2-status.neutral{background:#E7E5E4;color:#57534E}.v2-status.info{background:#E0F2FE;color:#075985}
+.v2-mini-tabs{display:flex;justify-content:space-around;align-items:center;gap:3px;border-top:1px solid #EADBC8;background:#FFF;min-height:66px;padding:7px 6px 10px}
+.v2-mini-tabs button{display:grid;justify-items:center;align-content:center;gap:4px;border:0;border-radius:11px;background:transparent;min-width:64px;min-height:47px;color:#71675F;font:700 10px var(--font);cursor:pointer}
+.v2-mini-tabs button span{font-size:18px}.v2-mini-tabs button[aria-pressed="true"]{color:#C2410C;background:#FFEDD5}
+.v2-mobile-cta{width:100%;border:0;border-radius:12px;background:#F97316;color:#242424;height:52px;font:800 13px var(--font);cursor:pointer;margin-top:12px}
+.v2-phone.v2-rider{background:#171717;color:#FFF8EF;border-color:#333}
+.v2-rider .v2-small{color:#C8BEB4}.v2-rider .v2-mobile-body{padding:4px 16px 20px}
+.v2-rider .v2-route-card{padding:18px;background:#242424;border:1px solid #444;border-radius:18px;margin:15px 0}
+.v2-route-stop{display:flex;gap:12px;align-items:flex-start}.v2-route-stop .v2-dot{width:12px;height:12px;border:3px solid #F97316;background:#242424;border-radius:100%;flex:none;margin-top:4px}
+.v2-route-stop h4{font:800 16px/1.3 var(--font);color:#FFF8EF}.v2-route-stop p{font:600 12px/1.5 var(--font);color:#C8BEB4;margin-top:2px}
+.v2-rider .v2-separator{width:2px;height:28px;background:#666;margin:4px 0 4px 5px}
+.v2-rider-number{font:800 32px/1.2 var(--font);letter-spacing:-.04em}
+.v2-rider-alert{background:#312515;border:1px solid #71542D;color:#FFE8BD;border-radius:12px;padding:12px;font:700 12px/1.5 var(--font);margin-top:10px}
+.v2-rider .v2-mobile-cta{font-size:17px;height:68px;border-radius:15px}
+.v2-rider-secondary{border:1px solid #666;background:transparent;color:#FFF8EF;border-radius:12px;min-height:50px;padding:10px 14px;font:800 13px var(--font)}
+.v2-rider .v2-mini-tabs{background:#242424;border-top-color:#444}.v2-rider .v2-mini-tabs button{color:#DDD}.v2-rider .v2-mini-tabs button[aria-pressed=true]{color:#242424;background:#F97316}
+.v2-desktop{background:#FBF7F2;border:1px solid #EADBC8;border-radius:19px;overflow:hidden;display:grid;grid-template-columns:176px minmax(0,1fr);min-height:540px;color:#242424;box-shadow:0 14px 45px rgba(38,25,12,.07)}
+.v2-desktop-side{background:#242424;color:#F9F1E8;padding:18px 10px;display:flex;flex-direction:column;gap:10px}
+.v2-brand{padding:4px 10px 18px;font:800 20px/1.2 var(--font);color:#FFF8EF}.v2-brand em{font-style:normal;color:#F97316}
+.v2-desktop-side button{width:100%;min-height:41px;display:flex;align-items:center;gap:8px;padding:8px 10px;border:0;border-radius:10px;background:transparent;color:#E7DCD1;font:700 12px/1.3 var(--font);text-align:left;cursor:pointer}
+.v2-desktop-side button[aria-pressed="true"]{background:#F97316;color:#242424}.v2-desktop-side .v2-rolehint{font:600 10px/1.4 var(--font);color:#B8AEA3;padding:10px;margin-top:auto}
+.v2-desktop-main{padding:18px;min-width:0}.v2-desktop-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.v2-desktop-top h3{font:800 20px/1.2 var(--font);color:#242424}.v2-breadcrumb{font:700 11px/1.5 var(--font);color:#756B62;margin-bottom:5px}
+.v2-vendor-filter{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.v2-vendor-filter input{height:36px;border:1px solid #D6C9BD;background:#FFF;border-radius:8px;padding:0 10px;font:600 12px var(--font);flex:1;min-width:110px}.v2-btn-sm{border:1px solid #D6C9BD;background:#FFF;border-radius:8px;color:#242424;padding:9px 10px;font:800 11px var(--font);cursor:pointer}.v2-btn-sm.primary{background:#F97316;border-color:#F97316;color:#242424}
+.v2-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.v2-kpi{background:white;border:1px solid #EADBC8;border-radius:10px;padding:14px 12px}.v2-kpi span{font:700 10px/1.4 var(--font);color:#786F67}.v2-kpi b{display:block;font:800 23px/1.2 var(--font);margin:5px 0;color:#242424}
+.v2-desktop-panel{background:white;border:1px solid #EADBC8;border-radius:12px;margin-top:12px;padding:14px;overflow:auto}.v2-desktop-panel h4{font:800 13px/1.5 var(--font);margin-bottom:12px;color:#242424}
+.v2-mini-table{width:100%;border-collapse:collapse;color:#242424;font-size:11px}.v2-mini-table th{font:800 10px/1.4 var(--font);color:#786F67;padding:9px;border-bottom:1px solid #EADBC8}.v2-mini-table td{font-size:11px;padding:12px 9px;border-bottom:1px solid #EADBC8}
+.v2-mini-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.v2-mini-col{background:#F7F2EB;border-radius:10px;padding:10px}.v2-mini-col>h5{font:800 11px/1.3 var(--font);margin:0 0 10px;color:#242424}.v2-mini-ticket{background:#FFF;border:1px solid #EADBC8;border-radius:9px;padding:9px;margin-bottom:8px;font-size:10px}.v2-mini-ticket b{display:block;font-size:11px;margin-bottom:5px}
+.v2-mini-meter{height:11px;background:#F0E9E0;border-radius:10px;overflow:hidden;margin:9px 0}.v2-mini-meter>i{height:100%;display:block;background:#F97316;border-radius:10px}
+.v2-flow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.v2-flow{background:var(--surface);border:1px solid var(--line);border-radius:15px;padding:17px}.v2-flow h3{font-size:15px;font-weight:800;margin-bottom:10px}.v2-flow ol{margin:0;padding-left:20px;color:var(--fg-muted);font-size:12px;line-height:1.95}
+.v2-matrix th,.v2-matrix td{white-space:normal;min-width:110px}.v2-matrix th:first-child,.v2-matrix td:first-child{min-width:140px}
+.v2-callout{background:var(--brand-tint);border:1px solid var(--brand);border-radius:15px;padding:20px;margin:22px 0;color:var(--on-brand-tint)}.v2-callout h3{font-size:18px;font-weight:800;margin-bottom:7px;color:inherit}.v2-callout p{font-size:13px;line-height:1.7}
+.v2-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.v2-check{display:flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px;font-size:13px;line-height:1.6}.v2-check b{display:block}.v2-check span:first-child{font-size:16px;color:var(--ok)}
+.v2-codebox{background:#242424;color:#FFF8EF;border-radius:14px;padding:18px;font:500 12px/1.8 var(--mono);overflow-x:auto;white-space:pre;margin:14px 0}
+.v2-flow-tag{display:inline-flex;padding:4px 7px;background:var(--surface-2);border-radius:6px;font:800 10px/1.4 var(--font);color:var(--fg-muted)}
+.v2-desktop-navbadge{display:none}
+@media(max-width:900px){.v2-preview-grid{grid-template-columns:1fr}.v2-desktop{grid-template-columns:145px minmax(0,1fr)}.v2-strategy{grid-template-columns:1fr}.v2-flow-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.v2-desktop{grid-template-columns:minmax(0,1fr)}.v2-desktop-side{flex-direction:row;flex-wrap:wrap;padding:10px}.v2-desktop-side .v2-brand{width:100%;padding:4px 0 7px}.v2-desktop-side button{width:auto;min-height:38px}.v2-desktop-side .v2-rolehint{display:none}.v2-desktop-main{padding:12px}.v2-mini-columns{grid-template-columns:1fr}.v2-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.v2-kpi{padding:10px 8px}.v2-kpi b{font-size:18px}.v2-checks{grid-template-columns:1fr}.v2-desktop-panel{padding:10px}}
+@media(prefers-reduced-motion:reduce){.v2-phone,.v2-desktop,.v2-preview{transition:none!important}}
+</style>
+</head><body>
+<title>KhaanaGo Design System · v2.0</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout concept: a reference sheet. Sticky section nav, then one block per topic; each block = rules on the left, live specimens on the right.
+   Palette: Zesty Orange & Charcoal. Orange #F97316 fills, charcoal #242424 text and dark surfaces, cream #FFF8EF page, white #FFFFFF cards.
+   Orange never carries small text (2.7:1 on cream); text accents use --brand-text. Button labels are charcoal (5.5:1), never white (2.8:1). */
+:root{
+  --font:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --bg:#FFF8EF; --surface:#FFFFFF; --surface-2:#FBF0E2;
+  --fg:#242424; --fg-muted:#6B635B; --line:#EADBC8; --line-strong:#D9C3A5; --field:#8A7F73;
+  --brand:#F97316; --on-brand:#242424; --brand-press:#FB923C; --brand-text:#C2410C; --brand-tint:#FFEDD5; --on-brand-tint:#7C2D12; --focus:#C2410C;
+  --ok:#15803D; --ok-tint:#DCFCE7; --ok-mark:#16A34A;
+  --lim:#854D0E; --lim-tint:#FEF3C7; --lim-mark:#EAB308;
+  --full:#B91C1C; --full-tint:#FEE2E2; --full-mark:#DC2626;
+  --closed:#57534E; --closed-tint:#E7E5E4; --closed-mark:#A8A29E;
+  --info:#0369A1; --info-tint:#E0F2FE; --info-mark:#0284C7;
+  --shadow-1:0 1px 2px rgba(36,36,36,.08),0 4px 12px rgba(36,36,36,.06);
+  --shadow-2:0 -8px 32px rgba(36,36,36,.16);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A1A1A; --surface:#242424; --surface-2:#2E2E2E;
+  --fg:#FFF8EF; --fg-muted:#B8AEA3; --line:#3A3835; --line-strong:#4A4743; --field:#8C8379;
+  --brand:#F97316; --on-brand:#242424; --brand-press:#FB923C; --brand-text:#FB923C; --brand-tint:#3A2415; --on-brand-tint:#FDBA74; --focus:#F97316;
+  --ok:#4ADE80; --ok-tint:#14301E; --ok-mark:#22C55E;
+  --lim:#FACC15; --lim-tint:#3A3010; --lim-mark:#EAB308;
+  --full:#F87171; --full-tint:#3F1A1A; --full-mark:#EF4444;
+  --closed:#A8A29E; --closed-tint:#2E2C2A; --closed-mark:#78716C;
+  --info:#38BDF8; --info-tint:#102B3A; --info-mark:#0EA5E9;
+  --shadow-1:0 0 0 1px rgba(255,248,239,.04);
+  --shadow-2:0 -8px 32px rgba(0,0,0,.5);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A1A1A; --surface:#242424; --surface-2:#2E2E2E;
+  --fg:#FFF8EF; --fg-muted:#B8AEA3; --line:#3A3835; --line-strong:#4A4743; --field:#8C8379;
+  --brand:#F97316; --on-brand:#242424; --brand-press:#FB923C; --brand-text:#FB923C; --brand-tint:#3A2415; --on-brand-tint:#FDBA74; --focus:#F97316;
+  --ok:#4ADE80; --ok-tint:#14301E; --ok-mark:#22C55E;
+  --lim:#FACC15; --lim-tint:#3A3010; --lim-mark:#EAB308;
+  --full:#F87171; --full-tint:#3F1A1A; --full-mark:#EF4444;
+  --closed:#A8A29E; --closed-tint:#2E2C2A; --closed-mark:#78716C;
+  --info:#38BDF8; --info-tint:#102B3A; --info-mark:#0EA5E9;
+  --shadow-1:0 0 0 1px rgba(255,248,239,.04);
+  --shadow-2:0 -8px 32px rgba(0,0,0,.5);
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--fg);font:500 16px/1.55 var(--font);padding-block:0 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+p{margin:0}
+a{color:var(--brand-text)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.ic{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.fill{fill:currentColor;stroke:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.eyebrow{font:700 12px/16px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--fg-muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:20px}
+th{text-align:left;font:700 12px/16px var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--fg-muted);padding:8px 12px;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+
+/* header */
+.hero{padding-block:40px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.hero h1{font:800 clamp(34px,6vw,56px)/1.04 var(--font);letter-spacing:-.02em;margin-top:8px}
+.hero h1 span{color:var(--brand-text)}
+.hero p.lede{max-width:60ch;color:var(--fg-muted);margin-top:16px;font-size:17px}
+.theme{display:inline-flex;border:1.5px solid var(--field);border-radius:12px;overflow:hidden;background:var(--surface)}
+.theme button{font:700 13px/20px var(--font);border:0;background:transparent;color:var(--fg);padding:10px 14px;cursor:pointer;min-height:44px}
+.theme button[aria-pressed="true"]{background:var(--brand);color:var(--on-brand)}
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-block:1px solid var(--line)}
+.topnav .wrap{display:flex;gap:4px;overflow-x:auto;padding-block:6px}
+.topnav a{white-space:nowrap;text-decoration:none;color:var(--fg);font:600 14px/20px var(--font);padding:10px 12px;border-radius:10px}
+.topnav a:hover{background:var(--surface-2)}
+
+/* blocks */
+.block{padding-block:56px 8px}
+.block>header{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:16px 40px;margin-bottom:28px}
+.block h2{font:800 30px/1.15 var(--font);letter-spacing:-.01em}
+.block header p{color:var(--fg-muted)}
+.sub{font:700 18px/24px var(--font);margin-block:36px 12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.spec h3{font:700 16px/24px var(--font)}
+.spec .demo{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-block:14px;min-width:0}
+.spec ul{margin:0;padding-left:18px;color:var(--fg-muted);font-size:14px;line-height:21px}
+.spec li+li{margin-top:4px}
+
+/* principles */
+.pr{display:grid;gap:6px;padding:20px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.pr b{font:800 18px/24px var(--font)}
+.pr span{color:var(--fg-muted);font-size:15px}
+
+/* swatches */
+.sw{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column}
+.sw .chip-c{height:110px;display:flex;align-items:flex-end;padding:12px;font:800 22px/1 var(--font)}
+.sw .meta{padding:12px 14px;display:grid;gap:2px;font-size:13px;line-height:18px}
+.sw .meta b{font-size:15px;line-height:20px}
+.sw .meta .mono{color:var(--fg-muted)}
+.scale{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.scale div{height:84px;padding:8px;display:flex;flex-direction:column;justify-content:flex-end;font:700 11px/14px var(--mono)}
+.mix{display:flex;height:44px;border-radius:12px;overflow:hidden;border:1px solid var(--line-strong)}
+.mix div{display:flex;align-items:center;padding-left:12px;font:700 12px/16px var(--font);white-space:nowrap;overflow:hidden}
+.role{display:flex;align-items:center;gap:10px}
+.dot{width:22px;height:22px;border-radius:7px;border:1px solid var(--line-strong);flex:none}
+.pass{color:var(--ok);font-weight:700}.fail{color:var(--full);font-weight:700}
+
+/* type */
+.tspec{display:grid;grid-template-columns:150px minmax(0,1fr) 190px;gap:8px 20px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+.tspec .meta{font:500 12px/18px var(--mono);color:var(--fg-muted)}
+.tspec .use{font-size:13px;color:var(--fg-muted)}
+
+/* spacing, shape */
+.sp{display:flex;align-items:center;gap:12px;font:500 13px/20px var(--mono)}
+.sp i{display:block;height:16px;background:var(--brand);border-radius:3px}
+.rad{width:84px;height:64px;background:var(--brand-tint);border:2px solid var(--brand);display:grid;place-items:center;font:700 12px/16px var(--mono);color:var(--on-brand-tint)}
+.elev{width:132px;height:72px;background:var(--surface);border:1px solid var(--line);border-radius:16px;display:grid;place-items:center;font:700 12px/16px var(--mono);text-align:center}
+
+/* components */
+.btn{min-height:48px;padding:0 20px;border-radius:12px;font:700 16px/24px var(--font);border:2px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:transparent;color:var(--fg)}
+.btn-primary{background:var(--brand);color:var(--on-brand)}
+.btn-primary:hover,.btn-primary.press{background:var(--brand-press)}
+.btn-secondary{border-color:var(--fg)}
+.btn-secondary:hover{background:var(--surface-2)}
+.btn-text{color:var(--brand-text);padding:0 12px}
+.btn-danger{background:var(--full-tint);color:var(--full);border-color:var(--full)}
+.btn[disabled]{background:var(--surface-2);color:var(--fg-muted);border-color:var(--line);cursor:not-allowed}
+.btn.block-btn{width:100%}
+.spin{width:18px;height:18px;border-radius:50%;border:3px solid currentColor;border-right-color:transparent;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.field{display:grid;gap:6px;min-width:0;flex:1 1 200px}
+.field label{font:700 13px/18px var(--font)}
+.field label i{color:var(--full);font-style:normal}
+.input{min-height:48px;border:1.5px solid var(--field);border-radius:12px;background:var(--surface);color:var(--fg);padding:0 14px;font:500 16px/24px var(--font);width:100%;display:flex;align-items:center}
+.input.focus{border-color:var(--focus);box-shadow:0 0 0 3px var(--brand-tint)}
+.input.err{border-color:var(--full)}
+.input.dis{background:var(--surface-2);border-color:var(--line);color:var(--fg-muted)}
+.hint{font-size:13px;line-height:18px;color:var(--fg-muted);display:flex;gap:6px;align-items:center}
+.hint.err{color:var(--full)}
+.chip{min-height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--field);background:var(--surface);color:var(--fg);font:600 14px/20px var(--font);display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand-tint);border-color:var(--brand);color:var(--on-brand-tint)}
+.chip[disabled]{border-style:dashed;color:var(--fg-muted);background:transparent;cursor:not-allowed}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:999px;font:700 12px/16px var(--font);white-space:nowrap}
+.b-ok{background:var(--ok-tint);color:var(--ok)}.b-lim{background:var(--lim-tint);color:var(--lim)}.b-full{background:var(--full-tint);color:var(--full)}.b-closed{background:var(--closed-tint);color:var(--closed)}.b-info{background:var(--info-tint);color:var(--info)}
+.meter{display:grid;gap:8px;min-width:210px;flex:1 1 210px}
+.meter .bar{display:grid;grid-template-columns:repeat(12,1fr);gap:3px}
+.meter .bar i{height:14px;border-radius:3px;background:var(--line)}
+.meter .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font:700 14px/20px var(--font)}
+.meter .top span:last-child{font-variant-numeric:tabular-nums}
+.nut{display:flex;gap:0;border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;font-variant-numeric:tabular-nums}
+.nut div{padding:8px 12px;display:grid;text-align:center;border-right:1px solid var(--line)}
+.nut div:last-child{border:0}
+.nut b{font:800 16px/20px var(--font)}.nut span{font:600 11px/14px var(--font);color:var(--fg-muted);letter-spacing:.04em;text-transform:uppercase}
+.warn{display:flex;gap:10px;padding:10px 12px;border-radius:12px;background:var(--full-tint);color:var(--full);font:600 13px/18px var(--font);align-items:flex-start}
+.pl{display:grid;gap:8px;width:100%;font-size:14px;line-height:20px;font-variant-numeric:tabular-nums}
+.pl div{display:flex;justify-content:space-between;gap:12px}
+.pl .disc{color:var(--ok);font-weight:700}
+.pl .tot{border-top:1px dashed var(--line-strong);padding-top:10px;font:800 18px/24px var(--font)}
+.tl{display:grid;gap:0;width:100%}
+.tl div{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding-bottom:14px;position:relative;font:600 14px/22px var(--font);color:var(--fg-muted)}
+.tl div::before{content:"";position:absolute;left:10px;top:22px;bottom:0;width:2px;background:var(--line-strong)}
+.tl div:last-child::before{display:none}
+.tl i{width:22px;height:22px;border-radius:50%;border:2px solid var(--field);background:var(--surface);display:grid;place-items:center}
+.tl .done{color:var(--fg)}.tl .done i{background:var(--ok-mark);border-color:var(--ok-mark);color:#fff}
+.tl .now{color:var(--fg);font-weight:800}.tl .now i{border-color:var(--info-mark);box-shadow:0 0 0 4px var(--info-tint)}
+.tl small{display:block;font:500 12px/16px var(--font);color:var(--fg-muted)}
+.vcard{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);width:100%;text-align:left}
+.vcard .ph{width:64px;height:64px;border-radius:12px;display:grid;place-items:center;font:800 24px/1 var(--font);color:var(--on-brand);background:var(--brand)}
+.vcard.closed{opacity:1}.vcard.closed .ph{background:var(--closed-tint);color:var(--closed)}
+.vcard h4{font:700 16px/22px var(--font)}.vcard p{font-size:13px;line-height:18px;color:var(--fg-muted)}
+.vcard .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.stars{display:inline-flex;align-items:center;gap:3px;font:700 13px/18px var(--font)}.stars .ic{color:var(--lim-mark)}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.slot{min-height:56px;border-radius:12px;border:1.5px solid var(--field);background:var(--surface);color:var(--fg);display:grid;place-content:center;gap:1px;text-align:center;font:700 14px/18px var(--font);cursor:pointer;padding:4px}
+.slot small{font:600 11px/14px var(--font);display:inline-flex;gap:4px;align-items:center;justify-content:center}
+.slot.s-ok small{color:var(--ok)}.slot.s-lim small{color:var(--lim)}.slot.s-full small{color:var(--full)}
+.slot.s-full{background:var(--surface-2);border-style:dashed;color:var(--fg-muted);cursor:not-allowed}
+.slot[aria-pressed="true"]{background:var(--brand-tint);border:2.5px solid var(--brand);color:var(--on-brand-tint)}
+.sheet{width:100%;border:1px solid var(--line);border-radius:24px 24px 0 0;padding:20px 20px 16px;background:var(--surface);box-shadow:var(--shadow-2);display:grid;gap:12px}
+.sheet::before{content:"";width:40px;height:4px;border-radius:2px;background:var(--line-strong);justify-self:center}
+.sheet h4{font:800 18px/24px var(--font)}.sheet p{font-size:14px;line-height:20px;color:var(--fg-muted)}
+.snack{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:#242424;color:#FFF8EF;font:600 14px/20px var(--font);width:100%;border:1px solid #4A4743}
+.snack b{margin-left:auto;color:#FB923C;font-weight:700}
+.nav{display:grid;grid-template-columns:repeat(4,1fr);width:100%;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.nav a{display:grid;justify-items:center;gap:2px;padding:8px 0 10px;text-decoration:none;color:var(--fg-muted);font:700 11px/14px var(--font);min-height:56px}
+.nav a[aria-current]{color:var(--fg)}
+.nav a[aria-current] .pillx{background:var(--brand);color:var(--on-brand)}
+.pillx{width:52px;height:28px;border-radius:14px;display:grid;place-items:center}
+.hold{position:relative;overflow:hidden;min-height:64px;width:100%;border-radius:16px;border:2px solid var(--brand);background:var(--brand-tint);color:var(--on-brand-tint);font:800 18px/24px var(--font);cursor:pointer;user-select:none;touch-action:none;display:flex;align-items:center;justify-content:center;gap:10px}
+.hold .fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--brand);transition:width .9s linear}
+.hold.on .fill{width:100%}
+.hold span{position:relative;display:inline-flex;gap:10px;align-items:center}
+.hold.done{background:var(--ok-tint);border-color:var(--ok-mark);color:var(--ok)}
+.hold.done .fill{display:none}
+.ticket{border:1px solid var(--line-strong);border-radius:12px;background:var(--surface);padding:10px;display:grid;gap:6px;font-size:13px;line-height:18px}
+.ticket b{font:800 15px/20px var(--font)}.ticket .t{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.board{display:grid;grid-template-columns:repeat(4,minmax(190px,1fr));gap:12px;min-width:800px}
+.board .col{background:var(--surface-2);border-radius:14px;padding:10px;display:grid;gap:8px;align-content:start}
+.board h4{font:700 12px/16px var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--fg-muted);display:flex;justify-content:space-between;padding:2px 2px 4px}
+
+/* phones */
+.phones{display:flex;gap:24px;overflow-x:auto;padding:8px 4px 20px}
+.phone{flex:none;width:292px;height:580px;border-radius:32px;border:1px solid var(--line-strong);background:var(--bg);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-1)}
+.phone .sb{height:28px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:0 18px;font:700 11px/14px var(--font);color:var(--fg-muted)}
+.phone .body{flex:1;overflow:hidden;padding:4px 16px 0;display:grid;gap:12px;align-content:start}
+.phone .foot{flex:none;padding:12px 16px 16px;background:var(--surface);border-top:1px solid var(--line);display:grid;gap:8px}
+.phone h3{font:800 22px/28px var(--font)}
+.addr{display:inline-flex;align-items:center;gap:6px;font:700 14px/20px var(--font);padding:6px 0}
+.addr .ic{color:var(--brand-text)}
+.search{min-height:48px;border-radius:14px;border:1.5px solid var(--field);background:var(--surface);display:flex;align-items:center;gap:10px;padding:0 14px;color:var(--fg-muted);font:500 15px/20px var(--font)}
+.row-chips{display:flex;gap:8px;overflow:hidden}
+.cap{font:700 12px/16px var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--fg-muted)}
+.daytabs{display:flex;gap:6px}
+.daytabs span{flex:1;text-align:center;padding:8px 0;border-radius:12px;font:700 13px/18px var(--font);color:var(--fg-muted)}
+.daytabs .on{background:var(--fg);color:var(--bg)}
+.eta{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--info-tint);color:var(--info);font:600 13px/18px var(--font)}
+.sum{display:grid;gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.sum div{display:flex;justify-content:space-between;gap:8px;padding:10px 12px;font-size:13px;line-height:18px;border-bottom:1px solid var(--line)}
+.sum div:last-child{border:0}.sum span:first-child{color:var(--fg-muted)}.sum b{font-weight:700;text-align:right}
+.hc{background:#141414;color:#FFF8EF;border-radius:20px;padding:20px;display:grid;gap:14px;max-width:360px;border:1px solid #3A3835}
+.hc .st{font:700 14px/20px var(--font);color:#C9BFB3;text-transform:uppercase;letter-spacing:.06em}
+.hc h4{font:800 28px/34px var(--font)}
+.hc .ad{font:600 20px/28px var(--font);color:#C9BFB3}
+.hc .quick{display:flex;gap:8px;flex-wrap:wrap}
+.hc .quick span{min-height:48px;display:inline-flex;align-items:center;padding:0 16px;border-radius:14px;border:2px solid #6B635B;font:700 16px/20px var(--font)}
+.hc .hold{background:#2A1A0E;border-color:#F97316;color:#FDBA74;min-height:72px;font-size:22px}
+.hc .hold.done{background:#10301C;border-color:#22C55E;color:#4ADE80}
+
+pre{margin:0;background:#1A1A1A;color:#FFF8EF;border-radius:14px;padding:16px;overflow-x:auto;font:500 12.5px/1.6 var(--mono);border:1px solid #3A3835;tab-size:2}
+.codehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.codehead h3{font:700 16px/24px var(--font)}
+.copy{min-height:40px;padding:0 14px;border-radius:10px;border:1.5px solid var(--field);background:var(--surface);color:var(--fg);font:700 13px/18px var(--font);cursor:pointer}
+.k{color:#FDBA74}.c{color:#A8A29E}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .block>header{grid-template-columns:1fr}
+  .tspec{grid-template-columns:1fr}
+  .scale{grid-template-columns:repeat(5,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 3l9 8v10h-6v-6H9v6H3z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 8h12l1 12H5z"/><path d="M9 8a3 3 0 0 1 6 0"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17.5v.01"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-nav" viewBox="0 0 24 24"><path d="M3 11 21 3l-8 18-2-8z"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M4 18a9 9 0 1 1 16 0"/><path d="m12 14 4-5"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></symbol>
+</svg>
+
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">KhaanaGo · Design system v2.0 · Unified product experience</div>
+      <h1>One identity. Three purposeful experiences. <span>Real workflows.</span></h1>
+      <p class="lede">A build-ready design system for Flutter customers and riders, plus an Odoo-inspired React vendor/admin workspace. Brand, interactions, accessibility and requirements traceability stay connected. The Chapter 2 requirements remain the source of truth.</p>
+    </div>
+    <div class="theme" role="group" aria-label="Preview theme">
+      <button type="button" data-t="auto" aria-pressed="true">Auto</button>
+      <button type="button" data-t="light" aria-pressed="false">Light</button>
+      <button type="button" data-t="dark" aria-pressed="false">Dark</button>
+    </div>
+  </div>
+</div>
+<div class="wrap"><div class="v2-meta" style="margin:0 0 18px"><span class="v2-pill v2-hot">v2.0 · expanded UI architecture</span><span class="v2-pill">Design specimens ≠ completed product</span><span class="v2-pill">Chapter 2 is authoritative</span></div></div>
+<nav class="topnav" aria-label="Sections"><div class="wrap">
+  <a href="#principles">Principles</a><a href="#colour">Colour</a><a href="#type">Type</a><a href="#space">Space and shape</a><a href="#components">Components</a><a href="#v2-experiences">Experience previews</a><a href="#v2-architecture">Navigation</a><a href="#v2-patterns">UX patterns</a><a href="#screens">Original specimens</a><a href="#roles">Roles</a><a href="#access">Accessibility</a><a href="#v2-qa">Handoff &amp; QA</a><a href="#code">Code</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- PRINCIPLES -->
+<section class="block" id="principles">
+  <header><h2>Principles</h2><p>Four rules that settle most design arguments. Each one comes from a finding in the pilot surveys or a user story in Chapter 2.</p></header>
+  <div class="grid g4">
+    <div class="pr"><b>Say what the kitchen can do</b><span>Capacity states (Available, Limited, Full, Paused) are the most consistent colour signal in the product, on customer slots, vendor meters and admin monitors.</span></div>
+    <div class="pr"><b>Orange asks, charcoal answers</b><span>Orange marks the one action or selection that matters on a screen. Charcoal carries text, so labels on orange stay readable.</span></div>
+    <div class="pr"><b>Never colour alone</b><span>Every state pairs its colour with an icon and a word, so the UI works in sunlight, in rain and for colour-blind users.</span></div>
+    <div class="pr"><b>Same parts, different density</b><span>Riders get 64 dp buttons and 20 sp text. Vendors get dense tables. Both draw from the same tokens.</span></div>
+  </div>
+</section>
+
+<!-- COLOUR -->
+<section class="block" id="colour">
+  <header><h2>Colour</h2><p>The four brand colours are fixed. Everything else (tints, text shades, status colours, dark theme) is derived so that each pairing passes WCAG AA, 4.5:1 for text and 3:1 for icons, borders and focus rings.</p></header>
+
+  <div class="grid g4" id="brand"></div>
+
+  <h3 class="sub">Proportion on a typical screen</h3>
+  <div class="mix" aria-label="Colour proportion: cream 55, white 25, charcoal 15, orange 5 percent">
+    <div style="flex:55;background:#FFF8EF;color:#242424">Cream 55%</div>
+    <div style="flex:25;background:#FFFFFF;color:#242424;border-inline:1px solid #EADBC8">White 25%</div>
+    <div style="flex:15;background:#242424;color:#FFF8EF">Charcoal 15%</div>
+    <div style="flex:5;background:#F97316;color:#242424;padding-left:6px">5%</div>
+  </div>
+  <p style="color:var(--fg-muted);font-size:14px;margin-top:8px">Orange stays near 5% so it keeps its power as the "tap here" colour. Dark theme swaps the proportions: charcoal becomes the ground and cream becomes the text.</p>
+
+  <h3 class="sub">Orange scale</h3>
+  <div class="scale" id="orange"></div>
+  <p style="color:var(--fg-muted);font-size:14px;margin-top:8px">500 is the brand fill. 700 is the minimum for orange text on cream or white. 400 is the text shade on charcoal and the pressed state of buttons. 100 and 200 are tints for selection.</p>
+
+  <h3 class="sub">Warm neutrals</h3>
+  <div class="scale" id="neutral"></div>
+
+  <h3 class="sub">Capacity and status colours</h3>
+  <div class="grid g3">
+    <div class="panel spec"><h3>Available</h3><div class="demo"><span class="badge b-ok"><svg class="ic"><use href="#i-check"/></svg>Available</span></div><ul><li>Open vendor, free slot, delivered, paid</li><li>Light text #15803D on #DCFCE7</li></ul></div>
+    <div class="panel spec"><h3>Limited</h3><div class="demo"><span class="badge b-lim"><svg class="ic"><use href="#i-clock"/></svg>2 left</span></div><ul><li>Slot nearly full, estimate rising, low stock</li><li>Light text #854D0E on #FEF3C7. A deeper yellow keeps it apart from brand orange.</li></ul></div>
+    <div class="panel spec"><h3>Full / stop</h3><div class="demo"><span class="badge b-full"><svg class="ic"><use href="#i-x"/></svg>Full</span></div><ul><li>Slot full, errors, allergen exclusions, failed payment</li><li>Light text #B91C1C on #FEE2E2</li></ul></div>
+    <div class="panel spec"><h3>Closed / paused</h3><div class="demo"><span class="badge b-closed"><svg class="ic"><use href="#i-lock"/></svg>Closed</span><span class="badge b-closed"><svg class="ic"><use href="#i-pause"/></svg>Paused</span></div><ul><li>Outside hours, manually closed, intake paused</li><li>Light text #57534E on #E7E5E4</li></ul></div>
+    <div class="panel spec"><h3>Info / live</h3><div class="demo"><span class="badge b-info"><svg class="ic"><use href="#i-nav"/></svg>On the way</span></div><ul><li>Tracking, rider position, estimates, banners</li><li>Light text #0369A1 on #E0F2FE</li></ul></div>
+    <div class="panel spec"><h3>Brand selection</h3><div class="demo"><span class="badge" style="background:var(--brand-tint);color:var(--on-brand-tint)"><svg class="ic"><use href="#i-check"/></svg>Selected</span></div><ul><li>Chosen chip, slot, address, payment method</li><li>Orange tint with a 2 px orange border</li></ul></div>
+  </div>
+
+  <h3 class="sub">Role tokens</h3>
+  <div class="panel tbl"><table id="roles-tbl"><thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Used for</th></tr></thead><tbody></tbody></table></div>
+
+  <h3 class="sub">Contrast checks</h3>
+  <p style="color:var(--fg-muted);font-size:14px;margin-bottom:12px">Computed from the token values on this page. Two brand-colour combinations are listed as rejected so no one reintroduces them.</p>
+  <div class="panel tbl"><table id="contrast"><thead><tr><th>Pairing</th><th class="num">Light</th><th class="num">Dark</th><th class="num">Needs</th><th>Rule</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<!-- TYPE -->
+<section class="block" id="type">
+  <header><h2>Typography</h2><p>Plus Jakarta Sans throughout, the face already used in the project deck. It ships as a Google font, so Flutter and React use the same file. Prices and times use tabular figures so columns line up.</p></header>
+  <div class="panel" id="typespec"></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="panel spec"><h3>Rider mode scale</h3><ul><li>Body 20/28, buttons 20/28 at weight 800, status line 28/34</li><li>Minimum text size 16 sp anywhere in the rider app</li><li>Maximum 3 lines of text per screen while a delivery is active</li></ul></div>
+    <div class="panel spec"><h3>Vendor and admin portals</h3><ul><li>Body 14/20, table 13/18, page title 22/28, section title 18/24</li><li>Tables use tabular figures and right-align numbers</li><li>Mobile text scales up to 130% without clipping; test at 200%</li></ul></div>
+  </div>
+</section>
+
+<!-- SPACE -->
+<section class="block" id="space">
+  <header><h2>Space, shape and depth</h2><p>An 8 dp grid with a 4 dp half step. Cards are separated by a 1 px warm line first and a shadow second, so the app stays flat and readable on budget Android screens.</p></header>
+  <div class="grid g2">
+    <div class="panel"><h3 class="sub" style="margin-top:0">Spacing scale (dp)</h3><div class="grid" id="spacing" style="gap:10px"></div></div>
+    <div class="panel"><h3 class="sub" style="margin-top:0">Corner radius</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div><div class="rad" style="border-radius:12px">12</div><p class="hint" style="margin-top:6px">Buttons, fields</p></div>
+        <div><div class="rad" style="border-radius:16px">16</div><p class="hint" style="margin-top:6px">Cards</p></div>
+        <div><div class="rad" style="border-radius:24px 24px 0 0">24</div><p class="hint" style="margin-top:6px">Sheet top</p></div>
+        <div><div class="rad" style="border-radius:999px">pill</div><p class="hint" style="margin-top:6px">Chips, badges</p></div>
+      </div>
+      <h3 class="sub">Elevation</h3>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="elev">Level 0<br>1 px line</div>
+        <div class="elev" style="box-shadow:var(--shadow-1)">Level 1<br>cards</div>
+        <div class="elev" style="box-shadow:var(--shadow-2);border-radius:24px 24px 0 0">Level 2<br>sheets</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel tbl" style="margin-top:16px"><table>
+    <thead><tr><th>Layout rule</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Phone artboard</td><td>360 × 800 dp (budget Android), checked at 390 × 844 dp (iPhone)</td></tr>
+      <tr><td>Side margin</td><td>16 dp; section gap 24 dp; card padding 16 dp</td></tr>
+      <tr><td>Touch target</td><td>48 × 48 dp minimum (customer, vendor). Rider app 64 dp for status buttons. Chips look 40 dp tall with a 48 dp hit area.</td></tr>
+      <tr><td>Tablet kitchen board</td><td>4 columns, 16 dp gutters, cards at least 190 dp wide</td></tr>
+      <tr><td>Web breakpoints</td><td>Below 600 px phone layout · 600–1024 px two columns · above 1024 px left rail, content up to 1200 px</td></tr>
+      <tr><td>Icons</td><td>24 dp, 2 dp stroke, rounded caps. Material Symbols Rounded in Flutter; the set on this page mirrors it.</td></tr>
+      <tr><td>Motion</td><td>Tap 120 ms · sheet 220 ms · page 300 ms, easing cubic-bezier(.2, 0, 0, 1). Respect the system "reduce motion" setting.</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- COMPONENTS -->
+<section class="block" id="components">
+  <header><h2>Components</h2><p>Every component below is live: tap the chips and slots, change the quantity, and press and hold the hold-to-confirm button. Specimens follow the theme toggle at the top.</p></header>
+
+  <div class="grid g2">
+    <div class="panel spec"><h3>Buttons</h3>
+      <div class="demo">
+        <button class="btn btn-primary" type="button">Place order</button>
+        <button class="btn btn-primary press" type="button">Pressed</button>
+        <button class="btn btn-secondary" type="button">Edit</button>
+        <button class="btn btn-text" type="button">Forgot password?</button>
+      </div>
+      <div class="demo">
+        <button class="btn btn-primary" type="button"><span class="spin"></span>Placing…</button>
+        <button class="btn btn-danger" type="button">Cancel order</button>
+        <button class="btn" type="button" disabled>Add to cart</button>
+      </div>
+      <ul><li>One primary button per screen, full width, 56 dp high at the bottom of the screen</li><li>Label is charcoal on orange, 5.5:1. Never white on orange.</li><li>Labels name the result: "Place order · Rs 2,340", not "Submit"</li></ul></div>
+
+    <div class="panel spec"><h3>Text fields</h3>
+      <div class="demo" style="align-items:flex-start">
+        <div class="field"><label>Mobile number <i>*</i></label><div class="input">03001234567</div></div>
+        <div class="field"><label>Mobile number <i>*</i></label><div class="input focus">0300123</div></div>
+      </div>
+      <div class="demo" style="align-items:flex-start">
+        <div class="field"><label>Mobile number <i>*</i></label><div class="input err">0300123</div><div class="hint err"><svg class="ic"><use href="#i-alert"/></svg>Enter an 11-digit number starting with 03.</div></div>
+        <div class="field"><label>Email</label><div class="input dis">ayesha@example.com</div></div>
+      </div>
+      <ul><li>48 dp high, 1.5 px border at 3.7:1 against the page; focus uses a 2 px orange-700 border and a tint ring</li><li>Label above, asterisk for mandatory, error below with an icon</li><li>Field limits must be verified from the current Chapter 2; missing values are unresolved requirements, not implementation assumptions</li></ul></div>
+
+    <div class="panel spec"><h3>Chips</h3>
+      <div class="demo" id="chips">
+        <button class="chip" aria-pressed="true" type="button"><svg class="ic"><use href="#i-check"/></svg>Open now</button>
+        <button class="chip" aria-pressed="false" type="button">Bakery</button>
+        <button class="chip" aria-pressed="false" type="button">Sugar-free</button>
+        <button class="chip" type="button" disabled>No walnuts</button>
+      </div>
+      <ul><li>Selected: orange tint, orange border, check icon. Unsupported option: dashed border, disabled.</li><li>Used for filters, sizes, flavours, exclusions and day tabs</li></ul></div>
+
+    <div class="panel spec"><h3>Capacity badges</h3>
+      <div class="demo">
+        <span class="badge b-ok"><svg class="ic"><use href="#i-check"/></svg>Available</span>
+        <span class="badge b-lim"><svg class="ic"><use href="#i-clock"/></svg>2 left</span>
+        <span class="badge b-full"><svg class="ic"><use href="#i-x"/></svg>Full</span>
+        <span class="badge b-closed"><svg class="ic"><use href="#i-lock"/></svg>Closed</span>
+      </div>
+      <ul><li>Always icon, word and colour together</li><li>Same four states on vendor cards, slots, the vendor meter and the admin monitor</li></ul></div>
+
+    <div class="panel spec"><h3>Kitchen capacity meter</h3>
+      <div class="demo" style="align-items:stretch">
+        <div class="meter"><div class="top"><span>Now</span><span>5 of 12 orders</span></div><div class="bar" data-n="5"></div><span class="badge b-ok" style="justify-self:start"><svg class="ic"><use href="#i-check"/></svg>Available</span></div>
+        <div class="meter"><div class="top"><span>Next hour</span><span>9 of 12 orders</span></div><div class="bar" data-n="9"></div><span class="badge b-lim" style="justify-self:start"><svg class="ic"><use href="#i-clock"/></svg>Limited</span></div>
+        <div class="meter"><div class="top"><span>Dinner rush</span><span>12 of 12 orders</span></div><div class="bar" data-n="12"></div><span class="badge b-full" style="justify-self:start"><svg class="ic"><use href="#i-pause"/></svg>Intake paused</span></div>
+      </div>
+      <ul><li>Capacity display: 0–60% available; 60–85% limited; above 85% high load. "Full" must mean no bookable capacity remains, not merely high utilisation. Actual thresholds and weighted unit rules must follow Chapter 2.</li></ul></div>
+
+    <div class="panel spec"><h3>Nutrition badge and allergen warning</h3>
+      <div class="demo" style="flex-direction:column;align-items:stretch">
+        <div class="nut"><div><b>420</b><span>kcal</span></div><div><b>6 g</b><span>protein</span></div><div><b>52 g</b><span>carbs</span></div><div><b>21 g</b><span>fat</span></div></div>
+        <div class="warn"><svg class="ic"><use href="#i-alert"/></svg><span>Contains eggs, dairy and gluten. May contain nuts.</span></div>
+      </div>
+      <ul><li>Per serving. Hidden entirely when a dish has no data; no placeholder values.</li><li>The warning updates when the recipe changes and never shows ingredient quantities</li></ul></div>
+
+    <div class="panel spec"><h3>Price lines and total</h3>
+      <div class="demo"><div class="pl">
+        <div><span>Chocolate cake, 1 lb × 1</span><span>Rs 1,850</span></div>
+        <div><span>Delivery (base Rs 60 + 3.2 km)</span><span>Rs 124</span></div>
+        <div><span>Rain surcharge</span><span>Rs 40</span></div>
+        <div class="disc"><span>First-order offer</span><span>− Rs 185</span></div>
+        <div class="tot"><span>Total</span><span>Rs 1,829</span></div>
+      </div></div>
+      <ul><li>One line each for food, delivery, surcharge, discount and total. Discounts in green with a minus sign.</li><li>Currency is "Rs" with thousands separators, no decimals</li></ul></div>
+
+    <div class="panel spec"><h3>Order status timeline</h3>
+      <div class="demo"><div class="tl">
+        <div class="done"><i><svg class="ic" style="width:12px;height:12px;stroke-width:3.5"><use href="#i-check"/></svg></i><span>Confirmed<small>6:42 PM</small></span></div>
+        <div class="done"><i><svg class="ic" style="width:12px;height:12px;stroke-width:3.5"><use href="#i-check"/></svg></i><span>Preparing<small>6:45 PM</small></span></div>
+        <div class="now"><i></i><span>Out for delivery<small>Arrives 7:25–7:45 PM</small></span></div>
+        <div><i></i><span>Delivered</span></div>
+      </div></div>
+      <ul><li>Done: green with check. Now: blue ring (live). Upcoming: grey outline. Only the current arrival window is shown large.</li></ul></div>
+
+    <div class="panel spec"><h3>Vendor card</h3>
+      <div class="demo" style="flex-direction:column;align-items:stretch">
+        <div class="vcard"><div class="ph">B</div><div><h4>BakeCharm</h4><p>Bakery · Custom cakes · F-11</p><div class="row"><span class="stars"><svg class="ic fill"><use href="#i-star"/></svg>4.7</span><span class="badge b-lim"><svg class="ic"><use href="#i-clock"/></svg>Limited</span></div></div></div>
+        <div class="vcard closed"><div class="ph">M</div><div><h4>Margalla Biryani House</h4><p>Desi · Opens 12:00 PM</p><div class="row"><span class="badge b-closed"><svg class="ic"><use href="#i-lock"/></svg>Closed</span></div></div></div>
+      </div>
+      <ul><li>Monogram tile in orange until the vendor adds a photo. Closed vendors are neutral and cannot be opened for ordering.</li></ul></div>
+
+    <div class="panel spec"><h3>Delivery slot grid</h3>
+      <div class="demo"><div class="slots" id="slots">
+        <button class="slot s-ok" aria-pressed="false" type="button">6:00 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-check"/></svg>Available</small></button>
+        <button class="slot s-ok" aria-pressed="true" type="button">6:30 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-check"/></svg>Available</small></button>
+        <button class="slot s-lim" aria-pressed="false" type="button">7:00 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-clock"/></svg>2 left</small></button>
+        <button class="slot s-full" aria-pressed="false" type="button" disabled>7:30 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-x"/></svg>Full</small></button>
+        <button class="slot s-full" aria-pressed="false" type="button" disabled>8:00 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-x"/></svg>Full</small></button>
+        <button class="slot s-ok" aria-pressed="false" type="button">8:30 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-check"/></svg>Available</small></button>
+      </div></div>
+      <ul><li>Full slots are dashed and unselectable, so a customer can never book an overbooked window</li><li>A held slot shows a countdown at checkout; if it expires, a dialog offers the nearest free windows</li></ul></div>
+
+    <div class="panel spec"><h3>Bottom sheet, dialog and snackbar</h3>
+      <div class="demo" style="flex-direction:column;align-items:stretch;gap:14px">
+        <div class="sheet"><h4>That slot was just taken</h4><p>Another customer booked the last place at 7:00 PM. These windows are still free.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="chip" aria-pressed="false" type="button">6:30 PM</button><button class="chip" aria-pressed="false" type="button">8:30 PM</button></div><button class="btn btn-primary block-btn" type="button">Choose another time</button></div>
+        <div class="snack"><svg class="ic" style="color:#4ADE80"><use href="#i-check"/></svg>Added 2 items to your cart<b>View</b></div>
+      </div>
+      <ul><li>Sheets slide up in 220 ms and always carry one primary action. Snackbars stay 4 seconds on a fixed charcoal ground in both themes.</li></ul></div>
+
+    <div class="panel spec"><h3>Bottom navigation</h3>
+      <div class="demo"><div class="nav">
+        <a href="#components" aria-current="page"><span class="pillx"><svg class="ic"><use href="#i-home"/></svg></span>Home</a>
+        <a href="#components"><span class="pillx"><svg class="ic"><use href="#i-bag"/></svg></span>Orders</a>
+        <a href="#components"><span class="pillx"><svg class="ic"><use href="#i-chat"/></svg></span>Assistant</a>
+        <a href="#components"><span class="pillx"><svg class="ic"><use href="#i-user"/></svg></span>Profile</a>
+      </div></div>
+      <ul><li>Four destinations, labels always visible. The active item gets the orange pill.</li></ul></div>
+
+    <div class="panel spec"><h3>Hold-to-confirm</h3>
+      <div class="demo"><button class="hold" type="button" data-done="Arrived at store"><span class="fill" style="position:absolute"></span><span><svg class="ic"><use href="#i-pin"/></svg>Hold to confirm arrival</span></button></div>
+      <ul><li>Press and hold for 0.9 s. Rain on the screen cannot trigger it by accident (story E16-US2).</li><li>Works with Space or Enter held on a keyboard. Releasing early resets it.</li></ul></div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section class="block" id="screens">
+  <header><h2>Customer screens</h2><p>Three screens built only from the components above, to check that the system holds together. These are the pattern for the Figma frames behind Section 2.4.</p></header>
+  <div class="phones">
+    <div class="phone" aria-label="Home screen">
+      <div class="sb"><span>6:12</span><span>Home</span></div>
+      <div class="body">
+        <div class="addr"><svg class="ic"><use href="#i-pin"/></svg>Home · F-11 Markaz</div>
+        <div class="search"><svg class="ic"><use href="#i-search"/></svg>Search food or restaurants</div>
+        <div class="row-chips"><span class="chip" aria-pressed="true" style="pointer-events:none"><svg class="ic"><use href="#i-check"/></svg>Open now</span><span class="chip" style="pointer-events:none">Bakery</span><span class="chip" style="pointer-events:none">Desi</span></div>
+        <div class="cap">Top rated near you</div>
+        <div class="vcard"><div class="ph">B</div><div><h4>BakeCharm</h4><p>Bakery · Custom cakes</p><div class="row"><span class="stars"><svg class="ic fill"><use href="#i-star"/></svg>4.7</span><span class="badge b-lim"><svg class="ic"><use href="#i-clock"/></svg>Limited</span></div></div></div>
+        <div class="vcard"><div class="ph">L</div><div><h4>Lazeez Cloud Kitchen</h4><p>Desi · Karahi, rice</p><div class="row"><span class="stars"><svg class="ic fill"><use href="#i-star"/></svg>4.5</span><span class="badge b-ok"><svg class="ic"><use href="#i-check"/></svg>Available</span></div></div></div>
+        <div class="vcard"><div class="ph" style="background:var(--closed-tint);color:var(--closed)">M</div><div><h4>Margalla Biryani House</h4><p>Opens 12:00 PM</p><div class="row"><span class="badge b-closed"><svg class="ic"><use href="#i-lock"/></svg>Closed</span></div></div></div>
+      </div>
+      <div class="nav" style="border-radius:0;border-inline:0;border-bottom:0">
+        <a href="#screens" aria-current="page"><span class="pillx"><svg class="ic"><use href="#i-home"/></svg></span>Home</a>
+        <a href="#screens"><span class="pillx"><svg class="ic"><use href="#i-bag"/></svg></span>Orders</a>
+        <a href="#screens"><span class="pillx"><svg class="ic"><use href="#i-chat"/></svg></span>Assistant</a>
+        <a href="#screens"><span class="pillx"><svg class="ic"><use href="#i-user"/></svg></span>Profile</a>
+      </div>
+    </div>
+
+    <div class="phone" aria-label="Slot selector">
+      <div class="sb"><span>6:14</span><span>Checkout</span></div>
+      <div class="body">
+        <h3>Choose delivery time</h3>
+        <div class="daytabs"><span class="on">Today</span><span>Sun</span><span>Mon</span></div>
+        <div class="slots" id="slots2">
+          <button class="slot s-ok" aria-pressed="false" type="button">6:30 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-check"/></svg>Available</small></button>
+          <button class="slot s-ok" aria-pressed="true" type="button">7:00 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-check"/></svg>Available</small></button>
+          <button class="slot s-lim" aria-pressed="false" type="button">7:30 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-clock"/></svg>2 left</small></button>
+          <button class="slot s-full" aria-pressed="false" type="button" disabled>8:00 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-x"/></svg>Full</small></button>
+          <button class="slot s-full" aria-pressed="false" type="button" disabled>8:30 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-x"/></svg>Full</small></button>
+          <button class="slot s-ok" aria-pressed="false" type="button">9:00 PM<small><svg class="ic" style="width:12px;height:12px"><use href="#i-check"/></svg>Available</small></button>
+        </div>
+        <div class="eta"><svg class="ic"><use href="#i-clock"/></svg><span>Arrives 7:25–7:45 PM. Includes extra time for rain in your area.</span></div>
+      </div>
+      <div class="foot"><span class="badge b-info" style="justify-self:start"><svg class="ic"><use href="#i-clock"/></svg>Slot hold · sample countdown 4:32</span><button class="btn btn-primary block-btn" type="button">Continue</button></div>
+    </div>
+
+    <div class="phone" aria-label="Review order">
+      <div class="sb"><span>6:16</span><span>Checkout</span></div>
+      <div class="body">
+        <h3>Review order</h3>
+        <div class="sum"><div><span>Deliver to</span><b>Home · F-11 Markaz</b></div><div><span>Time</span><b>Today, 7:00 PM</b></div><div><span>Delivery</span><b>Express</b></div><div><span>Pay with</span><b>JazzCash</b></div></div>
+        <div class="panel" style="padding:14px"><div class="pl">
+          <div><span>Chocolate cake, 1 lb × 1</span><span>Rs 1,850</span></div>
+          <div><span>Delivery (base + 3.2 km)</span><span>Rs 124</span></div>
+          <div><span>Rain surcharge</span><span>Rs 40</span></div>
+          <div class="disc"><span>First-order offer</span><span>− Rs 185</span></div>
+          <div class="tot"><span>Total</span><span>Rs 1,829</span></div>
+        </div></div>
+        <div class="warn" style="background:var(--lim-tint);color:var(--lim)"><svg class="ic"><use href="#i-alert"/></svg><span>Custom cake: the vendor confirms price and lead time before payment is taken.</span></div>
+      </div>
+      <div class="foot"><button class="btn btn-primary block-btn" type="button">Place order · Rs 1,829</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section class="block" id="roles">
+  <header><h2>Role variants</h2><p>The four interfaces share tokens. What changes is density, target size and default theme.</p></header>
+  <div class="panel tbl"><table>
+    <thead><tr><th>Interface</th><th>Platform</th><th>Default theme</th><th>Density</th><th>Special rules</th></tr></thead>
+    <tbody>
+      <tr><td><b>Customer</b></td><td>Flutter, Android and iOS; responsive web</td><td>Light (cream), follows system</td><td>Comfortable, 48 dp targets</td><td>Capacity and price are always visible before payment. Nutrition and allergens sit on the item.</td></tr>
+      <tr><td><b>Rider</b></td><td>Flutter, Android 10 and up</td><td>High-contrast dark, switchable</td><td>One action per screen, 64–72 dp targets, 20 sp text</td><td>Status changes use hold-to-confirm. Voice check-in overlay. No more than 3 text lines while moving. Low-data: no animations, one map tile layer.</td></tr>
+      <tr><td><b>Vendor</b></td><td>React PWA, tablet first for the kitchen board</td><td>Light for owner screens, dark for the kitchen board</td><td>Dense tables, 14 sp</td><td>Staff never see finance or recipe items in navigation. A direct link shows a "You do not have access" page.</td></tr>
+      <tr><td><b>Admin</b></td><td>React, desktop browser</td><td>Light</td><td>Dense, 13 sp tables</td><td>Queues first (verification, complaints, safety escalations). Audit views never show recipe quantities.</td></tr>
+    </tbody></table></div>
+
+  <h3 class="sub">Rider app, high-contrast mode</h3>
+  <div class="grid g2" style="align-items:start">
+    <div class="hc">
+      <div class="st">Pickup in 4 min</div>
+      <h4>BakeCharm</h4>
+      <div class="ad">Shop 14, F-11 Markaz</div>
+      <div class="quick"><span>I'm 2 min away</span><span>Running late</span></div>
+      <button class="hold" type="button" data-done="Arrived at store"><span class="fill" style="position:absolute"></span><span><svg class="ic"><use href="#i-pin"/></svg>Hold: arrived at store</span></button>
+    </div>
+    <div class="panel spec"><h3>Why it looks like this</h3><ul>
+      <li>Cream on near-black is 17.5:1; the muted line is 10:1. Both stay legible in direct sun.</li>
+      <li>The only orange is the action, so the eye lands on the button.</li>
+      <li>Preset messages replace typing (E16-US4). The same actions are available by voice.</li>
+      <li>Large type and one button keep glance time short while riding.</li></ul></div>
+  </div>
+
+  <h3 class="sub">Vendor kitchen board</h3>
+  <div class="tbl"><div class="board">
+    <div class="col"><h4><span>New</span><span>2</span></h4>
+      <div class="ticket"><div class="t"><b>#123</b><span class="badge b-info">Just in</span></div><span>Custom cake · 1 lb, "Happy Birthday Hira"</span><div class="warn" style="padding:6px 8px"><svg class="ic"><use href="#i-alert"/></svg><span>No nuts</span></div><div class="t"><button class="btn btn-primary" style="min-height:40px;padding:0 14px" type="button">Accept</button><button class="btn btn-text" style="min-height:40px" type="button">Reject</button></div></div>
+      <div class="ticket"><div class="t"><b>#124</b><span class="badge b-closed">0:20</span></div><span>Brownie box × 2</span></div></div>
+    <div class="col"><h4><span>Preparing</span><span>2</span></h4>
+      <div class="ticket"><div class="t"><b>#121</b><span class="badge b-lim"><svg class="ic"><use href="#i-clock"/></svg>8:42</span></div><span>Cupcakes × 6</span><button class="btn btn-secondary" style="min-height:40px" type="button">Mark 80% prepared</button></div>
+      <div class="ticket"><div class="t"><b>#120</b><span class="badge b-ok"><svg class="ic"><use href="#i-clock"/></svg>3:10</span></div><span>Karahi, naan × 4</span></div></div>
+    <div class="col"><h4><span>Ready</span><span>1</span></h4>
+      <div class="ticket"><div class="t"><b>#118</b><span class="badge b-info"><svg class="ic"><use href="#i-nav"/></svg>Rider 3 min</span></div><span>Chocolate cake · 2 lb</span></div></div>
+    <div class="col"><h4><span>Handed over</span><span>1</span></h4>
+      <div class="ticket"><div class="t"><b>#117</b><span class="badge b-ok"><svg class="ic"><use href="#i-check"/></svg>Done</span></div><span>Pasta × 2</span></div></div>
+  </div></div>
+  <p style="color:var(--fg-muted);font-size:14px;margin-top:8px">The board uses the dark theme in a busy kitchen, with an audible alert on every new order. Allergen exclusions are the only red element on a ticket, so they cannot be missed.</p>
+</section>
+
+<!-- ACCESS -->
+<section class="block" id="access">
+  <header><h2>Accessibility and content</h2><p>Targets the team can test against in Chapter 4.</p></header>
+  <div class="grid g2">
+    <div class="panel spec"><h3>Rules</h3><ul>
+      <li>Body text at least 4.5:1; large text, icons, borders and focus rings at least 3:1.</li>
+      <li>Targets at least 48 × 48 dp; rider status buttons 64 dp.</li>
+      <li>State is never colour alone: icon plus word plus colour.</li>
+      <li>Every interactive element has a visible focus ring in orange-700 (light) or orange (dark).</li>
+      <li>Every icon-only button has a spoken label, for example "Remove item" or "Open assistant".</li>
+      <li>Layouts survive text at 130% and do not clip at 200%.</li>
+      <li>Motion is optional: with "reduce motion" on, sheets and the hold fill change instantly.</li>
+      <li>Lists of live updates (slots, ETA) announce changes to screen readers without moving focus.</li></ul></div>
+    <div class="panel spec"><h3>Microcopy from the requirements</h3>
+      <div class="tbl"><table><tbody>
+        <tr><td>Slot taken</td><td>"That slot was just taken. Pick another time."</td></tr>
+        <tr><td>Delay</td><td>"Your order is running about 15 minutes late because the kitchen is busy."</td></tr>
+        <tr><td>Upload</td><td>"Only JPG or PNG files up to 5 MB are allowed."</td></tr>
+        <tr><td>Payment</td><td>"Payment did not go through. Your order has not been placed."</td></tr>
+        <tr><td>No access</td><td>"You do not have access to this page."</td></tr>
+        <tr><td>Empty orders</td><td>"No orders yet." with a "Browse restaurants" button</td></tr>
+      </tbody></table></div>
+      <ul style="margin-top:12px"><li>Say what happened and what to do next. No apology, no jargon.</li><li>Buttons name the result. Sentence case everywhere.</li></ul></div>
+  </div>
+</section>
+
+
+<!-- V2: ROLE EXPERIENCE PREVIEWS -->
+<section class="block" id="v2-experiences">
+  <header><h2>Experience previews</h2><p>The same KhaanaGo brand should feel familiar to customers, focused to riders, and operational to vendors. Switch between the interactive specimens; they demonstrate layout and behavior, not completed backend features.</p></header>
+  <div class="v2-strategy">
+    <article><div class="v2-icon" aria-hidden="true">◉</div><div class="v2-num">01 · CUSTOMER</div><h3>Discover, decide, order.</h3><p>Familiar food-delivery structure with recognizable cards, a short checkout, a highly visible slot selector, transparent costs, and clear order updates. Warm, welcoming, content-first.</p></article>
+    <article><div class="v2-icon" aria-hidden="true">↗</div><div class="v2-num">02 · RIDER</div><h3>One task, one next step.</h3><p>High-contrast active-delivery mode, large touch areas, obvious pickup/drop-off state, prewritten messages and low-attention controls. No typing while moving.</p></article>
+    <article><div class="v2-icon" aria-hidden="true">▦</div><div class="v2-num">03 · VENDOR / ADMIN</div><h3>Operate with confidence.</h3><p>Odoo-inspired information architecture: persistent modules, searchable records, tables, Kanban, scheduling, forms, filters, and audit-friendly state changes. KhaanaGo branding throughout.</p></article>
+  </div>
+  <div class="v2-meta" role="note"><span class="v2-pill v2-hot">Existing palette preserved</span><span class="v2-pill">#F97316 orange · #242424 charcoal · #FFF8EF cream</span><span class="v2-pill">Plus Jakarta Sans</span><span class="v2-pill">Live design specimens</span></div>
+  <h3 class="sub">Role preview · switch the application</h3>
+  <div class="v2-tabbar" role="tablist" aria-label="Role preview">
+    <button type="button" role="tab" data-show-role="customer" aria-selected="true" aria-controls="v2-role-customer">Customer · Mobile</button>
+    <button type="button" role="tab" data-show-role="rider" aria-selected="false" aria-controls="v2-role-rider">Rider · Mobile</button>
+    <button type="button" role="tab" data-show-role="vendor" aria-selected="false" aria-controls="v2-role-vendor">Vendor · ERP</button>
+  </div>
+  <div id="v2-role-customer" class="v2-preview" data-active="true" role="tabpanel">
+    <div class="v2-preview-grid">
+      <div><div class="v2-phone" aria-label="Customer mobile preview">
+        <div class="v2-statusbar"><span>9:41</span><span>▰ ▴ ●</span></div>
+        <div class="v2-mobile-head"><div><div class="v2-small">Delivering to ▾</div><h3>F-11, Islamabad</h3></div><div class="v2-avatar">KG</div></div>
+        <div class="v2-mobile-body" id="v2-customer-stage">
+           <div class="v2-demo-search" aria-label="Food search preview">⌕ &nbsp; Search food, kitchens or dishes</div>
+           <div class="v2-category-row"><span class="v2-category v2-selected">All</span><span class="v2-category">Desi</span><span class="v2-category">Bakery</span><span class="v2-category">Healthy</span></div>
+           <div style="border-radius:14px;background:#242424;padding:16px 15px;color:#FFF8EF;display:flex;align-items:center;justify-content:space-between;gap:9px"><div><div style="font-size:11px;color:#FDBA74;font-weight:800">MADE FRESH • DELIVERED SMART</div><div style="font:800 20px/1.25 var(--font);margin-top:5px">Good food.<br>Great timing.</div></div><div style="font-size:44px" aria-hidden="true">🍲</div></div>
+           <div class="v2-mobile-h">Top picks near you <em>See all</em></div>
+           <div class="v2-restaurant"><div class="v2-foodart">🍰</div><div class="v2-rest-body"><strong>BakeCharm</strong><small>Bakery · Cakes &amp; bakes</small><div class="v2-rest-footer"><span>★ 4.7 · 25–35 min</span><span class="v2-status warn">Limited</span></div></div></div>
+           <div class="v2-restaurant"><div class="v2-foodart v2-green">🍛</div><div class="v2-rest-body"><strong>Margalla Kitchen</strong><small>Desi · Rice &amp; karahi</small><div class="v2-rest-footer"><span>★ 4.6 · 30–45 min</span><span class="v2-status good">Available</span></div></div></div>
+        </div>
+        <div class="v2-mini-tabs" role="group" aria-label="Customer sample navigation">
+          <button type="button" data-customer-nav="Home" aria-pressed="true"><span>⌂</span>Home</button>
+          <button type="button" data-customer-nav="Orders" aria-pressed="false"><span>▤</span>Orders</button>
+          <button type="button" data-customer-nav="Assistant" aria-pressed="false"><span>✧</span>Assistant</button>
+          <button type="button" data-customer-nav="Profile" aria-pressed="false"><span>◉</span>Profile</button>
+        </div>
+      </div><p class="v2-demo-caption">Interactive example: select a bottom navigation item to inspect content-state patterns. This is a design specimen, not a real ordering service.</p></div>
+      <div class="v2-feature-list">
+        <div class="v2-feature"><span>01</span><div><b>Real information hierarchy</b>Location and search first; food content second; availability and fees before an order is committed. Cards show meaningful metadata without visual overload.</div></div>
+        <div class="v2-feature"><span>02</span><div><b>Navigation that connects a journey</b>Bottom navigation for top destinations; product detail → customizations → cart → slot → payment → tracking as a guided stack, not separate orphan screens.</div></div>
+        <div class="v2-feature"><span>03</span><div><b>Capacity is a first-class decision</b>Time windows must clearly distinguish bookable, limited, unavailable, paused and expired-held states. Never show an unbookable slot as merely decorative.</div></div>
+        <div class="v2-feature"><span>04</span><div><b>Cost and recovery are transparent</b>Display item adjustments, fees and total before placement. Preserve cart values and entered information when a slot expires or payment fails, unless business rules require otherwise.</div></div>
+        <div class="v2-feature"><span>05</span><div><b>Food is visually central</b>Use consistent 4:3 thumbnails in lists, 1:1 on menu items, 16:9 cover imagery, safe loading skeletons and a branded fallback when an image is unavailable.</div></div>
+      </div>
+    </div>
+  </div>
+  <div id="v2-role-rider" class="v2-preview" data-active="false" role="tabpanel" hidden>
+    <div class="v2-preview-grid"><div>
+      <div class="v2-phone v2-rider" aria-label="Rider mobile preview">
+        <div class="v2-statusbar"><span>9:41</span><span>▰ ▴ ●</span></div>
+        <div class="v2-mobile-head"><div><div class="v2-small">ACTIVE ASSIGNMENT · #KG-1028</div><h3>Pickup is next</h3></div><span class="v2-status warn">In progress</span></div>
+        <div class="v2-mobile-body" id="v2-rider-stage">
+          <div class="v2-rider-number" id="v2-rider-eta">4 min away</div><p style="font:600 12px/1.5 var(--font);color:#C8BEB4;margin-top:4px">Estimated time to pickup · sample</p>
+          <div class="v2-route-card"><div class="v2-route-stop"><span class="v2-dot"></span><div><h4>BakeCharm</h4><p>Shop 14, F-11 Markaz<br>Pickup · 2 items</p></div></div><div class="v2-separator"></div><div class="v2-route-stop"><span class="v2-dot" style="border-color:#38BDF8"></span><div><h4>Customer drop-off</h4><p>Sector G-10 · address verified on acceptance</p></div></div></div>
+          <div class="v2-rider-alert">⚠ Check the order ID and allergy notes before handover.</div>
+          <div style="display:flex;gap:9px;margin-top:12px"><button class="v2-rider-secondary" type="button" style="flex:1" data-rider-message="I'm on my way">Quick message</button><button class="v2-rider-secondary" type="button" style="flex:1" data-rider-message="Navigation handoff is a prototype">Navigate ↗</button></div>
+          <button class="v2-mobile-cta" type="button" id="v2-rider-next">Hold / confirm arrival →</button>
+          <p id="v2-rider-feedback" style="font:600 11px/1.5 var(--font);color:#C8BEB4;margin-top:9px" aria-live="polite">Demo only: advancing changes the specimen state.</p>
+        </div>
+        <div class="v2-mini-tabs"><button type="button" aria-pressed="true"><span>▤</span>Tasks</button><button type="button" aria-pressed="false"><span>◷</span>History</button><button type="button" aria-pressed="false"><span>₹</span>Earnings</button><button type="button" aria-pressed="false"><span>◉</span>Profile</button></div>
+      </div><p class="v2-demo-caption">Interactive status progression is illustrative. Production hold-to-confirm must use the verified accessibility and safety rules; never interact with the app while riding.</p></div>
+      <div class="v2-feature-list">
+        <div class="v2-feature"><span>01</span><div><b>High-contrast task mode</b>Near-black foundation, cream text, and one strong orange primary action. 64–72 dp primary touch targets. Minimize text during an active trip.</div></div>
+        <div class="v2-feature"><span>02</span><div><b>Action mapped to status</b>Available → assigned → arrive at pickup → picked up → arrived at drop-off → delivered, subject to documented state transitions and permissions.</div></div>
+        <div class="v2-feature"><span>03</span><div><b>Safe interaction</b>Provide quick message presets, obvious navigation handoff, error recovery and a stationary-use safety notice. Never depend on color alone or a gesture with no accessible alternative.</div></div>
+        <div class="v2-feature"><span>04</span><div><b>Constrained connectivity</b>Offline/weak-network banner, retry with idempotency, local pending-state display, and explicit acknowledgement after synchronization.</div></div>
+      </div>
+    </div>
+  </div>
+  <div id="v2-role-vendor" class="v2-preview" data-active="false" role="tabpanel" hidden>
+    <div class="v2-desktop" aria-label="Vendor ERP preview">
+      <aside class="v2-desktop-side" aria-label="ERP module navigation"><div class="v2-brand">Khaana<em>Go</em><div style="font:600 10px/1.4 var(--font);color:#C8BEB4;margin-top:4px">Merchant workspace</div></div>
+        <button type="button" data-vendor-page="Overview" aria-pressed="true">◫ &nbsp; Overview</button>
+        <button type="button" data-vendor-page="Orders" aria-pressed="false">▤ &nbsp; Orders</button>
+        <button type="button" data-vendor-page="Kitchen" aria-pressed="false">▥ &nbsp; Kitchen board</button>
+        <button type="button" data-vendor-page="Capacity" aria-pressed="false">◷ &nbsp; Capacity &amp; slots</button>
+        <button type="button" data-vendor-page="Inventory" aria-pressed="false">▦ &nbsp; Inventory</button>
+        <div class="v2-rolehint">Navigation shows representative modules. Actual module visibility follows role permissions and Chapter 2.</div>
+      </aside>
+      <div class="v2-desktop-main">
+        <div class="v2-desktop-top"><div><div class="v2-breadcrumb">Workspace / <span id="v2-erp-crumb">Overview</span></div><h3 id="v2-erp-title">Operations overview</h3></div><div style="display:flex;gap:6px;align-items:center"><span class="v2-status good">● Kitchen open</span><span class="v2-avatar" style="width:32px;height:32px;font-size:11px">BK</span></div></div>
+        <div id="v2-erp-content">
+          <div class="v2-kpis"><div class="v2-kpi"><span>Orders today</span><b>48</b><span>Sample data</span></div><div class="v2-kpi"><span>Preparing now</span><b>12</b><span>Across stations</span></div><div class="v2-kpi"><span>Slot utilisation</span><b>72%</b><span>Limited</span></div></div>
+          <div class="v2-desktop-panel"><h4>Needs attention</h4><table class="v2-mini-table"><thead><tr><th>ORDER</th><th>REQUESTED</th><th>STATE</th><th>OWNER</th></tr></thead><tbody><tr><td><b>#KG-1028</b></td><td>Chocolate cake · 1 lb</td><td><span class="v2-status warn">Preparing</span></td><td>Kitchen A</td></tr><tr><td><b>#KG-1029</b></td><td>Chicken biryani × 2</td><td><span class="v2-status info">New</span></td><td>Unassigned</td></tr><tr><td><b>#KG-1030</b></td><td>Brownie box × 3</td><td><span class="v2-status good">Ready</span></td><td>Kitchen B</td></tr></tbody></table></div>
+        </div>
+      </div>
+    </div>
+    <p class="v2-demo-caption">Interactive ERP design specimen: use the dark sidebar to switch module layouts. The portal patterns follow ERP usability conventions—not Odoo branding or code. Sample records are not real orders.</p>
+    <div class="v2-feature-list" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));margin-top:18px">
+      <div class="v2-feature"><span>01</span><div><b>Persistent information architecture</b>Module navigation, breadcrumbs, page title, record action bar, filters, and clearly scoped content.</div></div>
+      <div class="v2-feature"><span>02</span><div><b>Multiple useful views</b>Table for bulk records, Kanban for operational status, detail form for editing, dashboard for exceptions and indicators.</div></div>
+      <div class="v2-feature"><span>03</span><div><b>Dense, not cramped</b>Consistent 8px grid; aligned table data; 14–16px readable body; 44px action targets; sticky controls for long forms.</div></div>
+      <div class="v2-feature"><span>04</span><div><b>Role-restricted modules</b>Staff sees operational tools; privileged finance, admin or recipe information is shown only to authorized roles. Backend must enforce access.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="v2-architecture">
+ <header><h2>Navigation and layout</h2><p>Every route belongs to a hierarchy and a user journey. Never add a new screen without specifying how users arrive, go back, and recover from an error or interruption.</p></header>
+ <div class="v2-flow-grid">
+   <div class="v2-flow"><span class="v2-kicker">CUSTOMER · MOBILE</span><h3>Four destinations, short task stacks</h3><ol><li>Bottom destinations: Home, Orders, Assistant, Profile (subject to approved inventory)</li><li>Home → Restaurant → Menu item → Cart</li><li>Cart → Delivery slot → Payment → Confirmation</li><li>Orders → Live status → Receipt / support</li><li>Return preserves cart and form state when safe</li></ol></div>
+   <div class="v2-flow"><span class="v2-kicker">RIDER · MOBILE</span><h3>Assignment-centric workflow</h3><ol><li>Dashboard shows availability and next assignment</li><li>Offer → Accept or decline when allowed</li><li>Pickup details → Check-in → Collection confirmation</li><li>Drop-off → Handover → Completion evidence</li><li>Earnings, history, profile are secondary</li></ol></div>
+   <div class="v2-flow"><span class="v2-kicker">VENDOR · REACT ERP</span><h3>Module → list → record → action</h3><ol><li>Sidebar: Overview / Orders / Kitchen / Capacity / Inventory and approved modules</li><li>Header: context, role, alerts, account</li><li>Workspace: list, Kanban, calendar, or form as suited to task</li><li>Record actions: Save, assign, progress, export where allowed</li><li>Role guards apply to routes, menus, data, and APIs</li></ol></div>
+ </div>
+ <h3 class="sub">Layout contract</h3>
+ <div class="panel tbl"><table class="v2-matrix"><thead><tr><th>Pattern</th><th>Customer</th><th>Rider</th><th>Vendor / admin</th></tr></thead><tbody>
+ <tr><td>Primary shell</td><td>App bar + 4-item bottom navigation</td><td>Task status + minimal bottom navigation</td><td>Persistent sidebar + context toolbar + content workspace</td></tr>
+ <tr><td>Content width</td><td>Full phone width with 16 dp horizontal gutters</td><td>Full phone width with 16–20 dp gutters</td><td>Responsive main region; readable detail forms within ~720px</td></tr>
+ <tr><td>Action placement</td><td>Sticky bottom checkout CTA where relevant</td><td>Large primary action in thumb zone, only when stationary</td><td>Top record toolbar / sticky form footer</td></tr>
+ <tr><td>Navigation state</td><td>Active bottom tab plus clear stack header</td><td>Strong current-task step and next action</td><td>Current sidebar module, breadcrumbs, list filters and selected record</td></tr>
+ <tr><td>Responsive behavior</td><td>320–430 dp, then tablet scaling</td><td>320–430 dp plus landscape constraints</td><td>≥1200 wide table+rail; 768–1199 compact; &lt;768 collapsible nav + cards</td></tr>
+ <tr><td>Empty state</td><td>Helpful message + Browse action</td><td>"No active deliveries" + availability status</td><td>Contextual message + authorized Create/Refresh action</td></tr>
+ </tbody></table></div>
+ <div class="v2-tip"><b>Screen identity:</b> Every final screen needs a stable screen ID, route, role, source user story, source test cases, required states, primary CTA, secondary actions and back-navigation behavior. The design inventory and source code must use those same IDs.</div>
+</section>
+
+<section class="block" id="v2-patterns">
+ <header><h2>Interaction patterns</h2><p>Use task-specific patterns consistently. This section adds the workflow detail that static button and color specimens cannot capture.</p></header>
+ <div class="grid g2">
+   <div class="panel spec"><span class="v2-kicker">P01 · DISCOVERY AND PRODUCT</span><h3 style="margin-top:7px">Search, restaurant, menu item</h3><ul><li>Search shows recent and suggested results, no-results recovery, and clear filters.</li><li>Vendor card: name, cuisine, delivery estimate, rating if available, truthful operational state.</li><li>Dish detail: image, price, required options, optional extras, allergen disclosure, stepper, calculated total.</li><li>Disabled add-to-cart explains the exact missing required choice.</li></ul></div>
+   <div class="panel spec"><span class="v2-kicker">P02 · CHECKOUT AND CAPACITY</span><h3 style="margin-top:7px">No surprise charges or phantom slots</h3><ul><li>Keep address, cart, time slot and payment as clearly separated steps.</li><li>Do not treat color bands as actual booking permission; bookability must follow remaining validated capacity.</li><li>Expired holds show a recovery dialog and nearest permissible slots; use server time for live expiry.</li><li>The existing “4:32” hold countdown is an example, not the hold-time requirement.</li></ul></div>
+   <div class="panel spec"><span class="v2-kicker">P03 · RIDER DELIVERY</span><h3 style="margin-top:7px">State-first task screen</h3><ul><li>Visible order ID, pickup, destination, next action, and verified ETA when available.</li><li>Hold-to-confirm for sensitive actions only when documented; provide accessible alternate confirmation.</li><li>Retry or queue allowed offline actions with duplicate-submission protection.</li><li>Show safety, privacy and support routes without crowding active delivery.</li></ul></div>
+   <div class="panel spec"><span class="v2-kicker">P04 · VENDOR RECORD MANAGEMENT</span><h3 style="margin-top:7px">ERP control language</h3><ul><li>List: sort, query, filter, column options, pagination, row selection and bulk actions when required.</li><li>Record: title, status, timestamp, owner, inline details, action buttons, audit history.</li><li>Forms: grouped sections, clear required fields, dirty-state warning, save/cancel, field and server errors.</li><li>Kanban: stage counts and logical transition actions, not draggable cards unless authorized.</li></ul></div>
+   <div class="panel spec"><span class="v2-kicker">P05 · OPERATIONAL MONITORING</span><h3 style="margin-top:7px">Kitchen board and capacity</h3><ul><li>New / Accepted / Preparing / Ready / Handed over states follow the requirements, including permitted skips or reversals.</li><li>Tickets emphasize promised time, allergen exclusions, item quantities and special instructions.</li><li>Capacity panel shows time period, units, reservations, remaining capacity and breach alerts.</li><li>Critical events have visual and non-color cues; notifications avoid repeated noise.</li></ul></div>
+   <div class="panel spec"><span class="v2-kicker">P06 · SYSTEM STATES</span><h3 style="margin-top:7px">Every component has real states</h3><ul><li>Default, hover (web), focus, active, selected, disabled, loading, success, error.</li><li>Each data view: initial/loading, populated, empty, partial, offline, and recoverable failure.</li><li>Each form: untouched, invalid, valid, submitting, server-rejected, success, unsaved change.</li><li>Each role: authenticated, unauthorized, expired session, network loss.</li></ul></div>
+ </div>
+ <h3 class="sub">Semantic status: separate risk from availability</h3>
+ <div class="panel tbl"><table><thead><tr><th>Status</th><th>Use</th><th>May customer book?</th><th>Visual treatment</th></tr></thead><tbody>
+ <tr><td><span class="v2-status good">Available</span></td><td>Healthy remaining capacity</td><td>Yes, if other rules pass</td><td>Green + check + explicit text</td></tr>
+ <tr><td><span class="v2-status warn">Limited</span></td><td>Reduced capacity / approach to limit</td><td>Yes, when capacity remains</td><td>Amber + count or descriptor</td></tr>
+ <tr><td><span class="v2-status warn">High load</span></td><td>Risk band above design warning threshold</td><td>Based on real remaining capacity</td><td>Amber + "High load" + remaining count</td></tr>
+ <tr><td><span class="v2-status bad">Full</span></td><td>No permissible capacity remains</td><td>No</td><td>Red + "Full" + disabled slot</td></tr>
+ <tr><td><span class="v2-status neutral">Paused</span></td><td>Vendor manually stopped intake</td><td>No</td><td>Neutral + "Paused" + reason if allowed</td></tr>
+ </tbody></table></div>
+ <div class="v2-callout"><h3>Design rule: never invent a requirement</h3><p>Previous UI drafts used example passwords, a sample slot countdown and placeholder field limits. Treat all unspecified values as <b>unresolved requirements</b>. Use the approved Chapter 2 document for acceptance criteria, not the appearance of this specimen. Maintain exact story and test-case IDs in the implementation matrix.</p></div>
+</section>
+
+<section class="block" id="v2-qa">
+ <header><h2>Build handoff &amp; QA</h2><p>A design system is successful only when screens and controls are reusable, traceable, navigable, accessible and tested against the approved requirements.</p></header>
+ <h3 class="sub" style="margin-top:0">Definition of design complete</h3>
+ <div class="v2-checks">
+  <div class="v2-check"><span>✓</span><div><b>Requirement-linked</b>Epic, story, acceptance rule and test IDs map to each screen/behavior; no ID is invented.</div></div>
+  <div class="v2-check"><span>✓</span><div><b>All states designed</b>Default, selected, loading, empty, validation, error, disabled, offline, success and access-denied as applicable.</div></div>
+  <div class="v2-check"><span>✓</span><div><b>Full navigation</b>Every screen has an entry route, back/exit path, focus handling and expected state persistence.</div></div>
+  <div class="v2-check"><span>✓</span><div><b>Interactive implementation</b>Buttons and forms are bound to state, a local service or a real API—not styled dead ends.</div></div>
+  <div class="v2-check"><span>✓</span><div><b>Readable and accessible</b>WCAG AA contrast, screen reader names, keyboard support, text scaling, targets and reduced motion.</div></div>
+  <div class="v2-check"><span>✓</span><div><b>Verified across roles</b>Flutter widget/integration and React browser tests demonstrate actual journeys and cross-role state consistency.</div></div>
+ </div>
+ <h3 class="sub">Traceability schema · do not change source IDs</h3>
+ <div class="v2-codebox">Epic ID | Story ID | AC ID (if present) | Test Case ID | Role |
+Journey | Screen ID | Route | Component | State/API |
+Visual state | Evidence | Status | Finding / Fix</div>
+ <div class="v2-tip"><b>Coverage rule:</b> Screen existence ≠ functional coverage. A story is only complete after its navigation, behavior, error and boundary conditions are implemented and independently verified. Keep COMPLETE / PARTIAL / MISSING / BLOCKED distinct.</div>
+ <h3 class="sub">Implementation priorities for Cursor</h3>
+ <div class="panel tbl"><table><thead><tr><th>Stage</th><th>Deliverable</th><th>Exit criteria</th></tr></thead><tbody>
+ <tr><td>01 · Audit</td><td>Cross-check current Chapter 2 against screen inventory and code.</td><td>Every original story and test has a mapped disposition.</td></tr>
+ <tr><td>02 · Foundations</td><td>Shared tokens, themes, components, typography, roles and responsive shells.</td><td>All roles show consistent states and working navigation.</td></tr>
+ <tr><td>03 · Journeys</td><td>Complete customer, rider and vendor task flows in vertical slices.</td><td>Users can actually finish the required tasks with mock or real services.</td></tr>
+ <tr><td>04 · Verification</td><td>Run mobile and web tests; fix broken paths; collect screen evidence.</td><td>Every test status is grounded in execution or explicitly blocked.</td></tr>
+ </tbody></table></div>
+ <h3 class="sub">Token naming for code</h3>
+ <div class="panel"><p class="v2-lead" style="margin:0">Keep token names semantic in both Flutter and React. The companion <code>khaanago.design-tokens.json</code> is the exchange format; do not hardcode hex values in individual screens. Use <code>color.action.primary</code>, <code>color.text.primary</code>, <code>color.background.canvas</code>, <code>space.4</code>, <code>radius.card</code>, and role-specific component variants.</p></div>
+</section>
+
+<!-- CODE -->
+<section class="block" id="code">
+  <header><h2>Tokens in code</h2><p>Paste these into the projects so Figma, Flutter and React start from one source. They belong in Section 4.2 of the report under the development environment.</p></header>
+
+  <div class="codehead"><h3>Flutter: lib/theme/khaana_theme.dart</h3><button class="copy" type="button" data-copy="dart">Copy</button></div>
+<pre id="dart">import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class KhaanaColors {
+  static const orange = Color(0xFFF97316);
+  static const charcoal = Color(0xFF242424);
+  static const cream = Color(0xFFFFF8EF);
+  static const orangeText = Color(0xFFC2410C);   // orange as text on light
+  static const orangeTint = Color(0xFFFFEDD5);
+  static const available = Color(0xFF15803D);
+  static const limited = Color(0xFF854D0E);
+  static const full = Color(0xFFB91C1C);
+  static const closed = Color(0xFF57534E);
+  static const info = Color(0xFF0369A1);
+}
+
+ThemeData khaanaTheme(Brightness b) {
+  final dark = b == Brightness.dark;
+  final scheme = ColorScheme(
+    brightness: b,
+    primary: KhaanaColors.orange,
+    onPrimary: KhaanaColors.charcoal,            // never white on orange
+    primaryContainer: dark ? const Color(0xFF3A2415) : KhaanaColors.orangeTint,
+    onPrimaryContainer: dark ? const Color(0xFFFDBA74) : const Color(0xFF7C2D12),
+    secondary: dark ? KhaanaColors.cream : KhaanaColors.charcoal,
+    onSecondary: dark ? KhaanaColors.charcoal : KhaanaColors.cream,
+    error: dark ? const Color(0xFFF87171) : KhaanaColors.full,
+    onError: dark ? KhaanaColors.charcoal : Colors.white,
+    surface: dark ? KhaanaColors.charcoal : Colors.white,
+    onSurface: dark ? KhaanaColors.cream : KhaanaColors.charcoal,
+    outline: dark ? const Color(0xFF8C8379) : const Color(0xFF8A7F73),
+    outlineVariant: dark ? const Color(0xFF3A3835) : const Color(0xFFEADBC8),
+  );
+  final base = ThemeData(useMaterial3: true, colorScheme: scheme);
+  return base.copyWith(
+    scaffoldBackgroundColor: dark ? const Color(0xFF1A1A1A) : KhaanaColors.cream,
+    textTheme: GoogleFonts.plusJakartaSansTextTheme(base.textTheme),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        minimumSize: const Size.fromHeight(56),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+    ),
+    cardTheme: CardThemeData(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: scheme.outlineVariant),
+      ),
+    ),
+  );
+}</pre>
+
+  <div class="codehead" style="margin-top:24px"><h3>React portals: tokens.css</h3><button class="copy" type="button" data-copy="css">Copy</button></div>
+<pre id="css">:root {
+  --font: "Plus Jakarta Sans", system-ui, sans-serif;
+  --bg: #FFF8EF;  --surface: #FFFFFF;  --surface-2: #FBF0E2;
+  --fg: #242424;  --fg-muted: #6B635B; --line: #EADBC8; --field: #8A7F73;
+  --brand: #F97316; --on-brand: #242424; --brand-text: #C2410C; --brand-tint: #FFEDD5;
+  --ok: #15803D;  --ok-tint: #DCFCE7;
+  --lim: #854D0E; --lim-tint: #FEF3C7;
+  --full: #B91C1C; --full-tint: #FEE2E2;
+  --closed: #57534E; --closed-tint: #E7E5E4;
+  --info: #0369A1; --info-tint: #E0F2FE;
+  --r-field: 12px; --r-card: 16px; --r-sheet: 24px;
+}
+[data-theme="dark"] {
+  --bg: #1A1A1A;  --surface: #242424;  --surface-2: #2E2E2E;
+  --fg: #FFF8EF;  --fg-muted: #B8AEA3; --line: #3A3835; --field: #8C8379;
+  --brand-text: #FB923C; --brand-tint: #3A2415;
+  --ok: #4ADE80;  --ok-tint: #14301E;
+  --lim: #FACC15; --lim-tint: #3A3010;
+  --full: #F87171; --full-tint: #3F1A1A;
+  --closed: #A8A29E; --closed-tint: #2E2C2A;
+  --info: #38BDF8; --info-tint: #102B3A;
+}</pre>
+
+  <div class="codehead" style="margin-top:24px"><h3>React portals: MUI theme</h3><button class="copy" type="button" data-copy="mui">Copy</button></div>
+<pre id="mui">import { createTheme } from "@mui/material/styles";
+
+export const khaanaTheme = (mode = "light") => createTheme({
+  palette: {
+    mode,
+    primary: { main: "#F97316", contrastText: "#242424" },
+    secondary: { main: mode === "dark" ? "#FFF8EF" : "#242424" },
+    error: { main: mode === "dark" ? "#F87171" : "#B91C1C" },
+    success: { main: mode === "dark" ? "#4ADE80" : "#15803D" },
+    warning: { main: mode === "dark" ? "#FACC15" : "#854D0E" },
+    info: { main: mode === "dark" ? "#38BDF8" : "#0369A1" },
+    background: {
+      default: mode === "dark" ? "#1A1A1A" : "#FFF8EF",
+      paper: mode === "dark" ? "#242424" : "#FFFFFF",
+    },
+    text: { primary: mode === "dark" ? "#FFF8EF" : "#242424" },
+  },
+  shape: { borderRadius: 12 },
+  typography: {
+    fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
+    button: { textTransform: "none", fontWeight: 700 },
+  },
+  components: {
+    MuiButton: { defaultProps: { disableElevation: true } },
+    MuiCard: { styleOverrides: { root: { borderRadius: 16, border: "1px solid #EADBC8", boxShadow: "none" } } },
+  },
+});</pre>
+</section>
+
+</main>
+
+<script>
+(function(){
+  /* theme toggle */
+  var root=document.documentElement;
+  document.querySelectorAll('.theme button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-t');
+      if(t==='auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme',t);
+      document.querySelectorAll('.theme button').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});
+    });
+  });
+
+  /* colour maths */
+  function lin(c){c/=255;return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)}
+  function lum(h){var n=parseInt(h.slice(1),16);return .2126*lin(n>>16&255)+.7152*lin(n>>8&255)+.0722*lin(n&255)}
+  function cr(a,b){var x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
+  function ink(h){return cr(h,'#242424')>=cr(h,'#FFFFFF')?'#242424':'#FFFFFF'}
+
+  /* brand swatches */
+  var brand=[
+    ['Orange','#F97316','rgb 249 115 22','Fills: primary buttons, active tab pill, selection borders, progress. Label on it is charcoal.'],
+    ['Charcoal','#242424','rgb 36 36 36','Text on light, dark-theme surface, secondary button outline, snackbar.'],
+    ['Cream','#FFF8EF','rgb 255 248 239','Page background in light theme; text in dark theme.'],
+    ['White','#FFFFFF','rgb 255 255 255','Cards, sheets, fields, anything that sits on cream.']
+  ];
+  var bh='';brand.forEach(function(b){
+    bh+='<div class="sw"><div class="chip-c" style="background:'+b[1]+';color:'+ink(b[1])+';'+(b[1]==='#FFFFFF'||b[1]==='#FFF8EF'?'border-bottom:1px solid #EADBC8':'')+'">'+b[0]+'</div><div class="meta"><b>'+b[1]+'</b><span class="mono">'+b[2]+'</span><span style="color:var(--fg-muted);margin-top:4px">'+b[3]+'</span></div></div>';
+  });
+  document.getElementById('brand').innerHTML=bh;
+
+  /* scales */
+  function scale(id,arr){
+    var h='';arr.forEach(function(s){h+='<div style="background:'+s[1]+';color:'+ink(s[1])+'"><span>'+s[0]+'</span><span>'+s[1].slice(1)+'</span></div>'});
+    document.getElementById(id).innerHTML=h;
+  }
+  scale('orange',[['50','#FFF7ED'],['100','#FFEDD5'],['200','#FED7AA'],['300','#FDBA74'],['400','#FB923C'],['500','#F97316'],['600','#EA580C'],['700','#C2410C'],['800','#9A3412'],['900','#7C2D12']]);
+  scale('neutral',[['cream','#FFF8EF'],['100','#FBF0E2'],['200','#EADBC8'],['300','#D9C3A5'],['400','#B8AEA3'],['500','#8A7F73'],['600','#6B635B'],['700','#3A3835'],['800','#242424'],['900','#1A1A1A']]);
+
+  /* role tokens */
+  var roles=[
+    ['--bg','#FFF8EF','#1A1A1A','Page background'],['--surface','#FFFFFF','#242424','Cards, fields, sheets'],['--surface-2','#FBF0E2','#2E2E2E','Disabled, board columns, hover'],
+    ['--fg','#242424','#FFF8EF','Primary text'],['--fg-muted','#6B635B','#B8AEA3','Secondary text'],['--line','#EADBC8','#3A3835','Dividers, card borders'],['--field','#8A7F73','#8C8379','Field and chip borders (3:1)'],
+    ['--brand','#F97316','#F97316','Primary fill'],['--on-brand','#242424','#242424','Text and icons on orange'],['--brand-text','#C2410C','#FB923C','Orange links, small text accents'],['--brand-tint','#FFEDD5','#3A2415','Selected background'],['--focus','#C2410C','#F97316','Focus ring'],
+    ['--ok','#15803D','#4ADE80','Available text and icons'],['--lim','#854D0E','#FACC15','Limited'],['--full','#B91C1C','#F87171','Full, error, allergen'],['--closed','#57534E','#A8A29E','Closed, paused'],['--info','#0369A1','#38BDF8','Live, tracking']
+  ];
+  var rb='';roles.forEach(function(r){
+    rb+='<tr><td><code>'+r[0]+'</code></td><td><span class="role"><span class="dot" style="background:'+r[1]+'"></span><span class="mono">'+r[1]+'</span></span></td><td><span class="role"><span class="dot" style="background:'+r[2]+'"></span><span class="mono">'+r[2]+'</span></span></td><td>'+r[3]+'</td></tr>';
+  });
+  document.querySelector('#roles-tbl tbody').innerHTML=rb;
+
+  /* contrast table: label, light fg/bg, dark fg/bg, min, rule, rejected */
+  var pairs=[
+    ['Body text on page','#242424','#FFF8EF','#FFF8EF','#1A1A1A',4.5,'Use'],
+    ['Body text on card','#242424','#FFFFFF','#FFF8EF','#242424',4.5,'Use'],
+    ['Muted text on page','#6B635B','#FFF8EF','#B8AEA3','#1A1A1A',4.5,'Use'],
+    ['Button label on orange','#242424','#F97316','#242424','#F97316',4.5,'Use'],
+    ['Pressed button label','#242424','#FB923C','#242424','#FB923C',4.5,'Use'],
+    ['Orange link or text accent','#C2410C','#FFF8EF','#FB923C','#1A1A1A',4.5,'Use --brand-text'],
+    ['Available badge','#15803D','#DCFCE7','#4ADE80','#14301E',4.5,'Use'],
+    ['Limited badge','#854D0E','#FEF3C7','#FACC15','#3A3010',4.5,'Use'],
+    ['Full / error badge','#B91C1C','#FEE2E2','#F87171','#3F1A1A',4.5,'Use'],
+    ['Closed badge','#57534E','#E7E5E4','#A8A29E','#2E2C2A',4.5,'Use'],
+    ['Info badge','#0369A1','#E0F2FE','#38BDF8','#102B3A',4.5,'Use'],
+    ['Selected chip text','#7C2D12','#FFEDD5','#FDBA74','#3A2415',4.5,'Use'],
+    ['Field border on card','#8A7F73','#FFFFFF','#8C8379','#242424',3,'Use'],
+    ['Focus ring on page','#C2410C','#FFF8EF','#F97316','#1A1A1A',3,'Use'],
+    ['Brand orange as small text','#F97316','#FFF8EF','#F97316','#1A1A1A',4.5,'Light theme: never. Use --brand-text.'],
+    ['White label on orange','#FFFFFF','#F97316','#FFFFFF','#F97316',4.5,'Never. Use charcoal.']
+  ];
+  var cb='';pairs.forEach(function(p){
+    var l=cr(p[1],p[2]),d=cr(p[3],p[4]);
+    function cell(v){return '<td class="num"><span class="'+(v>=p[5]?'pass':'fail')+'">'+v.toFixed(2)+':1 '+(v>=p[5]?'✓':'✗')+'</span></td>'}
+    cb+='<tr><td>'+p[0]+'</td>'+cell(l)+cell(d)+'<td class="num">'+p[5]+':1</td><td>'+p[6]+'</td></tr>';
+  });
+  document.querySelector('#contrast tbody').innerHTML=cb;
+
+  /* type specimens */
+  var types=[
+    ['Display','28 / 36 · 800','Order total, empty states','Rs 1,829'],
+    ['Title','22 / 28 · 700','Screen titles','Choose delivery time'],
+    ['Heading','18 / 24 · 700','Vendor names, sheet titles','BakeCharm'],
+    ['Body','16 / 24 · 500','Default text','Chocolate cake with no nuts, ready by 7:00 PM.'],
+    ['Body small','14 / 20 · 500','Bill lines, secondary info','Delivery (base Rs 60 + 3.2 km)'],
+    ['Button','16 / 24 · 700','All buttons','Place order'],
+    ['Price','18 / 24 · 700 · tabular','Prices, totals, timers','Rs 1,850 · 8:42'],
+    ['Caption','12 / 16 · 600','Metadata, helper text','Arrives 7:25–7:45 PM'],
+    ['Eyebrow','12 / 16 · 700 · +6% caps','Section labels','Top rated near you']
+  ];
+  var sizes={'Display':'800 28px/36px','Title':'700 22px/28px','Heading':'700 18px/24px','Body':'500 16px/24px','Body small':'500 14px/20px','Button':'700 16px/24px','Price':'700 18px/24px','Caption':'600 12px/16px','Eyebrow':'700 12px/16px'};
+  var th='';types.forEach(function(t){
+    var extra=t[0]==='Eyebrow'?'letter-spacing:.06em;text-transform:uppercase;':'';
+    if(t[0]==='Price') extra='font-variant-numeric:tabular-nums;';
+    th+='<div class="tspec"><div><b>'+t[0]+'</b><div class="use">'+t[2]+'</div></div><div style="font:'+sizes[t[0]]+' var(--font);'+extra+'">'+t[3]+'</div><div class="meta">'+t[1]+'</div></div>';
+  });
+  document.getElementById('typespec').innerHTML=th;
+
+  /* spacing */
+  var sp=[['space-1',4],['space-2',8],['space-3',12],['space-4',16],['space-5',24],['space-6',32],['space-7',48],['space-8',64]];
+  var sh='';sp.forEach(function(s){sh+='<div class="sp"><span style="width:76px">'+s[0]+'</span><i style="width:'+s[1]*2+'px"></i><span>'+s[1]+'</span></div>'});
+  document.getElementById('spacing').innerHTML=sh;
+
+  /* capacity meter */
+  document.querySelectorAll('.meter .bar').forEach(function(b){
+    var n=+b.getAttribute('data-n'),pct=n/12,col=pct<=.6?'var(--ok-mark)':pct<=.85?'var(--lim-mark)':'var(--full-mark)',h='';
+    for(var i=0;i<12;i++) h+='<i'+(i<n?' style="background:'+col+'"':'')+'></i>';
+    b.innerHTML=h;
+  });
+
+  /* chips + slots */
+  document.querySelectorAll('#chips .chip:not([disabled])').forEach(function(c){
+    c.addEventListener('click',function(){c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')==='true'?'false':'true')});
+  });
+  ['slots','slots2'].forEach(function(id){
+    var g=document.getElementById(id);if(!g)return;
+    g.addEventListener('click',function(e){
+      var s=e.target.closest('.slot');if(!s||s.disabled)return;
+      g.querySelectorAll('.slot').forEach(function(x){x.setAttribute('aria-pressed',x===s?'true':'false')});
+    });
+  });
+
+  /* hold to confirm */
+  document.querySelectorAll('.hold').forEach(function(h){
+    var t=null,label=h.querySelector('span:last-child'),orig=label.innerHTML;
+    function start(){if(h.classList.contains('done'))return;h.classList.add('on');t=setTimeout(function(){h.classList.remove('on');h.classList.add('done');label.innerHTML='<svg class="ic"><use href="#i-check"/></svg>'+h.getAttribute('data-done')},900)}
+    function stop(){clearTimeout(t);if(!h.classList.contains('done'))h.classList.remove('on')}
+    h.addEventListener('pointerdown',function(e){e.preventDefault();start()});
+    ['pointerup','pointerleave','pointercancel'].forEach(function(ev){h.addEventListener(ev,stop)});
+    h.addEventListener('keydown',function(e){if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();start()}});
+    h.addEventListener('keyup',function(e){if(e.key===' '||e.key==='Enter')stop()});
+    h.addEventListener('dblclick',function(){if(h.classList.contains('done')){h.classList.remove('done');label.innerHTML=orig}});
+  });
+
+  /* copy buttons */
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var el=document.getElementById(b.getAttribute('data-copy')),txt=el.textContent;
+      function sel(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press copy'}
+      try{navigator.clipboard.writeText(txt).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)},sel)}catch(e){sel()}
+    });
+  });
+})();
+</script>
+
+
+<script id="v2-interactions">
+(function(){
+  // Design specimens only. No network or production actions.
+  const roleButtons=[...document.querySelectorAll('[data-show-role]')];
+  roleButtons.forEach(b=>b.addEventListener('click',()=>{
+    let v=b.dataset.showRole;
+    roleButtons.forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+    document.querySelectorAll('.v2-preview').forEach(p=>{let yes=p.id==='v2-role-'+v;p.dataset.active=String(yes);p.hidden=!yes;});
+  }));
+  const customer=document.getElementById('v2-customer-stage');
+  const initial=customer.innerHTML;
+  const pages={
+    Home:initial,
+    Orders:'<div class="v2-mobile-h">Your orders</div><div class="v2-restaurant" style="display:block;padding:16px"><div style="display:flex;justify-content:space-between"><b>#KG-1028</b><span class="v2-status info">Preparing</span></div><div class="v2-small" style="margin-top:7px">BakeCharm · 2 items · Sample order</div><div style="margin-top:17px;padding:12px;background:#FFF8EF;border-radius:12px"><b>Order is being prepared</b><div class="v2-small">You will see pickup and delivery updates here.</div></div><button class="v2-mobile-cta" type="button" data-demo-alert="Order detail is a design specimen">Track this order</button></div><div class="v2-mobile-h">Earlier orders</div><div class="v2-restaurant" style="display:block;padding:14px"><b>Margalla Kitchen</b><div class="v2-small">Completed · example only</div></div>',
+    Assistant:'<div class="v2-mobile-h">Need help?</div><div style="background:white;border:1px solid #EADBC8;border-radius:15px;padding:18px"><b>How can KhaanaGo help?</b><p class="v2-small" style="margin-top:10px">Choose a topic to start. AI or live support integration must follow requirements.</p><div class="v2-category-row" style="flex-wrap:wrap"><span class="v2-category">Track order</span><span class="v2-category">Change order</span><span class="v2-category">Help with payment</span></div></div>',
+    Profile:'<div class="v2-mobile-h">Your profile</div><div style="background:white;border:1px solid #EADBC8;border-radius:15px;padding:18px"><div style="display:flex;gap:10px;align-items:center"><div class="v2-avatar">A</div><div><b>Customer profile</b><div class="v2-small">Sample account</div></div></div><div style="margin-top:20px;border-top:1px solid #EADBC8;padding-top:10px"><div style="padding:10px 0">⌖ &nbsp; Addresses &nbsp;›</div><div style="padding:10px 0">◷ &nbsp; Preferences &nbsp;›</div><div style="padding:10px 0">◉ &nbsp; Account settings &nbsp;›</div></div></div>'
+  };
+  document.querySelectorAll('[data-customer-nav]').forEach(b=>b.addEventListener('click',()=>{
+    let page=b.dataset.customerNav;
+    document.querySelectorAll('[data-customer-nav]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    customer.innerHTML=pages[page];
+  }));
+  let stages=[['Pickup is next','4 min away','Hold / confirm arrival →'],['Arrived at pickup','At restaurant','Confirm items collected →'],['Deliver to customer','On delivery','Confirm handover →'],['Delivery complete','Done','Reset demo']];
+  let idx=0;const btn=document.getElementById('v2-rider-next'),feedback=document.getElementById('v2-rider-feedback');
+  btn.addEventListener('click',()=>{idx=(idx+1)%stages.length;const [head,eta,act]=stages[idx];document.querySelector('#v2-role-rider .v2-mobile-head h3').textContent=head;document.getElementById('v2-rider-eta').textContent=eta;btn.textContent=act;feedback.textContent=idx===0?'Demo reset.':`Specimen updated: ${head}. Production requires verified state transitions and accessible confirmation.`;});
+  document.querySelectorAll('[data-rider-message]').forEach(b=>b.addEventListener('click',()=>{feedback.textContent=b.dataset.riderMessage+' (illustrative; no message sent).';}));
+  const vendorContent=document.getElementById('v2-erp-content');const vendorStart=vendorContent.innerHTML;
+  const v={
+    Overview:vendorStart,
+    Orders:`<div class="v2-vendor-filter"><input type="search" aria-label="Search sample order records" placeholder="Search order ID or item" id="v2-order-filter"><button type="button" class="v2-btn-sm">Status: All ▾</button><button type="button" class="v2-btn-sm primary">+ New record</button></div><div class="v2-desktop-panel"><h4>Order records · 3 sample rows</h4><table class="v2-mini-table" id="v2-order-table"><thead><tr><th>ORDER</th><th>ITEMS</th><th>TIME</th><th>STATUS</th></tr></thead><tbody><tr><td>#KG-1028</td><td>Chocolate cake</td><td>7:00 PM</td><td><span class="v2-status warn">Preparing</span></td></tr><tr><td>#KG-1029</td><td>Chicken biryani</td><td>7:20 PM</td><td><span class="v2-status info">New</span></td></tr><tr><td>#KG-1030</td><td>Brownie box</td><td>7:30 PM</td><td><span class="v2-status good">Ready</span></td></tr></tbody></table></div>`,
+    Kitchen:`<div class="v2-vendor-filter"><span class="v2-status info">● Live board pattern</span><button class="v2-btn-sm">Today ▾</button><button class="v2-btn-sm">Sort by due time</button></div><div class="v2-mini-columns"><div class="v2-mini-col"><h5>New · 1</h5><div class="v2-mini-ticket"><b>#KG-1029</b>Chicken biryani × 2<br><span class="v2-status info" style="margin-top:8px">New</span></div></div><div class="v2-mini-col"><h5>Preparing · 1</h5><div class="v2-mini-ticket"><b>#KG-1028</b>Chocolate cake · 1 lb<br><span class="v2-status warn" style="margin-top:8px">Due soon</span></div></div><div class="v2-mini-col"><h5>Ready · 1</h5><div class="v2-mini-ticket"><b>#KG-1030</b>Brownie box × 3<br><span class="v2-status good" style="margin-top:8px">Pickup ready</span></div></div></div>`,
+    Capacity:`<div class="v2-desktop-panel"><h4>Capacity by time window</h4><div style="display:grid;gap:19px"><div><div style="display:flex;justify-content:space-between"><b>6:00–7:00 PM</b><span>7/12 units · Limited</span></div><div class="v2-mini-meter"><i style="width:58%"></i></div></div><div><div style="display:flex;justify-content:space-between"><b>7:00–8:00 PM</b><span>11/12 units · High load</span></div><div class="v2-mini-meter"><i style="width:92%;background:#EAB308"></i></div></div><div><div style="display:flex;justify-content:space-between"><b>8:00–9:00 PM</b><span>12/12 units · Full</span></div><div class="v2-mini-meter"><i style="width:100%;background:#DC2626"></i></div></div></div><p style="font:600 11px/1.6 var(--font);color:#6B635B;margin-top:16px">Sample capacity bands: eligibility is based on validated real remaining capacity.</p></div>`,
+    Inventory:`<div class="v2-vendor-filter"><input aria-label="Search inventory specimen" placeholder="Search item or SKU"><button type="button" class="v2-btn-sm primary">+ Add item</button></div><div class="v2-desktop-panel"><h4>Ingredient inventory · sample</h4><table class="v2-mini-table"><thead><tr><th>ITEM</th><th>ON HAND</th><th>REORDER POINT</th><th>STATUS</th></tr></thead><tbody><tr><td>Flour</td><td>20 kg</td><td>5 kg</td><td><span class="v2-status good">In stock</span></td></tr><tr><td>Milk</td><td>2 L</td><td>5 L</td><td><span class="v2-status warn">Low stock</span></td></tr><tr><td>Eggs</td><td>0 pcs</td><td>12 pcs</td><td><span class="v2-status bad">Out of stock</span></td></tr></tbody></table></div>`
+  };
+  document.querySelectorAll('[data-vendor-page]').forEach(b=>b.addEventListener('click',()=>{
+    const page=b.dataset.vendorPage;
+    document.querySelectorAll('[data-vendor-page]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+    document.getElementById('v2-erp-crumb').textContent=page;
+    document.getElementById('v2-erp-title').textContent=page==='Overview'?'Operations overview':page;
+    vendorContent.innerHTML=v[page];
+    const filter=vendorContent.querySelector('#v2-order-filter');
+    if(filter)filter.addEventListener('input',()=>{
+      let q=filter.value.trim().toLowerCase();vendorContent.querySelectorAll('#v2-order-table tbody tr').forEach(r=>r.hidden=!r.innerText.toLowerCase().includes(q));
+    });
+  }));
+  // Any controls included only as visual examples must not imply an API mutation.
+  document.getElementById('v2-role-vendor').addEventListener('click',e=>{
+    const b=e.target.closest('button.v2-btn-sm');
+    if(!b)return;
+    if(b.textContent.includes('New record')||b.textContent.includes('Add item')){
+      const note=document.createElement('div');note.className='v2-tip';note.textContent='Design specimen only: production creation uses a validated form and authorized API.';
+      const existing=document.querySelector('#v2-erp-content .v2-tip');if(existing)existing.remove();vendorContent.prepend(note);
+    }
+  });
+})();
+</script>
+</body></html>

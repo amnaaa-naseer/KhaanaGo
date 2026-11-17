@@ -72,16 +72,18 @@ class HttpKhaanaApi implements KhaanaApi {
 class MemoryKhaanaApi implements KhaanaApi {
   MemoryKhaanaApi() {
     vendors = [
-      {'id': 'bakecharm', 'name': 'BakeCharm', 'cuisine': 'Bakery', 'area': 'F-11 Markaz', 'open': true, 'intakePercent': 72, 'rating': 4.7},
-      {'id': 'margalla', 'name': 'Margalla Grill', 'cuisine': 'BBQ', 'area': 'F-10', 'open': false, 'intakePercent': 0, 'rating': 4.2},
+      {'id': 'bakecharm', 'name': 'BakeCharm', 'cuisine': 'Bakery', 'dietary': ['Vegetarian'], 'area': 'F-11 Markaz', 'open': true, 'intakePercent': 72, 'rating': 4.7, 'etaMin': 40, 'etaMax': 55},
+      {'id': 'lazeez', 'name': 'Lazeez Karahi', 'cuisine': 'Pakistani', 'dietary': ['Halal'], 'area': 'G-9', 'open': true, 'intakePercent': 40, 'rating': 4.5, 'etaMin': 25, 'etaMax': 35},
+      {'id': 'margalla', 'name': 'Margalla Grill', 'cuisine': 'BBQ', 'dietary': ['Halal'], 'area': 'F-10', 'open': false, 'opensAt': '12:00', 'intakePercent': 0, 'rating': 4.2, 'etaMin': 30, 'etaMax': 40},
     ];
     menu = [
       {'id': 'cake', 'vendorId': 'bakecharm', 'name': 'Chocolate fudge cake', 'price': 1850, 'available': true, 'fragile': true, 'allergens': 'Milk, egg, gluten'},
       {'id': 'brownie', 'vendorId': 'bakecharm', 'name': 'Walnut brownie', 'price': 450, 'available': false, 'fragile': false, 'allergens': 'Nuts, gluten'},
     ];
     slots = [
-      {'id': '1830', 'label': '6:30 PM', 'percent': 40, 'band': 'Available', 'bookable': true},
-      {'id': '1930', 'label': '7:30 PM', 'percent': 90, 'band': 'Full', 'bookable': false},
+      {'id': '1830', 'vendorId': 'bakecharm', 'label': '6:30 PM', 'percent': 40, 'band': 'Available', 'bookable': true},
+      {'id': '1930', 'vendorId': 'bakecharm', 'label': '7:30 PM', 'percent': 90, 'band': 'Full', 'bookable': false},
+      {'id': 'lz1900', 'vendorId': 'lazeez', 'label': '7:00 PM', 'percent': 30, 'band': 'Available', 'bookable': true},
     ];
   }
 
@@ -160,9 +162,12 @@ class MemoryKhaanaApi implements KhaanaApi {
     final food = lines.fold<int>(0, (sum, line) => sum + (line['price'] as int) * (line['qty'] as int));
     final deliveryBase = body['delivery'] == 'pooled' ? 120 : 180;
     final discount = body['delivery'] == 'pooled' ? (deliveryBase * 0.3).round() : 0;
+    final placedAt = DateTime.now().toUtc().toIso8601String();
     final order = {
       'id': 'KG-${1042 + orders.length}',
       'status': 'new',
+      'vendorId': vendorId,
+      'vendorName': vendors.cast<Map<String, dynamic>>().where((entry) => entry['id'] == vendorId).firstOrNull?['name'],
       'food': food,
       'deliveryFee': deliveryBase - discount,
       'discount': discount,
@@ -172,6 +177,8 @@ class MemoryKhaanaApi implements KhaanaApi {
       'delivery': body['delivery'],
       'payment': body['payment'],
       'lines': lines,
+      'createdAt': placedAt,
+      'events': {'placed': placedAt},
     };
     orders = [order, ...orders];
     holds.remove(body['slotId']);
@@ -181,8 +188,21 @@ class MemoryKhaanaApi implements KhaanaApi {
   @override
   Future<Map<String, dynamic>> advance(String orderId, String action, {String role = 'vendor_staff', String? code}) async {
     final order = orders.firstWhere((o) => o['id'] == orderId, orElse: () => throw ApiException('Order not found.'));
-    if (action == 'deliver' && code != '482913') throw ApiException('That code does not match. The delivery stays incomplete.');
+    if (action == 'deliver' && code != '482913' && code != order['code']) throw ApiException('That code does not match. The delivery stays incomplete.');
     const next = {'accept': 'preparing', 'ready': 'ready', 'pickup': 'picked_up', 'deliver': 'delivered', 'cancel': 'cancelled'};
+    final now = DateTime.now().toUtc().toIso8601String();
+    final events = Map<String, dynamic>.from((order['events'] as Map?) ?? {});
+    if (action == 'accept') events['accepted'] = now;
+    if (action == 'ready') events['preparing'] = now;
+    if (action == 'pickup') {
+      events['ready'] = now;
+      order['rider'] = {'name': 'Hamza Ali', 'vehicle': 'Motorbike'};
+    }
+    if (action == 'deliver') {
+      events['onTheWay'] = now;
+      events['delivered'] = now;
+    }
+    order['events'] = events;
     order['status'] = next[action] ?? order['status'];
     if (action == 'deliver') finance['revenue'] = (finance['revenue'] as int) + 1850;
     return order;

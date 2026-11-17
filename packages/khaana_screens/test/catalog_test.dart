@@ -16,14 +16,35 @@ void main() {
     expect(kScreenCatalog.where((s) => s.kind == 'Layout set').length, 3);
   });
 
-  testWidgets('every design renders its id, title, and a primary action', (tester) async {
+  testWidgets('every design renders its title and a primary action without a design id', (tester) async {
     final api = MemoryKhaanaApi();
     for (final spec in kScreenCatalog) {
       await tester.pumpWidget(MaterialApp(home: ScreenPage(spec: spec, api: api, role: spec.role == 'shared' ? 'customer' : spec.role, onOpen: (_) {})));
       await tester.pump();
-      expect(find.text(spec.id), findsWidgets, reason: spec.id);
+      expect(find.text(spec.id), findsNothing, reason: spec.id);
+      expect(find.text('${spec.priority} · ${spec.kind} · ${spec.module}'), findsNothing, reason: spec.id);
       expect(find.text(spec.title), findsWidgets, reason: spec.title);
-      expect(find.byKey(Key('primary-${spec.id}')), findsOneWidget, reason: spec.id);
+      if (spec.id == 'E3-US1-UI1') {
+        expect(find.text('Browse open kitchens'), findsNothing);
+        expect(find.text('Open now'), findsOneWidget);
+      } else if (spec.id == 'E17-US1-UI1') {
+        expect(find.text('Help'), findsOneWidget);
+      } else {
+        expect(find.byKey(Key('primary-${spec.id}')), findsOneWidget, reason: spec.id);
+      }
     }
+  });
+
+  testWidgets('state switcher stays hidden until dev tools are on', (tester) async {
+    final spec = kScreenCatalog.first;
+    final api = MemoryKhaanaApi();
+    await tester.pumpWidget(MaterialApp(home: ScreenPage(spec: spec, api: api, onOpen: (_) {})));
+    await tester.pump();
+    expect(find.text('ready'), findsNothing);
+
+    await tester.pumpWidget(MaterialApp(home: ScreenPage(spec: spec, api: api, devTools: true, onOpen: (_) {})));
+    await tester.pump();
+    expect(find.text('ready'), findsOneWidget);
+    expect(find.text('empty'), findsOneWidget);
   });
 }

@@ -41,6 +41,9 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
   const [query, setQuery] = useState('')
   const [collapsed, setCollapsed] = useState(() => stored(`khaanago:${role}:collapsed`, '0') === '1')
   const [actor, setActor] = useState(() => stored(`khaanago:${role}:actor`, role === 'admin' ? 'admin' : 'vendor_owner'))
+  const [devTools, setDevTools] = useState(() => {
+    try { return new URLSearchParams(window.location.search).get('dev') === '1' } catch { return false }
+  })
   const spec = list.find((item) => item.id === id) ?? list[0]
   const visible = list.filter((item) => actor !== 'vendor_staff' || !staffDenied(item))
   const needle = query.trim().toLowerCase()
@@ -81,14 +84,14 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
           </label>
         )}
         <label className="nav-search">Find a screen
-          <input value={query} placeholder="Name or ID" onChange={(event) => setQuery(event.target.value)} />
+          <input value={query} placeholder="Search" onChange={(event) => setQuery(event.target.value)} />
         </label>
         {[...groups.entries()].map(([name, items]) => (
           <div key={name}>
             <div className="nav-group">{name}</div>
             {items.map((item) => (
               <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} title={item.title} onClick={() => setId(item.id)}>
-                {collapsed ? item.title.slice(0, 2) : item.title}<small>{item.id}</small>
+                {collapsed ? item.title.slice(0, 2) : item.title}
               </button>
             ))}
           </div>
@@ -99,12 +102,16 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
         <header className="topbar">
           <div>
             <p className="crumb"><button type="button" onClick={openModule}>{spec.module || 'Shared'}</button> / {spec.title}</p>
-            <p className="page-title">{spec.title}</p>
+            <p className="page-title" onPointerDown={() => {
+              const timer = window.setTimeout(() => setDevTools((value) => !value), 700)
+              const clear = () => window.clearTimeout(timer)
+              window.addEventListener('pointerup', clear, { once: true })
+              window.addEventListener('pointercancel', clear, { once: true })
+            }}>{spec.title}</p>
           </div>
-          <span className="badge info">{spec.priority} · {spec.kind}</span>
         </header>
         <main>
-          <ScreenBody spec={spec} role={actor} onOpen={setId} />
+          <ScreenBody spec={spec} role={actor} onOpen={setId} devTools={devTools} />
         </main>
       </div>
     </div>
@@ -128,13 +135,42 @@ function money(value: number) {
   return `Rs ${Math.round(value).toLocaleString('en-PK')}`
 }
 
-function bandOf(percent: number) {
-  if (percent >= 85) return 'Full'
-  if (percent >= 60) return 'Limited'
-  return 'Available'
+function paceOf(percent: number) {
+  if (percent >= 85) return { label: 'Full', tone: 'full' }
+  if (percent >= 60) return { label: 'Busy', tone: 'limited' }
+  return { label: 'Quiet', tone: 'available' }
 }
 
-export function ScreenBody({ spec, role, onOpen }: { spec: ScreenSpec; role: string; onOpen: (id: string) => void }) {
+function paceLabel(band: unknown, percent?: unknown) {
+  const named = String(band ?? '').toLowerCase()
+  if (named === 'full') return 'Full'
+  if (named === 'limited' || named === 'busy') return 'Busy'
+  if (named === 'available' || named === 'quiet') return 'Quiet'
+  if (percent != null && percent !== '') return paceOf(Number(percent)).label
+  return ''
+}
+
+function StateSwitcher({ preview, onChange }: { preview: string; onChange: (state: string) => void }) {
+  return (
+    <div className="states">
+      {['ready', 'loading', 'empty', 'error'].map((state) => (
+        <button key={state} aria-pressed={preview === state} onClick={() => onChange(state)}>{state}</button>
+      ))}
+    </div>
+  )
+}
+
+function plainLabel(text: string) {
+  return text
+    .replace(/\s*\([^)]*\b(?:AC\d+|E\d+-US\d+(?:-UI\d+)?)[^)]*\)/g, '')
+    .replace(/\bE\d+-US\d+(?:-UI\d+)?\b/g, '')
+    .replace(/\bAC\d+\b/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\s+([,.;:])/g, '$1')
+    .trim()
+}
+
+export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: ScreenSpec; role: string; onOpen: (id: string) => void; devTools?: boolean }) {
   const [data, setData] = useState<DemoState | null>(null)
   const [preview, setPreview] = useState('ready')
   const [notice, setNotice] = useState('')
@@ -148,7 +184,7 @@ export function ScreenBody({ spec, role, onOpen }: { spec: ScreenSpec; role: str
   async function save() {
     try {
       await api(`/v1/screens/${spec.id}/submit`, { method: 'POST', role, body: { fields } })
-      setNotice(`Saved ${spec.id}. Demo mode does not write a production database.`)
+      setNotice('Saved.')
     } catch (err) {
       setNotice(err instanceof Error ? err.message : 'Save failed')
     }
@@ -164,13 +200,24 @@ export function ScreenBody({ spec, role, onOpen }: { spec: ScreenSpec; role: str
     }
   }
 
-  if (preview === 'loading') return <p>Loading</p>
-  if (preview === 'error') return <button onClick={() => setPreview('ready')}>Try again</button>
-  if (preview === 'empty') return <p>Nothing to show yet.</p>
+  if (preview === 'loading' || preview === 'error' || preview === 'empty') {
+    return (
+      <section className="page">
+        {devTools && <StateSwitcher preview={preview} onChange={setPreview} />}
+        {preview === 'loading' && <p>Loading</p>}
+        {preview === 'error' && (
+          <>
+            <p>We could not load this page. Please try again.</p>
+            <button onClick={() => setPreview('ready')}>Try again</button>
+          </>
+        )}
+        {preview === 'empty' && <p>Nothing to show yet.</p>}
+      </section>
+    )
+  }
   if (staffBlocked) {
     return (
       <section>
-        <p className="id">{spec.id}</p>
         <h1>{spec.title}</h1>
         <p>You do not have access to this page.</p>
         <button className="primary" onClick={() => onOpen('E7-US3-UI1')}>Back to kitchen board</button>
@@ -181,14 +228,8 @@ export function ScreenBody({ spec, role, onOpen }: { spec: ScreenSpec; role: str
   const orders = data?.orders ?? []
   return (
     <section className="page">
-      <p className="id">{spec.id}</p>
       <h1>{spec.title}</h1>
-      <p className="muted">{spec.priority} · {spec.kind} · {spec.requirements}</p>
-      <div className="states">
-        {['ready', 'loading', 'empty', 'error'].map((state) => (
-          <button key={state} aria-pressed={preview === state} onClick={() => setPreview(state)}>{state}</button>
-        ))}
-      </div>
+      {devTools && <StateSwitcher preview={preview} onChange={setPreview} />}
       {notice && <p role="status">{notice}</p>}
       {spec.id === 'E1-US3-UI5' && <OwnerDashboard data={data} onOpen={onOpen} />}
       {spec.id === 'E1-US3-UI6' && <StaffHome onOpen={onOpen} />}
@@ -215,15 +256,18 @@ export function ScreenBody({ spec, role, onOpen }: { spec: ScreenSpec; role: str
         </div>
       )}
       {spec.family === 'finance' && <FinancePanel data={data} />}
-      {spec.family === 'dashboard' && spec.id !== 'E20-US4-UI1' && <p>Orders {orders.length}. Intake {data?.capacity?.intakePercent ?? 0}% ({data?.capacity?.band}).</p>}
+      {spec.family === 'dashboard' && spec.id !== 'E20-US4-UI1' && <p>Orders {orders.length}. Kitchen {paceOf(Number(data?.capacity?.intakePercent ?? 0)).label}.</p>}
       {spec.family === 'list' && <RecordTable spec={spec} data={data} />}
-      {spec.clauses.map((clause) => (
-        <label key={clause}>{clause}
-          <input aria-label={clause} value={fields[clause] ?? ''} onChange={(event) => setFields({ ...fields, [clause]: event.target.value })} />
-        </label>
-      ))}
+      {spec.clauses.map((clause) => {
+        const label = plainLabel(clause)
+        if (!label) return null
+        return (
+          <label key={clause}>{label}
+            <input aria-label={label} value={fields[clause] ?? ''} onChange={(event) => setFields({ ...fields, [clause]: event.target.value })} />
+          </label>
+        )
+      })}
       <button className="primary" onClick={save}>Save {spec.title}</button>
-      <p className="muted">Stories {spec.stories}. Simulated payments, maps, and nutrition stay labelled.</p>
       <button className="ghost" onClick={() => onOpen(role === 'admin' ? 'E20-US4-UI1' : role === 'vendor_staff' ? 'E1-US3-UI6' : 'E1-US3-UI5')}>Back to workspace</button>
     </section>
   )
@@ -235,7 +279,7 @@ function OwnerDashboard({ data, onOpen }: { data: DemoState | null; onOpen: (id:
   const pendingCustom = active.filter((order) => (order.lines ?? []).some((line: any) => line.fragile || line.note || line.customizable))
   const low = (data?.stock ?? []).filter((item) => Number(item.quantity) <= Number(item.reorderAt))
   const percent = Number(data?.capacity?.intakePercent ?? 0)
-  const band = bandOf(percent)
+  const pace = paceOf(percent)
   const filled = Math.round((percent / 100) * 12)
   const counts = [['new', 'New'], ['preparing', 'Preparing'], ['ready', 'Ready'], ['picked_up', 'Handed over'], ['delivered', 'Delivered']].map(([status, label]) => ({ status, label, count: orders.filter((order) => order.status === status).length }))
   const max = Math.max(1, ...counts.map((item) => item.count))
@@ -249,18 +293,17 @@ function OwnerDashboard({ data, onOpen }: { data: DemoState | null; onOpen: (id:
         <button className="kpi" onClick={() => onOpen('E7-US3-UI1')}><span>In preparation</span><strong>{orders.filter((order) => order.status === 'preparing').length}</strong></button>
         <button className="kpi" onClick={() => onOpen('E7-US3-UI1')}><span>Ready for pickup</span><strong>{orders.filter((order) => order.status === 'ready').length}</strong></button>
         <button className="kpi" onClick={() => onOpen('E12-US1-UI1')}><span>Revenue</span><strong>{money(Number(data?.finance?.revenue ?? 0))}</strong></button>
-        <button className="kpi" onClick={() => onOpen('E5-US1-UI3')}><span>Capacity now</span><strong>{percent}% · {band}</strong></button>
+        <button className="kpi" onClick={() => onOpen('E5-US1-UI3')}><span>Kitchen</span><strong>{pace.label}</strong></button>
         <button className="kpi" onClick={() => onOpen('E9-US1-UI1')}><span>Low stock</span><strong>{low.length}</strong></button>
         <button className="kpi" onClick={() => onOpen('E7-US3-UI1')}><span>Pending custom orders</span><strong>{pendingCustom.length}</strong></button>
       </div>
       <div className="grid-2">
         <section className="panel">
-          <h2>Kitchen intake</h2>
-          <p><span className={`badge ${band.toLowerCase()}`}>{band}</span> {filled} of 12 · {data?.capacity?.ordersPerHour ?? 12} orders in the hourly view</p>
-          <div className="meter" aria-label={`${filled} of 12, ${band}`}>
-            {Array.from({ length: 12 }, (_, index) => <i key={index} className={index < filled ? `on ${band.toLowerCase()}` : ''} />)}
+          <h2>Kitchen pace</h2>
+          <p><span className={`badge ${pace.tone}`}>{pace.label}</span> {filled} of 12 orders this hour</p>
+          <div className="meter" aria-label={`${pace.label}, ${filled} of 12`}>
+            {Array.from({ length: 12 }, (_, index) => <i key={index} className={index < filled ? `on ${pace.tone}` : ''} />)}
           </div>
-          <p className="muted">Intake bands are below 60% Available, 60% up to 85% Limited, and 85% or above Full. This is an intake rule, not physical occupancy.</p>
           <h2>Orders by status</h2>
           <div className="bars">
             {counts.map((item) => (
@@ -274,7 +317,7 @@ function OwnerDashboard({ data, onOpen }: { data: DemoState | null; onOpen: (id:
           {closed.map((vendor) => <p key={vendor.id}><span className="badge closed">Closed</span> {vendor.name}{vendor.opensAt ? ` · opens ${vendor.opensAt}` : ''}</p>)}
           {fullSlots.map((slot) => <p key={slot.id}><span className="badge full">Full</span> {slot.label} is not bookable</p>)}
           {(data?.complaints ?? []).filter((item) => item.status === 'Open').map((item) => <p key={item.id}><span className="badge info">Open</span> {item.id} {item.subject}</p>)}
-          {low.length + closed.length + fullSlots.length + (data?.complaints ?? []).filter((item) => item.status === 'Open').length === 0 && <p className="empty">No operational exceptions in the demo state.</p>}
+          {low.length + closed.length + fullSlots.length + (data?.complaints ?? []).filter((item) => item.status === 'Open').length === 0 && <p className="empty">Nothing needs attention.</p>}
         </section>
       </div>
       <section className="panel">
@@ -319,11 +362,11 @@ function AdminDashboard({ data, onOpen }: { data: DemoState | null; onOpen: (id:
         <button className="kpi" onClick={() => onOpen('E20-US4-UI2')}><span>Active orders</span><strong>{active.length}</strong></button>
         <button className="kpi" onClick={() => onOpen('E16-US1-UI3')}><span>Delayed orders</span><strong>{delayed.length}</strong></button>
         <button className="kpi"><span>Riders online</span><strong>{online.length}</strong></button>
-        <button className="kpi" onClick={() => onOpen('E6-US3-UI1')}><span>Slot utilisation</span><strong>{percent}%</strong></button>
+        <button className="kpi" onClick={() => onOpen('E6-US3-UI1')}><span>Kitchen</span><strong>{paceOf(percent).label}</strong></button>
       </div>
       <section className="panel">
         <h2>Live queue</h2>
-        {delayed.length === 0 && <p className="muted">No order in the demo state is marked delayed.</p>}
+        {delayed.length === 0 && <p className="muted">No delayed orders.</p>}
         {orders.length === 0 ? <p className="empty">No orders yet.</p> : (
           <table>
             <thead><tr><th>Order</th><th>Status</th><th>Vendor</th></tr></thead>
@@ -372,7 +415,7 @@ function RecordTable({ spec, data }: { spec: ScreenSpec; data: DemoState | null 
       <table>
         <tbody>
           {rows.slice(0, 8).map((row, index) => (
-            <tr key={row.id || index}><td>{row.name || row.id || row.subject}</td><td className="num">{row.price != null ? money(Number(row.price)) : row.status || row.band || row.quantity || ''}</td></tr>
+            <tr key={row.id || index}><td>{row.name || row.id || row.subject}</td><td className="num">{row.price != null ? money(Number(row.price)) : row.status || paceLabel(row.band, row.percent) || row.quantity || ''}</td></tr>
           ))}
         </tbody>
       </table>

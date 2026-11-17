@@ -11,10 +11,11 @@ describe('admin inventory', () => {
     expect(new Set(admin.map((item) => item.id)).size).toBe(29)
   })
 
-  it('renders each design id, title, and save action', () => {
+  it('renders each title and save action without a design id', () => {
     for (const spec of admin) {
       const view = render(<ScreenBody spec={spec} role="admin" onOpen={() => undefined} />)
-      expect(screen.getByText(spec.id)).toBeTruthy()
+      expect(screen.queryByText(spec.id)).toBeNull()
+      expect(screen.queryByText(`${spec.priority} · ${spec.kind}`)).toBeNull()
       expect(screen.getByRole('heading', { name: spec.title })).toBeTruthy()
       expect(screen.getByRole('button', { name: `Save ${spec.title}` })).toBeTruthy()
       view.unmount()

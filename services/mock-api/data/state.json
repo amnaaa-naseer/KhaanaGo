@@ -3,32 +3,47 @@
     {
       "id": "bakecharm",
       "name": "BakeCharm",
-      "cuisine": "Bakery · Custom cakes",
+      "cuisine": "Bakery",
+      "dietary": [
+        "Vegetarian"
+      ],
       "area": "F-11 Markaz, Islamabad",
       "rating": 4.7,
       "open": true,
       "intakePercent": 80,
+      "etaMin": 40,
+      "etaMax": 55,
       "fragile": true
     },
     {
       "id": "lazeez",
       "name": "Lazeez Karahi",
       "cuisine": "Pakistani",
+      "dietary": [
+        "Halal"
+      ],
       "area": "G-9, Islamabad",
       "rating": 4.5,
       "open": true,
       "intakePercent": 40,
+      "etaMin": 25,
+      "etaMax": 35,
       "fragile": false
     },
     {
       "id": "margalla",
       "name": "Margalla Grill",
       "cuisine": "BBQ",
+      "dietary": [
+        "Halal"
+      ],
       "area": "F-10, Islamabad",
       "rating": 4.2,
       "open": false,
       "opensAt": "12:00",
       "intakePercent": 0,
+      "etaMin": 30,
+      "etaMax": 40,
       "fragile": false
     }
   ],
@@ -78,7 +93,7 @@
       "id": "1830",
       "vendorId": "bakecharm",
       "label": "6:30 PM",
-      "booked": 5,
+      "booked": 4,
       "limit": 10
     },
     {
@@ -99,7 +114,21 @@
       "id": "2030",
       "vendorId": "bakecharm",
       "label": "8:30 PM",
-      "booked": 2,
+      "booked": 3,
+      "limit": 10
+    },
+    {
+      "id": "lz1900",
+      "vendorId": "lazeez",
+      "label": "7:00 PM",
+      "booked": 3,
+      "limit": 10
+    },
+    {
+      "id": "lz1930",
+      "vendorId": "lazeez",
+      "label": "7:30 PM",
+      "booked": 5,
       "limit": 10
     }
   ],
@@ -108,7 +137,7 @@
       "id": "flour",
       "name": "Flour",
       "unit": "kg",
-      "quantity": 8,
+      "quantity": 7.6,
       "reorderAt": 5,
       "storage": "Dry"
     },
@@ -116,7 +145,7 @@
       "id": "cream",
       "name": "Cream",
       "unit": "L",
-      "quantity": 2,
+      "quantity": 1.8,
       "reorderAt": 3,
       "storage": "Chilled"
     },
@@ -124,7 +153,7 @@
       "id": "eggs",
       "name": "Eggs",
       "unit": "pcs",
-      "quantity": 24,
+      "quantity": 21,
       "reorderAt": 12,
       "storage": "Chilled"
     }
@@ -163,22 +192,49 @@
           "note": ""
         }
       ],
-      "slotId": "1830",
-      "slotLabel": "6:30 PM",
+      "slotId": "2030",
+      "slotLabel": "8:30 PM",
       "delivery": "express",
-      "payment": "Easypaisa",
-      "status": "new",
+      "payment": "Cash on delivery",
+      "status": "delivered",
       "food": 1850,
       "deliveryFee": 180,
       "discount": 0,
       "total": 2030,
       "code": "251598",
       "customer": "Ayesha Khan",
-      "createdAt": "2026-11-16T21:04:09.866Z"
+      "vendorName": "BakeCharm",
+      "createdAt": "2026-11-16T21:54:13.965Z",
+      "events": {
+        "placed": "2026-11-16T21:54:13.965Z",
+        "accepted": "2026-11-16T21:54:14.001Z",
+        "preparing": "2026-11-16T21:54:14.011Z",
+        "ready": "2026-11-16T21:54:14.018Z",
+        "onTheWay": "2026-11-16T21:54:14.029Z",
+        "delivered": "2026-11-16T21:54:14.029Z"
+      },
+      "rider": {
+        "name": "Hamza Ali",
+        "vehicle": "Motorbike"
+      }
     }
   ],
-  "holds": [],
-  "invoices": [],
+  "holds": [
+    {
+      "userId": "cust",
+      "slotId": "1830",
+      "expiresAt": "2026-11-16T21:59:13.984Z"
+    }
+  ],
+  "invoices": [
+    {
+      "id": "INV-KG-1042",
+      "orderId": "KG-1042",
+      "total": 2030,
+      "commission": 278,
+      "status": "Pending – COD"
+    }
+  ],
   "complaints": [
     {
       "id": "C-12",
@@ -238,15 +294,39 @@
   "submissions": {},
   "audit": [
     {
-      "at": "2026-11-16T21:04:09.866Z",
+      "at": "2026-11-16T21:54:13.965Z",
       "actor": "customer",
       "action": "Placed KG-1042",
       "screen": "E3-US2-UI2"
+    },
+    {
+      "at": "2026-11-16T21:54:14.001Z",
+      "actor": "vendor_staff",
+      "action": "accept KG-1042",
+      "screen": "E7-US3-UI1"
+    },
+    {
+      "at": "2026-11-16T21:54:14.011Z",
+      "actor": "vendor_staff",
+      "action": "ready KG-1042",
+      "screen": ""
+    },
+    {
+      "at": "2026-11-16T21:54:14.018Z",
+      "actor": "rider",
+      "action": "pickup KG-1042",
+      "screen": ""
+    },
+    {
+      "at": "2026-11-16T21:54:14.029Z",
+      "actor": "rider",
+      "action": "deliver KG-1042",
+      "screen": ""
     }
   ],
   "finance": {
-    "revenue": 0,
-    "commission": 0,
+    "revenue": 2030,
+    "commission": 278,
     "expenses": 1200
   },
   "nextOrder": 1043,

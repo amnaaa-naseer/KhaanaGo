@@ -1,6 +1,6 @@
 # Build status
 
-Updated 8 November 2026. The product is not complete.
+Updated 17 November 2026. The product is not complete. Customer home and live tracking are purpose-built screens: search, filters, kitchen cards, and a live order stepper. The other designs are still catalog scaffolds.
 
 | Status | Count | Meaning |
 | --- | ---: | --- |

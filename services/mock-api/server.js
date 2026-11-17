@@ -9,9 +9,9 @@ const statePath = join(root, 'data', 'state.json')
 export function freshState() {
   return {
     vendors: [
-      { id: 'bakecharm', name: 'BakeCharm', cuisine: 'Bakery · Custom cakes', area: 'F-11 Markaz, Islamabad', rating: 4.7, open: true, intakePercent: 72, fragile: true },
-      { id: 'lazeez', name: 'Lazeez Karahi', cuisine: 'Pakistani', area: 'G-9, Islamabad', rating: 4.5, open: true, intakePercent: 40, fragile: false },
-      { id: 'margalla', name: 'Margalla Grill', cuisine: 'BBQ', area: 'F-10, Islamabad', rating: 4.2, open: false, opensAt: '12:00', intakePercent: 0, fragile: false },
+      { id: 'bakecharm', name: 'BakeCharm', cuisine: 'Bakery', dietary: ['Vegetarian'], area: 'F-11 Markaz, Islamabad', rating: 4.7, open: true, intakePercent: 72, etaMin: 40, etaMax: 55, fragile: true },
+      { id: 'lazeez', name: 'Lazeez Karahi', cuisine: 'Pakistani', dietary: ['Halal'], area: 'G-9, Islamabad', rating: 4.5, open: true, intakePercent: 40, etaMin: 25, etaMax: 35, fragile: false },
+      { id: 'margalla', name: 'Margalla Grill', cuisine: 'BBQ', dietary: ['Halal'], area: 'F-10, Islamabad', rating: 4.2, open: false, opensAt: '12:00', intakePercent: 0, etaMin: 30, etaMax: 40, fragile: false },
     ],
     menu: [
       { id: 'cake', vendorId: 'bakecharm', name: 'Chocolate fudge cake', price: 1850, category: 'Cakes', available: true, customizable: true, fragile: true, allergens: 'Milk, egg, gluten', kcal: 420, prepMinutes: 50 },
@@ -23,6 +23,8 @@ export function freshState() {
       { id: '1900', vendorId: 'bakecharm', label: '7:00 PM', booked: 7, limit: 10 },
       { id: '1930', vendorId: 'bakecharm', label: '7:30 PM', booked: 9, limit: 10 },
       { id: '2030', vendorId: 'bakecharm', label: '8:30 PM', booked: 2, limit: 10 },
+      { id: 'lz1900', vendorId: 'lazeez', label: '7:00 PM', booked: 3, limit: 10 },
+      { id: 'lz1930', vendorId: 'lazeez', label: '7:30 PM', booked: 5, limit: 10 },
     ],
     stock: [
       { id: 'flour', name: 'Flour', unit: 'kg', quantity: 8, reorderAt: 5, storage: 'Dry' },
@@ -232,7 +234,9 @@ export function handle(req, res, body) {
       total: food + deliveryBase - discount,
       code: deliveryCode(number),
       customer: user.name,
+      vendorName: vendor.name,
       createdAt: now,
+      events: { placed: now },
     }
     state.holds = state.holds.filter((item) => !(item.userId === user.id && item.slotId === slot.id))
     slot.booked += 1
@@ -252,12 +256,23 @@ export function handle(req, res, body) {
     const kitchen = user.role === 'vendor_owner' || user.role === 'vendor_staff'
     const allowed = (action === 'accept' || action === 'ready') ? kitchen : (action === 'pickup' || action === 'deliver') ? user.role === 'rider' : action === 'cancel' && (kitchen || user.id === order.customerId)
     if (!allowed) return json(res, 403, { error: 'You do not have access to this page.' })
-    if (action === 'accept' && order.status === 'new') order.status = 'preparing'
-    else if (action === 'ready' && order.status === 'preparing') order.status = 'ready'
-    else if (action === 'pickup' && order.status === 'ready') order.status = 'picked_up'
-    else if (action === 'deliver' && order.status === 'picked_up') {
+    order.events = order.events || {}
+    const at = new Date().toISOString()
+    if (action === 'accept' && order.status === 'new') {
+      order.status = 'preparing'
+      order.events.accepted = at
+    } else if (action === 'ready' && order.status === 'preparing') {
+      order.status = 'ready'
+      order.events.preparing = at
+    } else if (action === 'pickup' && order.status === 'ready') {
+      order.status = 'picked_up'
+      order.events.ready = at
+      order.rider = { name: user.name, vehicle: user.vehicle || 'Motorbike' }
+    } else if (action === 'deliver' && order.status === 'picked_up') {
       if (body.code !== order.code) return json(res, 400, { error: 'That code does not match. The delivery stays incomplete.' })
       order.status = 'delivered'
+      order.events.onTheWay = at
+      order.events.delivered = at
       for (const line of order.lines) {
         const recipe = state.recipes[line.id] || []
         for (const part of recipe) {

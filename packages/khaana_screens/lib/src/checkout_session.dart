@@ -22,6 +22,8 @@ class CheckoutSession extends ChangeNotifier {
   String? orderId;
   String? orderCode;
   String? orderStatus;
+  Map<String, dynamic>? activeOrder;
+  String? _orderSignature;
 
   int get food => price * qty;
   int get deliveryBase => delivery == 'pooled' ? 120 : 180;
@@ -87,9 +89,14 @@ class CheckoutSession extends ChangeNotifier {
   }
 
   void rememberOrder(Map order) {
-    orderId = '${order['id']}';
-    orderCode = '${order['code']}';
-    orderStatus = '${order['status']}';
+    final next = Map<String, dynamic>.from(order);
+    final signature = '${next['id']}|${next['status']}|${next['events']}|${next['rider']}';
+    activeOrder = next;
+    orderId = '${next['id']}';
+    orderCode = next['code']?.toString();
+    orderStatus = '${next['status']}';
+    if (signature == _orderSignature) return;
+    _orderSignature = signature;
     notifyListeners();
   }
 

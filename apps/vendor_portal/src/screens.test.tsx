@@ -11,10 +11,11 @@ describe('vendor inventory', () => {
     expect(new Set(vendor.map((item) => item.id)).size).toBe(73)
   })
 
-  it('renders each design id, title, and save action', () => {
+  it('renders each title and save action without a design id', () => {
     for (const spec of vendor) {
       const view = render(<ScreenBody spec={spec} role="vendor_owner" onOpen={() => undefined} />)
-      expect(screen.getByText(spec.id)).toBeTruthy()
+      expect(screen.queryByText(spec.id)).toBeNull()
+      expect(screen.queryByText(`${spec.priority} · ${spec.kind}`)).toBeNull()
       expect(screen.getByRole('heading', { name: spec.title })).toBeTruthy()
       expect(screen.getByRole('button', { name: `Save ${spec.title}` })).toBeTruthy()
       view.unmount()

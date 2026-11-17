@@ -5,7 +5,7 @@ void main() {
   testWidgets('customer opens on login', (tester) async {
     await tester.pumpWidget(KhaanaApp(role: 'customer', api: MemoryKhaanaApi(), homeId: 'E1-US1-UI3'));
     await tester.pump();
-    expect(find.text('E1-US1-UI3'), findsWidgets);
+    expect(find.text('E1-US1-UI3'), findsNothing);
     expect(find.text('Login'), findsWidgets);
   });
 }

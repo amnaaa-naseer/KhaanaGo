@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'api.dart';
 import 'checkout_session.dart';
+import 'customer_experience.dart';
 import 'screen_spec.dart';
 
 class ScreenPage extends StatefulWidget {
-  const ScreenPage({super.key, required this.spec, required this.api, required this.onOpen, this.role = 'customer', this.embedded = false, this.session});
+  const ScreenPage({super.key, required this.spec, required this.api, required this.onOpen, this.role = 'customer', this.embedded = false, this.session, this.devTools = false, this.onBack, this.onDevToggle, this.onOpenCatalog});
 
   final ScreenSpec spec;
   final KhaanaApi api;
@@ -15,6 +16,10 @@ class ScreenPage extends StatefulWidget {
   final String role;
   final bool embedded;
   final CheckoutSession? session;
+  final bool devTools;
+  final VoidCallback? onBack;
+  final VoidCallback? onDevToggle;
+  final VoidCallback? onOpenCatalog;
 
   @override
   State<ScreenPage> createState() => _ScreenPageState();
@@ -67,6 +72,7 @@ class _ScreenPageState extends State<ScreenPage> {
       final data = await widget.api.state(role: widget.role);
       if (!mounted) return;
       setState(() { _data = data; _loading = false; });
+      _captureOrder(data);
     } catch (err) {
       if (!mounted) return;
       setState(() { _error = err; _loading = false; });
@@ -76,7 +82,7 @@ class _ScreenPageState extends State<ScreenPage> {
   Future<void> _save() async {
     try {
       final saved = await widget.api.submit(widget.spec.id, {for (final e in _fields.entries) e.key: e.value.text}, role: widget.role);
-      setState(() => _notice = 'Saved ${widget.spec.id}. Demo mode does not write a production database.');
+      setState(() => _notice = 'Saved.');
       _data = await widget.api.state(role: widget.role);
       if (saved['saved'] is Map) setState(() {});
     } on ApiException catch (err) {
@@ -112,39 +118,54 @@ class _ScreenPageState extends State<ScreenPage> {
     );
   }
 
+  void _captureOrder(Map<String, dynamic> data) {
+    if (widget.role != 'customer') return;
+    final orders = ((data['orders'] as List?) ?? []).whereType<Map>();
+    Map? current;
+    if (_session.orderId != null) {
+      current = orders.where((order) => '${order['id']}' == _session.orderId).firstOrNull;
+    }
+    current ??= orders.where((order) => order['status'] != 'delivered' && order['status'] != 'cancelled').firstOrNull;
+    if (current != null) _session.rememberOrder(current);
+  }
+
   Widget _body() {
-    if (_preview == 'loading' || _loading) {
-      return const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [CircularProgressIndicator(), SizedBox(height: 12), Text('Loading')]));
+    final Widget content;
+    final trackingReady = widget.spec.id == 'E17-US1-UI1' && _session.activeOrder != null;
+    if (_preview == 'loading' || (_loading && !trackingReady)) {
+      content = const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [CircularProgressIndicator(), SizedBox(height: 12), Text('Loading')]));
+    } else if (_preview == 'error' || _error != null) {
+      content = _message('Something went wrong', 'We could not load this page. Please try again.', 'Try again', _load);
+    } else if (_preview == 'empty') {
+      content = _message(widget.spec.title, 'Nothing to show yet.', 'Refresh', _load);
+    } else if (widget.spec.ownerOnly && widget.role == 'vendor_staff') {
+      content = _message(widget.spec.title, 'You do not have access to this page.', 'Back', () => widget.onOpen('E7-US3-UI1'));
+    } else {
+      content = ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          if (_notice != null) Padding(padding: const EdgeInsets.only(bottom: 12), child: Text(_notice!)),
+          _familyBody(),
+        ],
+      );
     }
-    if (_preview == 'error' || _error != null) {
-      return _message('Something went wrong', _error?.toString() ?? 'The server did not respond.', 'Try again', _load);
-    }
-    if (_preview == 'empty') return _message(widget.spec.title, 'Nothing to show yet.', 'Refresh', _load);
-    if (widget.spec.ownerOnly && widget.role == 'vendor_staff') {
-      return _message(widget.spec.id, 'You do not have access to this page.', 'Back', () => widget.onOpen('E7-US3-UI1'));
-    }
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        Text(widget.spec.id, style: const TextStyle(fontWeight: FontWeight.w800, color: Color(0xFFC2410C))),
-        Text('${widget.spec.priority} · ${widget.spec.kind} · ${widget.spec.module}', style: const TextStyle(color: Color(0xFF6B635B))),
-        const SizedBox(height: 8),
-        Wrap(spacing: 8, children: [
+    if (!widget.devTools) return content;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+        child: Wrap(spacing: 8, children: [
           for (final state in ['ready', 'loading', 'empty', 'error'])
             ChoiceChip(label: Text(state), selected: _preview == state, onSelected: (_) => setState(() => _preview = state)),
         ]),
-        if (_notice != null) Padding(padding: const EdgeInsets.only(top: 12), child: Text(_notice!)),
-        const SizedBox(height: 12),
-        _familyBody(),
-      ],
-    );
+      ),
+      Expanded(child: content),
+    ]);
   }
 
   Widget _message(String title, String detail, String action, VoidCallback onPressed) {
     return Center(child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 420),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Text(widget.spec.id),
         Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
         const SizedBox(height: 8),
         Text(detail, textAlign: TextAlign.center),
@@ -184,8 +205,6 @@ class _ScreenPageState extends State<ScreenPage> {
 
   Widget _auth() {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      const Text('Demo sign-in. Passwords are not hashed.', style: TextStyle(color: Color(0xFF6B635B))),
-      const SizedBox(height: 12),
       TextField(controller: _fields.values.first, decoration: const InputDecoration(labelText: 'Mobile or email')),
       const SizedBox(height: 8),
       TextField(controller: _fields.values.elementAt(_fields.length > 1 ? 1 : 0), obscureText: true, decoration: const InputDecoration(labelText: 'Password')),
@@ -200,8 +219,6 @@ class _ScreenPageState extends State<ScreenPage> {
           setState(() => _notice = err.message);
         }
       }),
-      const SizedBox(height: 12),
-      ..._clauseCards(),
     ]);
   }
 
@@ -212,11 +229,10 @@ class _ScreenPageState extends State<ScreenPage> {
       Wrap(spacing: 8, runSpacing: 8, children: [
         _stat('Orders', '${orders.length}'),
         _stat('Revenue', 'Rs ${finance['revenue'] ?? 0}'),
-        _stat('Intake', '${((data['vendors'] as List?)?.isNotEmpty ?? false) ? (data['vendors'] as List).first['intakePercent'] : 0}%'),
+        _stat('Kitchen', kitchenPace(((data['vendors'] as List?)?.isNotEmpty ?? false) ? (data['vendors'] as List).first['intakePercent'] : 0)),
       ]),
       const SizedBox(height: 12),
       ..._vendorCards(data),
-      ..._clauseCards(),
       _primary('Save ${widget.spec.title}', _save),
     ]);
   }
@@ -260,7 +276,7 @@ class _ScreenPageState extends State<ScreenPage> {
         height: 140,
         alignment: Alignment.center,
         decoration: BoxDecoration(color: const Color(0xFF242424), borderRadius: BorderRadius.circular(16)),
-        child: const Text('Simulated map. Text address is the fallback.', style: TextStyle(color: Color(0xFFFFF8EF))),
+        child: const Text('Delivery area', style: TextStyle(color: Color(0xFFFFF8EF))),
       ),
       const SizedBox(height: 8),
       Text(current == null ? 'F-11 Markaz, Islamabad' : '${current['id']} · ${current['status']} · ${current['slotLabel'] ?? ''}'),
@@ -271,7 +287,6 @@ class _ScreenPageState extends State<ScreenPage> {
           onSubmitted: (code) => _advance('${current['id']}', 'deliver', role: 'rider', code: code),
         ),
       _primary(current == null ? 'Waiting for an order' : 'Update ${current['id']}', current == null ? () { _load(); } : () => _advance('${current['id']}', 'pickup', role: 'rider')),
-      ..._clauseCards(),
     ]);
   }
 
@@ -289,7 +304,6 @@ class _ScreenPageState extends State<ScreenPage> {
           onTap: () => widget.onOpen(widget.spec.role == 'customer' ? 'E3-US1-UI3' : widget.spec.id),
         ),
       if (menu.isEmpty) const Text('No items match.'),
-      ..._clauseCards(),
       _primary('Save filters', _save),
     ]);
   }
@@ -303,25 +317,19 @@ class _ScreenPageState extends State<ScreenPage> {
       const SizedBox(height: 8),
       for (final invoice in invoices) Text('${invoice['id']} · Rs ${invoice['total']} · ${invoice['status']}'),
       if (invoices.isEmpty) const Text('No invoices yet. A delivered order creates one.'),
-      ..._clauseCards(),
       _primary('Record note', _save),
     ]);
   }
 
   Widget _chat() {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      const Text('Simulated assistant. This is not a live model.'),
-      const SizedBox(height: 8),
       TextField(controller: _fields.values.first, decoration: const InputDecoration(labelText: 'Ask about an order, menu, or delivery')),
-      _primary('Send', () => setState(() => _notice = 'Demo reply: I can open your latest order or the kitchen board. I do not invent recommendations.')),
-      ..._clauseCards(),
+      _primary('Send', () => setState(() => _notice = 'I can open your latest order or the kitchen board.')),
     ]);
   }
 
   Widget _overlay() {
     return _card(widget.spec.title, [
-      const Text('This overlay stays attached to the screen that opened it.'),
-      ..._clauseCards(),
       _primary('Confirm', _save),
       TextButton(onPressed: () => widget.onOpen(_homeFor(widget.role)), child: const Text('Close')),
     ]);
@@ -329,12 +337,10 @@ class _ScreenPageState extends State<ScreenPage> {
 
   Widget _layout() {
     return Column(children: [
-      const Text('The same screen at phone and desktop widths.'),
-      const SizedBox(height: 8),
       Row(children: [
-        Expanded(child: _card('360 px', _clauseCards())),
+        Expanded(child: _card('Phone', const [Text('A single column for a phone.')])),
         const SizedBox(width: 8),
-        Expanded(child: _card('1280 px', [const Text('Navigation rail and a wider table.')])),
+        Expanded(child: _card('Desktop', const [Text('A side menu and a wider table.')])),
       ]),
       _primary('Save layout note', _save),
     ]);
@@ -354,8 +360,8 @@ class _ScreenPageState extends State<ScreenPage> {
       if (widget.spec.id == 'E5-US3-UI1')
         for (final slot in (((_data?['slots'] as List?) ?? []).cast<Map>()))
           ListTile(
-            title: Text('${slot['label']} · ${slot['band']}'),
-            subtitle: Text('${slot['percent']}% intake. Full means the intake rule, not a physically full kitchen.'),
+            title: Text('${slot['label']}'),
+            subtitle: Text(kitchenPace(slot['percent'], slot['band'])),
             selected: _slot == slot['id'],
             enabled: slot['bookable'] == true,
             onTap: () => setState(() => _slot = '${slot['id']}'),
@@ -366,7 +372,7 @@ class _ScreenPageState extends State<ScreenPage> {
           onChanged: (value) { if (value != null) setState(() => _payment = value); },
           child: Column(children: [
             for (final method in ['Cash on delivery', 'JazzCash', 'Easypaisa', 'Card'])
-              RadioListTile<String>(value: method, title: Text(method), subtitle: const Text('Gateway pages are simulated.')),
+              RadioListTile<String>(value: method, title: Text(method)),
           ]),
         ),
       if (widget.spec.id == 'E3-US2-UI2' || widget.spec.id == 'E4-US1-UI1')
@@ -385,8 +391,7 @@ class _ScreenPageState extends State<ScreenPage> {
     try {
       final order = await widget.api.placeOrder(_session.orderBody());
       _session.rememberOrder(order);
-      setState(() => _notice = 'Placed ${order['id']}. The kitchen sees this same order. Code ${order['code']}.');
-      widget.onOpen('E3-US4-UI2');
+      widget.onOpen('E17-US1-UI1');
     } on ApiException catch (err) {
       setState(() => _notice = err.message);
     }
@@ -395,7 +400,9 @@ class _ScreenPageState extends State<ScreenPage> {
   Widget? _journey(Map<String, dynamic> data) {
     switch (widget.spec.id) {
       case 'E3-US1-UI1':
-        return _homeMarkets(data);
+        return CustomerHome(data: data, onOpen: widget.onOpen, onVendor: _session.selectVendor, onDevToggle: widget.onDevToggle, onOpenCatalog: widget.onOpenCatalog, devTools: widget.devTools);
+      case 'E17-US1-UI1':
+        return CustomerTracking(order: _trackedOrder(data), vendorName: _session.vendorName, onOpen: widget.onOpen, onBack: widget.onBack, onDevToggle: widget.onDevToggle, onOpenCatalog: widget.onOpenCatalog, devTools: widget.devTools);
       case 'E3-US1-UI2':
         return _menuList(data);
       case 'E3-US1-UI3':
@@ -414,7 +421,6 @@ class _ScreenPageState extends State<ScreenPage> {
         return _review();
       case 'E3-US4-UI2':
         return _placed();
-      case 'E17-US1-UI1':
       case 'E17-US2-UI1':
         return _orderList(data);
       default:
@@ -422,19 +428,16 @@ class _ScreenPageState extends State<ScreenPage> {
     }
   }
 
-  Widget _homeMarkets(Map<String, dynamic> data) {
-    final vendors = ((data['vendors'] as List?) ?? []).cast<Map>();
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      const Text('Kitchens near F-11, Islamabad', style: TextStyle(fontWeight: FontWeight.w700)),
-      for (final vendor in vendors)
-        ListTile(
-          title: Text('${vendor['name']}'),
-          subtitle: Text('${vendor['cuisine']} · ${vendor['area']} · ${vendor['open'] == true ? 'Open' : 'Closed'} · intake ${vendor['intakePercent']}%'),
-          enabled: vendor['open'] == true,
-          onTap: vendor['open'] == true ? () { _session.selectVendor(vendor); widget.onOpen('E3-US1-UI2'); } : null,
-        ),
-      _primary('Browse open kitchens', () => widget.onOpen('E3-US1-UI2')),
-    ]);
+  Map<String, dynamic>? _trackedOrder(Map<String, dynamic> data) {
+    final live = _session.activeOrder;
+    if (live != null && (_session.orderId == null || '${live['id']}' == _session.orderId)) return live;
+    final orders = ((data['orders'] as List?) ?? []).whereType<Map>();
+    if (_session.orderId != null) {
+      final match = orders.where((order) => '${order['id']}' == _session.orderId).firstOrNull;
+      if (match != null) return Map<String, dynamic>.from(match);
+    }
+    final active = orders.where((order) => order['status'] != 'delivered' && order['status'] != 'cancelled').firstOrNull;
+    return active == null ? null : Map<String, dynamic>.from(active);
   }
 
   Widget _menuList(Map<String, dynamic> data) {
@@ -518,8 +521,8 @@ class _ScreenPageState extends State<ScreenPage> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       for (final slot in slots)
         ListTile(
-          title: Text('${slot['label']} · ${slot['band']}'),
-          subtitle: Text('${slot['percent']}% intake. Full means the intake rule, not a physically full kitchen.'),
+          title: Text('${slot['label']}'),
+          subtitle: Text(kitchenPace(slot['percent'], slot['band'])),
           selected: _session.slotId == slot['id'],
           enabled: slot['bookable'] == true,
           onTap: slot['bookable'] == true ? () => _session.selectSlot(slot) : null,
@@ -538,7 +541,6 @@ class _ScreenPageState extends State<ScreenPage> {
 
   Widget _paymentChoice() {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      const Text('Card and wallet pages are simulated.'),
       RadioGroup<String>(
         groupValue: _session.payment,
         onChanged: (value) { if (value != null) _session.setPayment(value); },
@@ -547,7 +549,7 @@ class _ScreenPageState extends State<ScreenPage> {
             RadioListTile<String>(value: method, title: Text(method)),
         ]),
       ),
-      SwitchListTile(
+      if (widget.devTools) SwitchListTile(
         contentPadding: EdgeInsets.zero,
         title: const Text('Simulate a failed card payment'),
         value: _session.simulatePaymentFailure,
@@ -579,11 +581,20 @@ class _ScreenPageState extends State<ScreenPage> {
   }
 
   Widget _orderList(Map<String, dynamic> data) {
-    final orders = ((data['orders'] as List?) ?? []).cast<Map>();
+    final orders = ((data['orders'] as List?) ?? []).whereType<Map>().toList();
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      if (orders.isEmpty && _session.orderId == null) const Text('No orders yet.'),
-      if (_session.orderId != null) Text('Latest ${_session.orderId} · ${_session.orderStatus ?? 'new'} · code ${_session.orderCode ?? ''}'),
-      for (final order in orders) Text('${order['id']} · ${order['status']} · Rs ${order['total']} · ${order['slotLabel'] ?? ''}'),
+      if (orders.isEmpty) const Text('No orders yet.'),
+      for (final order in orders)
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Text('${order['id']}'),
+          subtitle: Text('${orderStage(order['status'])} · Rs ${order['total']}'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () {
+            _session.rememberOrder(order);
+            widget.onOpen('E17-US1-UI1');
+          },
+        ),
       _primary('Refresh orders', _load),
     ]);
   }
@@ -594,21 +605,20 @@ class _ScreenPageState extends State<ScreenPage> {
       for (final vendor in vendors)
         ListTile(
           title: Text('${vendor['name']}'),
-          subtitle: Text('${vendor['cuisine']} · ${vendor['area']} · ${vendor['open'] == true ? 'Open' : 'Closed'} · intake ${vendor['intakePercent']}%'),
+          subtitle: Text('${vendor['cuisine']} · ${vendor['area']} · ${vendor['open'] == true ? 'Open' : 'Closed'} · ${kitchenPace(vendor['intakePercent'])}'),
           onTap: vendor['open'] == true ? () => widget.onOpen('E3-US1-UI2') : null,
         ),
     ];
   }
 
-  List<Widget> _clauseCards() => [for (final clause in widget.spec.clauses) Padding(padding: const EdgeInsets.only(top: 8), child: Text('• $clause'))];
-
   List<Widget> _clauseFields() {
     return [
       for (final clause in widget.spec.clauses)
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: TextField(controller: _fields[clause], decoration: InputDecoration(labelText: clause)),
-        ),
+        if (plainCopy(clause).isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: TextField(controller: _fields[clause], decoration: InputDecoration(labelText: plainCopy(clause))),
+          ),
     ];
   }
 
@@ -641,4 +651,25 @@ class _ScreenPageState extends State<ScreenPage> {
 
 String _homeFor(String role) {
   return switch (role) { 'rider' => 'E13-US2-UI2', 'vendor' => 'E7-US3-UI1', 'admin' => 'E20-US4-UI1', _ => 'E3-US1-UI1' };
+}
+
+String kitchenPace(Object? percent, [Object? band]) {
+  final named = band?.toString().toLowerCase();
+  if (named == 'full') return 'Full';
+  if (named == 'limited' || named == 'busy') return 'Busy';
+  if (named == 'available' || named == 'quiet') return 'Quiet';
+  final value = percent is num ? percent.toDouble() : double.tryParse('${percent ?? ''}') ?? 0;
+  if (value >= 85) return 'Full';
+  if (value >= 60) return 'Busy';
+  return 'Quiet';
+}
+
+String plainCopy(String raw) {
+  return raw
+      .replaceAll(RegExp(r'\s*\([^)]*\b(?:AC\d+|E\d+-US\d+(?:-UI\d+)?)[^)]*\)'), '')
+      .replaceAll(RegExp(r'\bE\d+-US\d+(?:-UI\d+)?\b'), '')
+      .replaceAll(RegExp(r'\bAC\d+\b'), '')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .replaceAll(RegExp(r'\s+([,.;:])'), '')
+      .trim();
 }

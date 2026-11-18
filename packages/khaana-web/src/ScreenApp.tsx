@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 're
 import catalog from '../../screen-catalog/screens.json'
 import { api, setToken } from './api'
 import { KitchenBoard } from './KitchenBoard'
+import { Button, Card, Chip, EmptyState, ErrorState, Skeleton } from './ui'
 import './tokens.css'
 
 export type ScreenSpec = {
@@ -77,6 +78,7 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
     return stored(`khaanago:${role}:screen`, homeId)
   })
   const [collapsed, setCollapsed] = useState(() => stored(`khaanago:${role}:collapsed`, '0') === '1')
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [devTools, setDevTools] = useState(() => {
     try { return new URLSearchParams(window.location.search).get('dev') === '1' } catch { return false }
   })
@@ -90,6 +92,20 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
       sessionStorage.setItem(`khaanago:${role}:collapsed`, collapsed ? '1' : '0')
     } catch { /* demo storage can be unavailable */ }
   }, [role, spec.id, collapsed])
+
+  useEffect(() => {
+    if (!drawerOpen) return
+    function onKey(event: KeyboardEvent) {
+      if (event.key === 'Escape') setDrawerOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [drawerOpen])
+
+  function choose(next: string) {
+    setId(next)
+    setDrawerOpen(false)
+  }
 
   function enter(next: Session | null) {
     setToken(next?.token ?? null)
@@ -109,49 +125,84 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
       <SignInFrame title={vendor ? 'Vendor portal' : 'Admin portal'}>
         <p>{vendor ? 'This account is for the vendor portal.' : 'This account is for the platform admin portal.'}</p>
         <a className="primary link" href={vendor ? 'http://localhost:5173' : 'http://localhost:5174'}>{vendor ? 'Open vendor portal' : 'Open admin portal'}</a>
-        <button className="ghost" onClick={() => enter(null)}>Use a different account</button>
+        <Button variant="ghost" onClick={() => enter(null)}>Use a different account</Button>
       </SignInFrame>
     )
   }
 
   const navLabel = nav.find((item) => item.id === spec.id)?.label ?? spec.title
+  const liveOrders = spec.id === 'E7-US3-UI1'
+  const shellClass = ['shell', collapsed ? 'collapsed' : '', drawerOpen ? 'drawer-open' : '', liveOrders ? 'live-orders' : ''].filter(Boolean).join(' ')
   return (
-    <div className={collapsed ? 'shell collapsed' : 'shell'}>
+    <div className={shellClass}>
+      {drawerOpen && <button className="backdrop" aria-label="Close navigation" onClick={() => setDrawerOpen(false)} />}
       <aside>
         <div className="brand">
           <strong>Khaana<em>Go</em></strong>
-          <button className="icon-btn" aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} onClick={() => setCollapsed((value) => !value)}>{collapsed ? '>' : '<'}</button>
+          <span className="brand-mark" aria-hidden="true">K</span>
+          <button className="icon-btn collapse-toggle" aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} onClick={() => setCollapsed((value) => !value)}>{collapsed ? '>' : '<'}</button>
         </div>
         <p className="role">{session.name}</p>
         {role === 'vendor' && nav.map((item) => (
-          <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => setId(item.id)}>
-            {collapsed ? item.label.slice(0, 2) : item.label}
+          <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => choose(item.id)}>
+            <NavIcon id={item.id} />
+            <span className="nav-label">{item.label}</span>
           </button>
         ))}
         {role === 'admin' && list.filter((item) => item.kind === 'Screen').map((item) => (
-          <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => setId(item.id)}>
-            {collapsed ? item.title.slice(0, 2) : item.title}
+          <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => choose(item.id)}>
+            <NavIcon id="admin" />
+            <span className="nav-label">{item.title}</span>
           </button>
         ))}
-        <button className="nav sign-out" onClick={() => enter(null)}>Sign out</button>
+        <button className="nav sign-out" onClick={() => enter(null)}>
+          <NavIcon id="sign-out" />
+          <span className="nav-label">Sign out</span>
+        </button>
       </aside>
       <div className="workspace">
         <header className="topbar">
-          <div>
-            <p className="crumb">{role === 'vendor' ? 'Kitchen' : 'Administration'}</p>
-            <p className="page-title" onPointerDown={() => {
-              const timer = window.setTimeout(() => setDevTools((value) => !value), 700)
-              const clear = () => window.clearTimeout(timer)
-              window.addEventListener('pointerup', clear, { once: true })
-              window.addEventListener('pointercancel', clear, { once: true })
-            }}>{navLabel}</p>
-          </div>
+          <button className="icon-btn menu-btn" aria-expanded={drawerOpen} aria-label="Open navigation" onClick={() => setDrawerOpen(true)}>☰</button>
+          {!liveOrders && (
+            <div className="titles">
+              <p className="crumb">{role === 'vendor' ? 'Kitchen' : 'Administration'}</p>
+              <p className="page-title" onPointerDown={holdDev(() => setDevTools((value) => !value))}>{navLabel}</p>
+            </div>
+          )}
         </header>
         <main>
-          <ScreenBody spec={spec} role={actor} onOpen={setId} devTools={devTools} />
+          <ScreenBody spec={spec} role={actor} onOpen={choose} devTools={devTools} onDevToggle={() => setDevTools((value) => !value)} />
         </main>
       </div>
     </div>
+  )
+}
+
+function holdDev(toggle: () => void) {
+  return () => {
+    const timer = window.setTimeout(toggle, 700)
+    const clear = () => window.clearTimeout(timer)
+    window.addEventListener('pointerup', clear, { once: true })
+    window.addEventListener('pointercancel', clear, { once: true })
+  }
+}
+
+function NavIcon({ id }: { id: string }) {
+  const paths: Record<string, ReactNode> = {
+    'E7-US3-UI1': <><rect x="3" y="4" width="5" height="16" rx="1" /><rect x="10" y="4" width="5" height="10" rx="1" /><rect x="17" y="4" width="5" height="13" rx="1" /></>,
+    'E2-US2-UI1': <><path d="M5 7h14M5 12h14M5 17h10" /></>,
+    'E9-US4-UI1': <><path d="M4 8l8-4 8 4-8 4-8-4Z" /><path d="M4 8v8l8 4 8-4V8" /><path d="M12 12v8" /></>,
+    'E5-US1-UI3': <><circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 2" /></>,
+    'E11-US1-UI1': <><path d="M4 12V5h7l9 9-7 7-9-9Z" /><circle cx="8.5" cy="8.5" r="1" fill="currentColor" stroke="none" /></>,
+    'E12-US1-UI1': <><rect x="4" y="6" width="16" height="12" rx="2" /><path d="M4 10h16" /></>,
+    'E1-US4-UI1': <><circle cx="9" cy="9" r="3" /><circle cx="16" cy="10" r="2" /><path d="M4 18c.6-2.4 2.6-3.5 5-3.5s4.4 1.1 5 3.5" /><path d="M14 14.6c1.4-.2 2.8.2 3.6 1.4" /></>,
+    'E2-US1-UI1': <><circle cx="12" cy="12" r="3" /><path d="M12 3.5v2.2M12 18.3v2.2M3.5 12h2.2M18.3 12h2.2M6 6l1.6 1.6M16.4 16.4 18 18M18 6l-1.6 1.6M7.6 16.4 6 18" /></>,
+    'sign-out': <><path d="M10 5H6v14h4" /><path d="M10 12h8M15 8l4 4-4 4" /></>,
+  }
+  return (
+    <svg className="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+      {paths[id] ?? <rect x="5" y="5" width="14" height="14" rx="2" />}
+    </svg>
   )
 }
 
@@ -185,7 +236,7 @@ function SignIn({ appRole, onSuccess }: { appRole: 'vendor' | 'admin'; onSuccess
           <input value={password} type="password" autoComplete="current-password" onChange={(event) => setPassword(event.target.value)} />
         </label>
         {error && <p role="alert">{error}</p>}
-        <button className="primary" type="submit" disabled={busy}>Sign in</button>
+        <Button type="submit" disabled={busy}>Sign in</Button>
       </form>
     </SignInFrame>
   )
@@ -194,11 +245,11 @@ function SignIn({ appRole, onSuccess }: { appRole: 'vendor' | 'admin'; onSuccess
 function SignInFrame({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="signin">
-      <section>
+      <Card>
         <strong>Khaana<em>Go</em></strong>
         <h1>{title}</h1>
         {children}
-      </section>
+      </Card>
     </div>
   )
 }
@@ -242,7 +293,7 @@ function StateSwitcher({ preview, onChange }: { preview: string; onChange: (stat
   return (
     <div className="states">
       {['ready', 'loading', 'empty', 'error'].map((state) => (
-        <button key={state} aria-pressed={preview === state} onClick={() => onChange(state)}>{state}</button>
+        <Chip key={state} selected={preview === state} onClick={() => onChange(state)}>{state}</Chip>
       ))}
     </div>
   )
@@ -258,7 +309,7 @@ function plainLabel(text: string) {
     .trim()
 }
 
-export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: ScreenSpec; role: string; onOpen: (id: string) => void; devTools?: boolean }) {
+export function ScreenBody({ spec, role, onOpen, devTools = false, onDevToggle }: { spec: ScreenSpec; role: string; onOpen: (id: string) => void; devTools?: boolean; onDevToggle?: () => void }) {
   const [data, setData] = useState<DemoState | null>(null)
   const [preview, setPreview] = useState('ready')
   const [notice, setNotice] = useState('')
@@ -304,14 +355,9 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
     return (
       <section className="page">
         {devTools && <StateSwitcher preview={preview} onChange={setPreview} />}
-        {preview === 'loading' && <p>Loading</p>}
-        {preview === 'error' && (
-          <>
-            <p>We could not load this page. Please try again.</p>
-            <button onClick={() => setPreview('ready')}>Try again</button>
-          </>
-        )}
-        {preview === 'empty' && <p>Nothing to show yet.</p>}
+        {preview === 'loading' && <><Skeleton /><p>Loading</p></>}
+        {preview === 'error' && <ErrorState message="We could not load this page. Please try again." action="Try again" onRetry={() => setPreview('ready')} />}
+        {preview === 'empty' && <EmptyState>Nothing to show yet.</EmptyState>}
       </section>
     )
   }
@@ -320,7 +366,7 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
       <section>
         <h1>{spec.title}</h1>
         <p>You do not have access to this page.</p>
-        <button className="primary" onClick={() => onOpen('E7-US3-UI1')}>Back to kitchen board</button>
+        <Button onClick={() => onOpen('E7-US3-UI1')}>Back to kitchen board</Button>
       </section>
     )
   }
@@ -329,7 +375,7 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
   if (spec.id === 'E7-US3-UI1') {
     return (
       <section className="page">
-        <h1>{spec.title}</h1>
+        <h1 onPointerDown={onDevToggle ? holdDev(onDevToggle) : undefined}>{spec.title}</h1>
         {devTools && <StateSwitcher preview={preview} onChange={setPreview} />}
         {notice && <p role="status">{notice}</p>}
         <KitchenBoard orders={orders} onAdvance={advance} />
@@ -355,11 +401,11 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
                   <div className="ticket" key={order.id}>
                     <strong>{order.id}</strong>
                     <p className="muted">{order.customer || 'Customer'} · {order.slotLabel || 'No slot'}</p>
-                    {status === 'new' && <button className="ghost" onClick={() => advance(order.id, 'accept')}>Accept</button>}
-                    {status === 'preparing' && <button className="ghost" onClick={() => advance(order.id, 'ready')}>Ready</button>}
+                    {status === 'new' && <Button variant="ghost" onClick={() => advance(order.id, 'accept')}>Accept</Button>}
+                    {status === 'preparing' && <Button variant="ghost" onClick={() => advance(order.id, 'ready')}>Ready</Button>}
                   </div>
                 ))}
-                {column.length === 0 && <p className="empty">No orders in this column.</p>}
+                {column.length === 0 && <EmptyState>No orders in this column.</EmptyState>}
               </article>
             )
           })}
@@ -381,8 +427,8 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
           </label>
         )
       })}
-      <button className="primary" onClick={save}>Save {spec.title}</button>
-      <button className="ghost" onClick={() => onOpen(role === 'admin' ? 'E20-US4-UI1' : role === 'vendor_staff' ? 'E1-US3-UI6' : 'E1-US3-UI5')}>Back to workspace</button>
+      <Button onClick={save}>Save {spec.title}</Button>
+      <Button variant="ghost" onClick={() => onOpen(role === 'admin' ? 'E20-US4-UI1' : role === 'vendor_staff' ? 'E1-US3-UI6' : 'E1-US3-UI5')}>Back to workspace</Button>
     </section>
   )
 }
@@ -431,12 +477,12 @@ function OwnerDashboard({ data, onOpen }: { data: DemoState | null; onOpen: (id:
           {closed.map((vendor) => <p key={vendor.id}><span className="badge closed">Closed</span> {vendor.name}{vendor.opensAt ? ` · opens ${vendor.opensAt}` : ''}</p>)}
           {fullSlots.map((slot) => <p key={slot.id}><span className="badge full">Full</span> {slot.label} is not bookable</p>)}
           {(data?.complaints ?? []).filter((item) => item.status === 'Open').map((item) => <p key={item.id}><span className="badge info">Open</span> {item.id} {item.subject}</p>)}
-          {low.length + closed.length + fullSlots.length + (data?.complaints ?? []).filter((item) => item.status === 'Open').length === 0 && <p className="empty">Nothing needs attention.</p>}
+          {low.length + closed.length + fullSlots.length + (data?.complaints ?? []).filter((item) => item.status === 'Open').length === 0 && <EmptyState>Nothing needs attention.</EmptyState>}
         </section>
       </div>
       <section className="panel">
         <h2>Recent orders</h2>
-        {orders.length === 0 ? <p className="empty">No orders yet.</p> : (
+        {orders.length === 0 ? <EmptyState>No orders yet.</EmptyState> : (
           <table>
             <thead><tr><th>Order</th><th>Status</th><th>Slot</th><th className="num">Total</th></tr></thead>
             <tbody>
@@ -457,7 +503,7 @@ function StaffHome({ onOpen }: { onOpen: (id: string) => void }) {
       <h2>Kitchen operations</h2>
       <p>This home shows the board and assigned kitchen work. Finance, recipes, and the owner dashboard stay hidden.</p>
       <div className="row-actions">
-        <button className="primary" onClick={() => onOpen('E7-US3-UI1')}>Open kitchen board</button>
+        <Button onClick={() => onOpen('E7-US3-UI1')}>Open kitchen board</Button>
       </div>
     </section>
   )
@@ -481,7 +527,7 @@ function AdminDashboard({ data, onOpen }: { data: DemoState | null; onOpen: (id:
       <section className="panel">
         <h2>Live queue</h2>
         {delayed.length === 0 && <p className="muted">No delayed orders.</p>}
-        {orders.length === 0 ? <p className="empty">No orders yet.</p> : (
+        {orders.length === 0 ? <EmptyState>No orders yet.</EmptyState> : (
           <table>
             <thead><tr><th>Order</th><th>Status</th><th>Vendor</th></tr></thead>
             <tbody>{orders.slice(0, 8).map((order) => <tr key={order.id}><td>{order.id}</td><td>{order.status}</td><td>{order.vendorId}</td></tr>)}</tbody>
@@ -503,7 +549,7 @@ function FinancePanel({ data }: { data: DemoState | null }) {
         <div className="kpi"><span>Expenses</span><strong>{money(Number(finance?.expenses ?? 0))}</strong></div>
         <div className="kpi"><span>Invoices</span><strong>{invoices.length}</strong></div>
       </div>
-      {invoices.length === 0 ? <p className="empty">No invoices yet. A delivered order creates one.</p> : (
+      {invoices.length === 0 ? <EmptyState>No invoices yet. A delivered order creates one.</EmptyState> : (
         <table>
           <thead><tr><th>Invoice</th><th>Status</th><th className="num">Total</th></tr></thead>
           <tbody>{invoices.map((invoice) => <tr key={invoice.id}><td>{invoice.id}</td><td>{invoice.status}</td><td className="num">{money(Number(invoice.total || 0))}</td></tr>)}</tbody>
@@ -520,7 +566,7 @@ function InventoryPanel({ data }: { data: DemoState | null }) {
     <>
       <section className="panel">
         <h2>Stock</h2>
-        {stock.length === 0 ? <p className="empty">No ingredients yet.</p> : (
+        {stock.length === 0 ? <EmptyState>No ingredients yet.</EmptyState> : (
           <table>
             <thead><tr><th>Ingredient</th><th>On hand</th><th>Reorder at</th></tr></thead>
             <tbody>{stock.map((item) => <tr key={item.id}><td>{item.name}</td><td>{item.quantity} {item.unit}</td><td>{item.reorderAt} {item.unit}</td></tr>)}</tbody>
@@ -529,7 +575,7 @@ function InventoryPanel({ data }: { data: DemoState | null }) {
       </section>
       <section className="panel">
         <h2>Bill of materials</h2>
-        {cake.length === 0 ? <p className="empty">No recipe is available for this account.</p> : (
+        {cake.length === 0 ? <EmptyState>No recipe is available for this account.</EmptyState> : (
           <table>
             <thead><tr><th>Cake ingredient</th><th className="num">Per cake</th></tr></thead>
             <tbody>{cake.map((part) => <tr key={part.ingredientId}><td>{stock.find((item) => item.id === part.ingredientId)?.name || part.ingredientId}</td><td className="num">{part.quantity} {part.unit}</td></tr>)}</tbody>
@@ -554,7 +600,7 @@ function OffersPanel({ data }: { data: DemoState | null }) {
   return (
     <section className="panel">
       <h2>Offers</h2>
-      {offers.length === 0 ? <p className="empty">No offers yet.</p> : (
+      {offers.length === 0 ? <EmptyState>No offers yet.</EmptyState> : (
         <table>
           <thead><tr><th>Offer</th><th>Status</th><th>Detail</th></tr></thead>
           <tbody>{offers.map((offer) => <tr key={offer.id}><td>{offer.name}</td><td>{offer.status}</td><td>{offer.detail}</td></tr>)}</tbody>
@@ -569,7 +615,7 @@ function TeamPanel({ data }: { data: DemoState | null }) {
   return (
     <section className="panel">
       <h2>Staff</h2>
-      {team.length === 0 ? <p className="empty">No staff yet.</p> : (
+      {team.length === 0 ? <EmptyState>No staff yet.</EmptyState> : (
         <table>
           <thead><tr><th>Name</th><th>Role</th></tr></thead>
           <tbody>{team.map((person) => <tr key={person.name}><td>{person.name}</td><td>{person.role}</td></tr>)}</tbody>
@@ -601,7 +647,7 @@ function RecordTable({ spec, data }: { spec: ScreenSpec; data: DemoState | null 
     : blob.includes('order') ? data?.orders
     : null
   if (!rows) return null
-  if (rows.length === 0) return <p className="empty">No orders yet.</p>
+  if (rows.length === 0) return <EmptyState>No orders yet.</EmptyState>
   return (
     <section className="panel">
       <table>

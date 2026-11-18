@@ -8,6 +8,7 @@ import 'checkout_session.dart';
 import 'customer_experience.dart';
 import 'screen_spec.dart';
 import 'screen_view.dart';
+import 'tokens.dart';
 
 class KhaanaApp extends StatefulWidget {
   const KhaanaApp({super.key, required this.role, required this.api, required this.homeId, this.session});
@@ -125,8 +126,8 @@ class _KhaanaAppState extends State<KhaanaApp> {
     final theme = ThemeData(
       useMaterial3: true,
       brightness: dark ? Brightness.dark : Brightness.light,
-      scaffoldBackgroundColor: dark ? const Color(0xFF1A1A1A) : const Color(0xFFFFF8EF),
-      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFF97316), brightness: dark ? Brightness.dark : Brightness.light),
+      scaffoldBackgroundColor: KhaanaColors.page(dark),
+      colorScheme: ColorScheme.fromSeed(seedColor: KhaanaColors.brand, brightness: dark ? Brightness.dark : Brightness.light),
     );
     final customer = widget.role == 'customer';
     final bare = customer && (_id == 'E3-US1-UI1' || _id == 'E17-US1-UI1');
@@ -144,8 +145,8 @@ class _KhaanaAppState extends State<KhaanaApp> {
           },
           child: Scaffold(
             appBar: bare ? null : AppBar(
-              backgroundColor: dark ? const Color(0xFF242424) : Colors.white,
-              foregroundColor: dark ? const Color(0xFFFFF8EF) : const Color(0xFF242424),
+              backgroundColor: KhaanaColors.surface(dark),
+              foregroundColor: KhaanaColors.ink(dark),
               automaticallyImplyLeading: _showCatalog && !showBack,
               leading: showBack ? IconButton(tooltip: 'Back', onPressed: _back, icon: const Icon(Icons.arrow_back)) : null,
               title: GestureDetector(
@@ -181,9 +182,9 @@ class _KhaanaAppState extends State<KhaanaApp> {
               child: SafeArea(
                 child: Column(
                   children: [
-                    const ListTile(title: Text('KhaanaGo', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800))),
+                    const ListTile(title: Text('KhaanaGo', style: KhaanaType.display)),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: KhaanaSpace.s4),
                       child: TextField(
                         decoration: const InputDecoration(labelText: 'Find a screen', prefixIcon: Icon(Icons.search)),
                         onChanged: (value) => setState(() => _query = value),
@@ -194,8 +195,8 @@ class _KhaanaAppState extends State<KhaanaApp> {
                         children: [
                           for (final entry in groups.entries) ...[
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-                              child: Text(entry.key, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Color(0xFF6B635B))),
+                              padding: const EdgeInsets.fromLTRB(KhaanaSpace.s4, KhaanaSpace.s4, KhaanaSpace.s4, KhaanaSpace.s1),
+                              child: Text(entry.key, style: KhaanaType.eyebrow),
                             ),
                             for (final item in entry.value)
                               ListTile(
@@ -240,20 +241,20 @@ class _KhaanaAppState extends State<KhaanaApp> {
     final active = _session.orderId != null && status != 'delivered' && status != 'cancelled';
     if (!active || _id == 'E17-US1-UI1') return null;
     return Material(
-      color: const Color(0xFFF97316),
+      color: KhaanaColors.brand,
       child: InkWell(
         key: const Key('track-banner'),
         onTap: () => _open('E17-US1-UI1'),
         child: SizedBox(
-          height: 48,
+          height: KhaanaType.field,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: KhaanaSpace.s4),
             child: Row(children: [
-              const Text('Track order', style: TextStyle(fontWeight: FontWeight.w800, color: Color(0xFF242424))),
+              const Text('Track order', style: KhaanaType.button),
               const Spacer(),
-              Flexible(child: Text(trackingHeadline(_session.activeOrder), overflow: TextOverflow.ellipsis, style: const TextStyle(color: Color(0xFF242424)))),
-              const SizedBox(width: 8),
-              const Icon(Icons.chevron_right, color: Color(0xFF242424)),
+              Flexible(child: Text(trackingHeadline(_session.activeOrder), overflow: TextOverflow.ellipsis, style: KhaanaType.button)),
+              const SizedBox(width: KhaanaSpace.s2),
+              const Icon(Icons.chevron_right, color: KhaanaColors.onBrand),
             ]),
           ),
         ),

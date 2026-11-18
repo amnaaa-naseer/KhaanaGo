@@ -1,4 +1,6 @@
 export 'src/app_shell.dart';
+export 'src/components.dart';
+export 'src/tokens.dart';
 export 'src/api.dart';
 export 'src/checkout_session.dart';
 export 'src/catalog.g.dart';

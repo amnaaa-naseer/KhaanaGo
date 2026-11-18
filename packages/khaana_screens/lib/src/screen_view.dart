@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'api.dart';
 import 'checkout_session.dart';
+import 'components.dart';
 import 'customer_experience.dart';
 import 'screen_spec.dart';
+import 'tokens.dart';
 
 class ScreenPage extends StatefulWidget {
   const ScreenPage({super.key, required this.spec, required this.api, required this.onOpen, this.role = 'customer', this.embedded = false, this.session, this.devTools = false, this.onBack, this.onDevToggle, this.onOpenCatalog});
@@ -98,8 +100,8 @@ class _ScreenPageState extends State<ScreenPage> {
     final theme = ThemeData(
       useMaterial3: true,
       brightness: dark ? Brightness.dark : Brightness.light,
-      scaffoldBackgroundColor: dark ? const Color(0xFF1A1A1A) : const Color(0xFFFFF8EF),
-      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFF97316), brightness: dark ? Brightness.dark : Brightness.light),
+      scaffoldBackgroundColor: KhaanaColors.page(dark),
+      colorScheme: ColorScheme.fromSeed(seedColor: KhaanaColors.brand, brightness: dark ? Brightness.dark : Brightness.light),
     );
     if (widget.embedded) {
       return Theme(data: theme, child: _body());
@@ -108,8 +110,8 @@ class _ScreenPageState extends State<ScreenPage> {
       data: theme,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: dark ? const Color(0xFF242424) : Colors.white,
-          foregroundColor: dark ? const Color(0xFFFFF8EF) : const Color(0xFF242424),
+          backgroundColor: KhaanaColors.surface(dark),
+          foregroundColor: KhaanaColors.ink(dark),
           title: Text(widget.spec.title),
           actions: [
             IconButton(tooltip: 'Reload', onPressed: _load, icon: const Icon(Icons.refresh)),
@@ -135,18 +137,21 @@ class _ScreenPageState extends State<ScreenPage> {
     final Widget content;
     final trackingReady = widget.spec.id == 'E17-US1-UI1' && _session.activeOrder != null;
     if (_preview == 'loading' || (_loading && !trackingReady)) {
-      content = const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [CircularProgressIndicator(), SizedBox(height: 12), Text('Loading')]));
+      content = const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [KhaanaSkeleton(), SizedBox(height: KhaanaSpace.s3), Text('Loading', style: KhaanaType.body)]));
     } else if (_preview == 'error' || _error != null) {
-      content = _message('Something went wrong', 'We could not load this page. Please try again.', 'Try again', _load);
+      content = KhaanaErrorState(title: 'Something went wrong', message: 'We could not load this page. Please try again.', actionLabel: 'Try again', onRetry: _load);
     } else if (_preview == 'empty') {
-      content = _message(widget.spec.title, 'Nothing to show yet.', 'Refresh', _load);
+      content = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text(widget.spec.title, style: KhaanaType.title),
+        KhaanaEmptyState(message: 'Nothing to show yet.', action: KhaanaButton(label: 'Refresh', onPressed: _load)),
+      ]);
     } else if (widget.spec.ownerOnly && widget.role == 'vendor_staff') {
       content = _message(widget.spec.title, 'You do not have access to this page.', 'Back', () => widget.onOpen('E7-US3-UI1'));
     } else {
       content = ListView(
-        padding: const EdgeInsets.all(16),
+        padding: KhaanaSpace.page,
         children: [
-          if (_notice != null) Padding(padding: const EdgeInsets.only(bottom: 12), child: Text(_notice!)),
+          if (_notice != null) Padding(padding: const EdgeInsets.only(bottom: KhaanaSpace.s3), child: Text(_notice!, style: KhaanaType.body)),
           _familyBody(),
         ],
       );
@@ -154,8 +159,8 @@ class _ScreenPageState extends State<ScreenPage> {
     if (!widget.devTools) return content;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-        child: Wrap(spacing: 8, children: [
+        padding: const EdgeInsets.fromLTRB(KhaanaSpace.s4, KhaanaSpace.s3, KhaanaSpace.s4, 0),
+        child: Wrap(spacing: KhaanaSpace.s2, children: [
           for (final state in ['ready', 'loading', 'empty', 'error'])
             ChoiceChip(label: Text(state), selected: _preview == state, onSelected: (_) => setState(() => _preview = state)),
         ]),
@@ -168,11 +173,11 @@ class _ScreenPageState extends State<ScreenPage> {
     return Center(child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 420),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Text(title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
-        const SizedBox(height: 8),
-        Text(detail, textAlign: TextAlign.center),
-        const SizedBox(height: 16),
-        FilledButton(onPressed: onPressed, style: FilledButton.styleFrom(backgroundColor: const Color(0xFFF97316), foregroundColor: const Color(0xFF242424), minimumSize: const Size.fromHeight(56)), child: Text(action)),
+        Text(title, style: KhaanaType.title),
+        const SizedBox(height: KhaanaSpace.s2),
+        Text(detail, textAlign: TextAlign.center, style: KhaanaType.body.copyWith(color: KhaanaColors.muted)),
+        const SizedBox(height: KhaanaSpace.s4),
+        KhaanaButton(label: action, onPressed: onPressed),
       ]),
     ));
   }
@@ -258,7 +263,7 @@ class _ScreenPageState extends State<ScreenPage> {
     final pickup = status == 'ready' || status == 'ready_for_pickup';
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(KhaanaSpace.s3),
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Text(pickup ? 'Pickup alert' : 'Out for delivery', style: const TextStyle(fontWeight: FontWeight.w800)),
           const SizedBox(height: 8),
@@ -266,7 +271,7 @@ class _ScreenPageState extends State<ScreenPage> {
           if (pickup)
             Align(
               alignment: Alignment.centerLeft,
-              child: FilledButton(onPressed: () => _advance(id, 'pickup', role: 'rider'), child: const Text('Pick up')),
+              child: KhaanaButton(label: 'Pick up', onPressed: () => _advance(id, 'pickup', role: 'rider')),
             ),
           if (!pickup) ...[
             TextField(
@@ -276,7 +281,7 @@ class _ScreenPageState extends State<ScreenPage> {
             ),
             Align(
               alignment: Alignment.centerLeft,
-              child: FilledButton(onPressed: () => _advance(id, 'deliver', role: 'rider', code: _deliveryCode.text), child: const Text('Deliver')),
+              child: KhaanaButton(label: 'Deliver', onPressed: () => _advance(id, 'deliver', role: 'rider', code: _deliveryCode.text)),
             ),
           ],
         ]),
@@ -342,8 +347,8 @@ class _ScreenPageState extends State<ScreenPage> {
       Container(
         height: 140,
         alignment: Alignment.center,
-        decoration: BoxDecoration(color: const Color(0xFF242424), borderRadius: BorderRadius.circular(16)),
-        child: const Text('Delivery area', style: TextStyle(color: Color(0xFFFFF8EF))),
+        decoration: BoxDecoration(color: KhaanaColors.charcoal, borderRadius: BorderRadius.circular(KhaanaRadius.card)),
+        child: Text('Delivery area', style: KhaanaType.body.copyWith(color: KhaanaColors.cream)),
       ),
       const SizedBox(height: 8),
       Text(current == null ? 'F-11 Markaz, Islamabad' : '$id · $status · ${current['slotLabel'] ?? ''}'),
@@ -520,7 +525,7 @@ class _ScreenPageState extends State<ScreenPage> {
   Widget _menuList(Map<String, dynamic> data) {
     final menu = ((data['menu'] as List?) ?? []).cast<Map>().where((item) => item['vendorId'] == null || item['vendorId'] == _session.vendorId);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(_session.vendorName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+      Text(_session.vendorName, style: KhaanaType.heading),
       for (final item in menu)
         ListTile(
           title: Text('${item['name']}'),
@@ -535,9 +540,9 @@ class _ScreenPageState extends State<ScreenPage> {
   Widget _itemDetail(Map<String, dynamic> data) {
     final item = ((data['menu'] as List?) ?? []).cast<Map>().where((entry) => entry['id'] == _session.itemId).firstOrNull;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(_session.itemName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
+      Text(_session.itemName, style: KhaanaType.title),
       Text('Rs ${_session.price} · ${_session.fragile ? 'Fragile · express only' : 'Can be pooled'}'),
-      if (item != null) Text('Allergens: ${item['allergens'] ?? 'None listed'}', style: const TextStyle(color: Color(0xFFB91C1C))),
+      if (item != null) Text('Allergens: ${item['allergens'] ?? 'None listed'}', style: KhaanaType.body.copyWith(color: KhaanaColors.full)),
       Text(_session.available ? 'Available' : 'Sold out'),
       Row(children: [
         const Text('Quantity'),
@@ -642,8 +647,8 @@ class _ScreenPageState extends State<ScreenPage> {
       Text('Slot ${_session.slotLabel} · ${_session.delivery} · ${_session.payment}'),
       Text('Food Rs ${_session.food}'),
       Text('Delivery Rs ${_session.deliveryFee}'),
-      if (_session.discount > 0) Text('Discount − Rs ${_session.discount}', style: const TextStyle(color: Color(0xFF15803D))),
-      Text('Total Rs ${_session.total}', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
+      if (_session.discount > 0) Text('Discount − Rs ${_session.discount}', style: KhaanaType.body.copyWith(color: KhaanaColors.ok)),
+      Text('Total Rs ${_session.total}', style: KhaanaType.title),
       _primary('Place order', _place),
     ]);
   }
@@ -693,34 +698,34 @@ class _ScreenPageState extends State<ScreenPage> {
       for (final clause in widget.spec.clauses)
         if (plainCopy(clause).isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: KhaanaSpace.s2),
             child: TextField(controller: _fields[clause], decoration: InputDecoration(labelText: plainCopy(clause))),
           ),
     ];
   }
 
   Widget _card(String title, List<Widget> children) {
-    return Card(child: Padding(padding: const EdgeInsets.all(12), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: const TextStyle(fontWeight: FontWeight.w800)), ...children])));
+    return KhaanaCard(padding: const EdgeInsets.all(KhaanaSpace.s3), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: KhaanaType.heading), ...children]));
   }
 
   Widget _stat(String label, String value) {
     return Container(
       width: 140,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFEADBC8))),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(label, style: const TextStyle(color: Color(0xFF6B635B))), Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800))]),
+      padding: const EdgeInsets.all(KhaanaSpace.s3),
+      decoration: BoxDecoration(color: KhaanaColors.white, borderRadius: BorderRadius.circular(KhaanaRadius.button), border: Border.all(color: KhaanaColors.line)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(label, style: KhaanaType.caption), Text(value, style: KhaanaType.price)]),
     );
   }
 
   Widget _primary(String label, FutureOr<void> Function() onPressed) {
     final tall = widget.spec.role == 'rider';
     return Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: FilledButton(
+      padding: const EdgeInsets.only(top: KhaanaSpace.s3),
+      child: KhaanaButton(
         key: Key('primary-${widget.spec.id}'),
+        label: label,
+        tall: tall,
         onPressed: () { onPressed(); },
-        style: FilledButton.styleFrom(backgroundColor: const Color(0xFFF97316), foregroundColor: const Color(0xFF242424), minimumSize: Size.fromHeight(tall ? 64 : 56)),
-        child: Text(label),
       ),
     );
   }

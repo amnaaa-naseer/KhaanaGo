@@ -1,4 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+import { Button, StatusBadge } from './ui'
+
+const emptyColumn: Record<string, string> = {
+  new: 'No new orders',
+  preparing: 'No orders being prepared',
+  ready: 'No orders ready',
+  ready_for_pickup: 'No orders with the rider',
+}
 
 export type KitchenLine = { name?: string; qty?: number; note?: string; image?: string }
 export type KitchenOrder = {
@@ -8,6 +16,7 @@ export type KitchenOrder = {
   slotLabel?: string
   payment?: string
   lines?: KitchenLine[]
+  events?: { preparing?: string }
 }
 
 const columns = [
@@ -24,13 +33,26 @@ export function nextKitchenAction(status: string) {
   return null
 }
 
+function clockLabel(from: string | undefined, now: number) {
+  const placed = Date.parse(from || '')
+  if (!Number.isFinite(placed)) return ''
+  const minutes = Math.max(0, Math.floor((now - placed) / 60000))
+  return minutes < 1 ? 'Just now' : minutes < 60 ? `${minutes} min` : `${Math.floor(minutes / 60)} h ${minutes % 60} min`
+}
+
 function ageOf(createdAt: string | undefined, now: number) {
+  const label = clockLabel(createdAt, now)
+  if (!label) return { label: '', tone: '' }
   const placed = Date.parse(createdAt || '')
-  if (!Number.isFinite(placed)) return { label: '', tone: '' }
   const minutes = Math.max(0, Math.floor((now - placed) / 60000))
   const tone = minutes >= 20 ? 'late' : minutes >= 10 ? 'warn' : ''
-  const label = minutes < 1 ? 'Just now' : minutes < 60 ? `${minutes} min` : `${Math.floor(minutes / 60)} h ${minutes % 60} min`
   return { label, tone }
+}
+
+function cardTimer(order: KitchenOrder, now: number) {
+  if (order.status === 'new' || order.status === 'preparing') return ageOf(order.createdAt, now)
+  if (order.status === 'ready') return { label: clockLabel(order.events?.preparing, now), tone: '' }
+  return { label: '', tone: '' }
 }
 
 function payBadge(payment: string | undefined) {
@@ -73,7 +95,7 @@ export function KitchenBoard({ orders, onAdvance }: { orders: KitchenOrder[]; on
   }
 
   return (
-    <div>
+    <div className="board-wrap">
       {note && <p role="status">{note}</p>}
       <div className="kitchen-board">
         {columns.map((column) => {
@@ -81,9 +103,13 @@ export function KitchenBoard({ orders, onAdvance }: { orders: KitchenOrder[]; on
           return (
             <article
               key={column.status}
-              className={over === column.status ? 'over' : ''}
+              className={[dragId ? 'drag-target' : '', over === column.status ? 'over' : ''].filter(Boolean).join(' ')}
               onDragOver={(event) => { event.preventDefault(); setOver(column.status) }}
-              onDragLeave={() => setOver((current) => current === column.status ? '' : current)}
+              onDragLeave={(event) => {
+                const next = event.relatedTarget
+                if (next instanceof Node && event.currentTarget.contains(next)) return
+                setOver((current) => current === column.status ? '' : current)
+              }}
               onDrop={(event) => {
                 event.preventDefault()
                 setOver('')
@@ -91,23 +117,29 @@ export function KitchenBoard({ orders, onAdvance }: { orders: KitchenOrder[]; on
                 if (order) void move(order, column.status)
               }}
             >
-              <h2>{column.label} <span>{cards.length}</span></h2>
+              <h2><span>{column.label}</span> <span className="count">{cards.length}</span></h2>
+              <div className="column-body">
+              {dragId && over === column.status && <p className="drop-hint">Drop here</p>}
               {cards.map((order) => {
                 const step = nextKitchenAction(order.status)
-                const age = ageOf(order.createdAt, now)
+                const age = cardTimer(order, now)
                 return (
                   <div
                     key={order.id}
-                    className={fresh.includes(order.id) ? 'ticket fresh' : 'ticket'}
+                    className={`ticket status-${order.status}${fresh.includes(order.id) ? ' fresh' : ''}`}
                     role="group"
                     aria-label={order.id}
                     draggable={!!step}
-                    onDragStart={() => setDragId(order.id)}
+                    onDragStart={(event) => {
+                      setDragId(order.id)
+                      event.dataTransfer.effectAllowed = 'move'
+                      event.dataTransfer.setData('text/plain', order.id)
+                    }}
                     onDragEnd={() => { setDragId(''); setOver('') }}
                   >
                     <div className="ticket-top">
                       <strong>{order.id}</strong>
-                      {age.label && <span className={`age ${age.tone}`}>{age.label}</span>}
+                      <OrderAge label={age.label} tone={age.tone} />
                     </div>
                     <ul>
                       {(order.lines ?? []).map((line, index) => (
@@ -124,17 +156,61 @@ export function KitchenBoard({ orders, onAdvance }: { orders: KitchenOrder[]; on
                     </ul>
                     <div className="ticket-meta">
                       <span>{order.slotLabel || 'No slot'}</span>
-                      <span className={payBadge(order.payment) === 'COD' ? 'badge limited' : 'badge available'}>{payBadge(order.payment)}</span>
+                      <StatusBadge tone={payBadge(order.payment) === 'COD' ? 'limited' : 'available'}>{payBadge(order.payment)}</StatusBadge>
                     </div>
-                    {step && <button className="primary" onClick={() => void move(order, step.to)}>{step.label}</button>}
+                    {step && <Button onClick={() => void move(order, step.to)}>{step.label}</Button>}
                   </div>
                 )
               })}
-              {cards.length === 0 && <p className="empty">No orders</p>}
+              {cards.length === 0 && <EmptyColumn label={emptyColumn[column.status]} />}
+              </div>
             </article>
           )
         })}
       </div>
     </div>
+  )
+}
+
+function OrderAge({ label, tone }: { label: string; tone: string }) {
+  if (!label) return null
+  const late = tone === 'late'
+  return (
+    <span className={`age ${tone}`}>
+      {late ? <AlertIcon /> : <ClockIcon />}
+      <span>{late ? `Late · ${label}` : label}</span>
+    </span>
+  )
+}
+
+function EmptyColumn({ label }: { label: string }) {
+  return (
+    <div className="column-empty">
+      <svg className="empty-art" viewBox="0 0 64 48" aria-hidden="true">
+        <rect x="10" y="16" width="44" height="22" rx="6" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M18 16v-2a6 6 0 0 1 6-6h16a6 6 0 0 1 6 6v2" fill="none" stroke="currentColor" strokeWidth="2" />
+        <path d="M24 27h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+      <p className="empty">{label}</p>
+    </div>
+  )
+}
+
+function ClockIcon() {
+  return (
+    <svg className="age-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8 4.5V8l2.5 1.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function AlertIcon() {
+  return (
+    <svg className="age-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 1.8 14.5 13.2H1.5L8 1.8Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M8 6.2v3.2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="8" cy="11.2" r="0.7" fill="currentColor" />
+    </svg>
   )
 }

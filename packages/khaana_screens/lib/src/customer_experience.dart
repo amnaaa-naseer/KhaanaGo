@@ -27,7 +27,7 @@ String orderStage(Object? status) {
   return switch ('$status') {
     'accepted' => 'Accepted',
     'preparing' => 'Preparing',
-    'ready' => 'Ready',
+    'ready' || 'ready_for_pickup' => 'Ready',
     'picked_up' => 'On the way',
     'delivered' => 'Delivered',
     'cancelled' => 'Cancelled',
@@ -44,7 +44,7 @@ String trackingHeadline(Map? order) {
   final status = '${order['status']}';
   if (status == 'delivered') return 'Delivered';
   if (status == 'picked_up') return 'On the way';
-  if (status == 'ready') return 'Ready now';
+  if (status == 'ready' || status == 'ready_for_pickup') return 'Ready now';
   if (status == 'cancelled') return 'Cancelled';
   final slot = friendlyClock(order['slotLabel']);
   if (slot.isEmpty) return 'Ready soon';
@@ -77,7 +77,7 @@ int trackingIndex(Object? status) {
   return switch ('$status') {
     'accepted' => 1,
     'preparing' => 2,
-    'ready' => 3,
+    'ready' || 'ready_for_pickup' => 3,
     'picked_up' => 4,
     'delivered' => 5,
     _ => 0,

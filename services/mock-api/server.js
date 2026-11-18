@@ -38,16 +38,18 @@ export function freshState() {
     holds: [],
     invoices: [],
     complaints: [{ id: 'C-12', subject: 'Late delivery', status: 'Open', vendorId: 'lazeez' }],
+    offers: [{ id: 'weekday', name: 'Weekday cake', status: 'Active', detail: '10% off before 5 pm' }],
     buffers: [{ id: 'rain', name: 'Rain', area: 'Islamabad', percent: 15 }, { id: 'peak', name: 'Dinner peak', area: 'F-11', percent: 10 }],
     users: [
-      { id: 'cust', role: 'customer', name: 'Ayesha Khan', identifier: '03001234567' },
-      { id: 'owner', role: 'vendor_owner', name: 'BakeCharm owner', identifier: 'owner@bakecharm.test' },
-      { id: 'staff', role: 'vendor_staff', name: 'Kitchen staff', identifier: 'staff@bakecharm.test' },
-      { id: 'rider', role: 'rider', name: 'Hamza Ali', identifier: '03007654321', vehicle: 'Motorbike', approved: true },
-      { id: 'admin', role: 'admin', name: 'Platform admin', identifier: 'admin@khaanago.test' },
+      { id: 'cust', role: 'customer', name: 'Ayesha Khan', identifier: '03001234567', password: 'password12' },
+      { id: 'owner', role: 'vendor_owner', name: 'BakeCharm owner', identifier: 'owner@bakecharm.test', password: 'password12' },
+      { id: 'staff', role: 'vendor_staff', name: 'Kitchen staff', identifier: 'staff@bakecharm.test', password: 'password12' },
+      { id: 'rider', role: 'rider', name: 'Hamza Ali', identifier: '03007654321', password: 'password12', vehicle: 'Motorbike', approved: true },
+      { id: 'admin', role: 'admin', name: 'Platform admin', identifier: 'admin@khaanago.test', password: 'password12' },
     ],
     submissions: {},
     audit: [],
+    alerts: [],
     finance: { revenue: 0, commission: 0, expenses: 1200 },
     nextOrder: 1042,
     demo: true,
@@ -98,11 +100,57 @@ function slotView(slot) {
   return { ...slot, percent, band: band(percent), bookable: percent < 85 }
 }
 
+function riderCard(user) {
+  return { id: user.id, name: user.name, vehicle: user.vehicle || 'Motorbike' }
+}
+
+function availableRider() {
+  const riders = state.users.filter((user) => user.role === 'rider' && user.approved !== false)
+  const busy = new Set(state.orders.filter((order) => order.status === 'picked_up' && order.riderId).map((order) => order.riderId))
+  return riders.find((user) => !busy.has(user.id)) || riders[0] || null
+}
+
+function assignRider(order) {
+  const existing = order.riderId ? state.users.find((user) => user.id === order.riderId && user.role === 'rider') : null
+  const rider = existing || availableRider()
+  if (!rider) return null
+  order.riderId = rider.id
+  order.rider = riderCard(rider)
+  return rider
+}
+
+function openPickupAlert(order, rider) {
+  state.alerts = state.alerts || []
+  const existing = state.alerts.find((alert) => alert.orderId === order.id && alert.type === 'pickup' && alert.status === 'open')
+  if (existing) {
+    existing.riderId = rider.id
+    return existing
+  }
+  const alert = {
+    id: `ALERT-${order.id}`,
+    type: 'pickup',
+    orderId: order.id,
+    riderId: rider.id,
+    status: 'open',
+    vendorName: order.vendorName,
+    slotLabel: order.slotLabel,
+    createdAt: new Date().toISOString(),
+  }
+  state.alerts.push(alert)
+  return alert
+}
+
+function closePickupAlert(order) {
+  for (const alert of state.alerts || []) {
+    if (alert.orderId === order.id && alert.type === 'pickup' && alert.status === 'open') alert.status = 'closed'
+  }
+}
+
 function visibleOrders(user) {
   if (!user) return []
   if (user.role === 'customer') return state.orders.filter((order) => order.customerId === user.id)
   if (user.role === 'vendor_owner' || user.role === 'vendor_staff') return state.orders.filter((order) => order.vendorId === 'bakecharm')
-  if (user.role === 'rider') return state.orders.filter((order) => ['ready', 'picked_up', 'delivered'].includes(order.status))
+  if (user.role === 'rider') return state.orders.filter((order) => order.riderId === user.id && ['ready', 'ready_for_pickup', 'picked_up', 'delivered'].includes(order.status))
   return state.orders
 }
 
@@ -123,6 +171,9 @@ function publicState(user) {
     buffers: state.buffers,
     finance: !user || role === 'vendor_staff' || role === 'customer' || role === 'rider' ? null : state.finance,
     riders: state.users.filter((user) => user.role === 'rider').map((user) => ({ name: user.name, vehicle: user.vehicle, approved: user.approved })),
+    offers: state.offers || [],
+    alerts: role === 'rider' ? (state.alerts || []).filter((alert) => alert.riderId === user.id && alert.status === 'open') : [],
+    team: state.users.filter((user) => user.role === 'vendor_owner' || user.role === 'vendor_staff').map((user) => ({ name: user.name, role: user.role === 'vendor_owner' ? 'Owner' : 'Kitchen' })),
     submissions: state.submissions,
     audit: state.audit.slice(-40),
     capacity: {
@@ -169,10 +220,11 @@ export function handle(req, res, body) {
     if (!body.identifier || !password) return json(res, 400, { error: 'Enter your mobile or email and a password.' })
     if (password.length < 8 || password.length > 128) return json(res, 400, { error: 'Password must be 8 to 128 characters. This check is provisional and awaiting review.' })
     const user = state.users.find((u) => u.identifier === body.identifier && (!body.role || u.role === body.role))
-    if (!user) return json(res, 401, { error: 'Those details do not match an account.' })
+    if (!user || password !== (user.password || 'password12')) return json(res, 401, { error: 'Those details do not match an account.' })
     const token = `demo-${user.id}`
     sessions.set(token, user)
-    return json(res, 200, { user, token, demo: true, note: 'Demo sign-in. Passwords are not hashed or stored. This is not production authentication.' })
+    const { password: _secret, ...safeUser } = user
+    return json(res, 200, { user: safeUser, token, demo: true, note: 'Demo sign-in. Passwords are not hashed or stored. This is not production authentication.' })
   }
 
   const hold = url.pathname.match(/^\/v1\/slots\/([^/]+)\/hold$/)
@@ -247,27 +299,49 @@ export function handle(req, res, body) {
     return json(res, 201, order)
   }
 
-  const stage = url.pathname.match(/^\/v1\/orders\/([^/]+)\/(accept|ready|pickup|deliver|cancel)$/)
+  const stage = url.pathname.match(/^\/v1\/orders\/([^/]+)\/(accept|ready|handoff|pickup|deliver|cancel)$/)
   if (stage && req.method === 'POST') {
     if (!user) return json(res, 401, { error: 'Sign in to update an order.' })
     const order = state.orders.find((o) => o.id === stage[1])
     if (!order) return json(res, 404, { error: 'Order not found.' })
     const action = stage[2]
     const kitchen = user.role === 'vendor_owner' || user.role === 'vendor_staff'
-    const allowed = (action === 'accept' || action === 'ready') ? kitchen : (action === 'pickup' || action === 'deliver') ? user.role === 'rider' : action === 'cancel' && (kitchen || user.id === order.customerId)
+    const allowed = (action === 'accept' || action === 'ready' || action === 'handoff') ? kitchen : (action === 'pickup' || action === 'deliver') ? user.role === 'rider' : action === 'cancel' && (kitchen || user.id === order.customerId)
     if (!allowed) return json(res, 403, { error: 'You do not have access to this page.' })
     order.events = order.events || {}
     const at = new Date().toISOString()
+    const assignedToRider = !order.riderId || order.riderId === user.id
+    let handled = false
     if (action === 'accept' && order.status === 'new') {
       order.status = 'preparing'
       order.events.accepted = at
+      handled = true
     } else if (action === 'ready' && order.status === 'preparing') {
       order.status = 'ready'
       order.events.preparing = at
-    } else if (action === 'pickup' && order.status === 'ready') {
+      const rider = assignRider(order)
+      if (rider) openPickupAlert(order, rider)
+      handled = true
+    } else if (action === 'handoff' && (order.status === 'ready' || order.status === 'ready_for_pickup')) {
+      const rider = assignRider(order)
+      if (!rider) return json(res, 409, { error: 'No rider is available for this order.' })
+      if (order.status === 'ready') {
+        order.status = 'ready_for_pickup'
+        order.events.handedToRider = at
+      }
+      openPickupAlert(order, rider)
+      handled = true
+    } else if (action === 'pickup' && (order.status === 'ready' || order.status === 'ready_for_pickup') && assignedToRider) {
       order.status = 'picked_up'
+      order.riderId = user.id
+      order.rider = riderCard(user)
       order.events.ready = at
-      order.rider = { name: user.name, vehicle: user.vehicle || 'Motorbike' }
+      closePickupAlert(order)
+      handled = true
+    } else if (action === 'pickup' && order.status === 'picked_up' && assignedToRider) {
+      handled = true
+    } else if (action === 'deliver' && order.status === 'delivered' && assignedToRider) {
+      handled = true
     } else if (action === 'deliver' && order.status === 'picked_up') {
       if (body.code !== order.code) return json(res, 400, { error: 'That code does not match. The delivery stays incomplete.' })
       order.status = 'delivered'
@@ -284,11 +358,18 @@ export function handle(req, res, body) {
       state.finance.revenue += order.total
       state.finance.commission += commission
       state.invoices.unshift({ id: `INV-${order.id}`, orderId: order.id, total: order.total, commission, status: order.payment === 'Cash on delivery' ? 'Pending – COD' : 'Paid (simulated)' })
+      handled = true
     } else if (action === 'cancel' && !['picked_up', 'delivered'].includes(order.status)) {
       order.status = 'cancelled'
       const slot = state.slots.find((s) => s.id === order.slotId)
       if (slot) slot.booked = Math.max(0, slot.booked - 1)
-    } else return json(res, 409, { error: `Cannot ${action} an order that is ${order.status}.` })
+      handled = true
+    }
+    if (!handled) {
+      if (action === 'pickup' && order.riderId && order.riderId !== user.id) return json(res, 409, { error: 'This order is assigned to another rider.' })
+      if (action === 'pickup') return json(res, 409, { error: 'This order is not ready for pickup yet.' })
+      return json(res, 409, { error: `Cannot ${action} an order that is ${order.status}.` })
+    }
     state.audit.push({ at: new Date().toISOString(), actor: user.role, action: `${action} ${order.id}`, screen: body.screen || '' })
     persist()
     return json(res, 200, order)

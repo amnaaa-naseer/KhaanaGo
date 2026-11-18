@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react'
 import catalog from '../../screen-catalog/screens.json'
-import { api } from './api'
+import { api, setToken } from './api'
+import { KitchenBoard } from './KitchenBoard'
 import './tokens.css'
 
 export type ScreenSpec = {
@@ -24,11 +25,39 @@ export function screensFor(role: 'vendor' | 'admin') {
 }
 
 function staffDenied(spec: ScreenSpec) {
-  if (spec.id === 'E1-US3-UI5' || spec.id === 'E21-US2-UI1') return true
-  const text = `${spec.title} ${spec.module}`.toLowerCase()
-  if (spec.title.toLowerCase().includes('invoice')) return false
-  if (spec.ownerOnly) return true
-  return /\bbom\b|bill of materials|recipe|nutrition/.test(text)
+  return spec.id !== 'E7-US3-UI1'
+}
+
+export const vendorModules = [
+  { id: 'E7-US3-UI1', label: 'Live Orders', staff: true },
+  { id: 'E2-US2-UI1', label: 'Menu', staff: false },
+  { id: 'E9-US4-UI1', label: 'Inventory (BOM/MRP)', staff: false },
+  { id: 'E5-US1-UI3', label: 'Capacity', staff: false },
+  { id: 'E11-US1-UI1', label: 'Offers', staff: false },
+  { id: 'E12-US1-UI1', label: 'Finance', staff: false },
+  { id: 'E1-US4-UI1', label: 'Staff', staff: false },
+  { id: 'E2-US1-UI1', label: 'Settings', staff: false },
+]
+
+export function modulesFor(actor: string) {
+  return vendorModules.filter((item) => actor === 'vendor_owner' || item.staff)
+}
+
+type Session = { token: string; role: string; name: string; identifier: string }
+
+function readSession(appRole: string): Session | null {
+  try {
+    const raw = sessionStorage.getItem(`khaanago:${appRole}:session`)
+    return raw ? JSON.parse(raw) as Session : null
+  } catch {
+    return null
+  }
+}
+
+function portalFor(userRole: string) {
+  if (userRole === 'admin') return 'admin'
+  if (userRole === 'vendor_owner' || userRole === 'vendor_staff') return 'vendor'
+  return ''
 }
 
 function stored(key: string, fallback: string) {
@@ -37,36 +66,55 @@ function stored(key: string, fallback: string) {
 
 export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: string }) {
   const list = useMemo(() => screensFor(role), [role])
-  const [id, setId] = useState(() => stored(`khaanago:${role}:screen`, homeId))
-  const [query, setQuery] = useState('')
+  const [session, setSession] = useState<Session | null>(() => {
+    const saved = readSession(role)
+    setToken(saved?.token ?? null)
+    return saved
+  })
+  const [id, setId] = useState(() => {
+    const saved = readSession(role)
+    if (role === 'vendor' && saved?.role === 'vendor_staff') return 'E7-US3-UI1'
+    return stored(`khaanago:${role}:screen`, homeId)
+  })
   const [collapsed, setCollapsed] = useState(() => stored(`khaanago:${role}:collapsed`, '0') === '1')
-  const [actor, setActor] = useState(() => stored(`khaanago:${role}:actor`, role === 'admin' ? 'admin' : 'vendor_owner'))
   const [devTools, setDevTools] = useState(() => {
     try { return new URLSearchParams(window.location.search).get('dev') === '1' } catch { return false }
   })
-  const spec = list.find((item) => item.id === id) ?? list[0]
-  const visible = list.filter((item) => actor !== 'vendor_staff' || !staffDenied(item))
-  const needle = query.trim().toLowerCase()
-  const filtered = visible.filter((item) => !needle || `${item.title} ${item.id} ${item.module}`.toLowerCase().includes(needle))
-  const groups = new Map<string, ScreenSpec[]>()
-  for (const item of filtered) {
-    const name = item.module || 'Shared'
-    groups.set(name, [...(groups.get(name) ?? []), item])
-  }
+  const actor = session?.role ?? (role === 'admin' ? 'admin' : 'vendor_owner')
+  const nav = role === 'vendor' ? modulesFor(actor) : []
+  const spec = list.find((item) => item.id === id) ?? list.find((item) => item.id === homeId) ?? list[0]
 
   useEffect(() => {
     try {
       sessionStorage.setItem(`khaanago:${role}:screen`, spec.id)
       sessionStorage.setItem(`khaanago:${role}:collapsed`, collapsed ? '1' : '0')
-      sessionStorage.setItem(`khaanago:${role}:actor`, actor)
     } catch { /* demo storage can be unavailable */ }
-  }, [role, spec.id, collapsed, actor])
+  }, [role, spec.id, collapsed])
 
-  function openModule() {
-    const first = list.find((item) => item.module === spec.module && item.kind === 'Screen')
-    if (first) setId(first.id)
+  function enter(next: Session | null) {
+    setToken(next?.token ?? null)
+    setSession(next)
+    try {
+      if (next) sessionStorage.setItem(`khaanago:${role}:session`, JSON.stringify(next))
+      else sessionStorage.removeItem(`khaanago:${role}:session`)
+    } catch { /* demo storage can be unavailable */ }
+    if (next?.role === 'vendor_staff' || next?.role === 'vendor_owner') setId('E7-US3-UI1')
+    if (next?.role === 'admin') setId(homeId)
   }
 
+  if (!session) return <SignIn appRole={role} onSuccess={enter} />
+  if (portalFor(session.role) !== role) {
+    const vendor = portalFor(session.role) === 'vendor'
+    return (
+      <SignInFrame title={vendor ? 'Vendor portal' : 'Admin portal'}>
+        <p>{vendor ? 'This account is for the vendor portal.' : 'This account is for the platform admin portal.'}</p>
+        <a className="primary link" href={vendor ? 'http://localhost:5173' : 'http://localhost:5174'}>{vendor ? 'Open vendor portal' : 'Open admin portal'}</a>
+        <button className="ghost" onClick={() => enter(null)}>Use a different account</button>
+      </SignInFrame>
+    )
+  }
+
+  const navLabel = nav.find((item) => item.id === spec.id)?.label ?? spec.title
   return (
     <div className={collapsed ? 'shell collapsed' : 'shell'}>
       <aside>
@@ -74,46 +122,83 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
           <strong>Khaana<em>Go</em></strong>
           <button className="icon-btn" aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} onClick={() => setCollapsed((value) => !value)}>{collapsed ? '>' : '<'}</button>
         </div>
-        <p className="role">{role === 'admin' ? 'Administration' : 'Vendor and kitchen'}</p>
-        {role === 'vendor' && (
-          <label>Signed in as
-            <select value={actor} onChange={(event) => setActor(event.target.value)}>
-              <option value="vendor_owner">Owner</option>
-              <option value="vendor_staff">Kitchen staff</option>
-            </select>
-          </label>
-        )}
-        <label className="nav-search">Find a screen
-          <input value={query} placeholder="Search" onChange={(event) => setQuery(event.target.value)} />
-        </label>
-        {[...groups.entries()].map(([name, items]) => (
-          <div key={name}>
-            <div className="nav-group">{name}</div>
-            {items.map((item) => (
-              <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} title={item.title} onClick={() => setId(item.id)}>
-                {collapsed ? item.title.slice(0, 2) : item.title}
-              </button>
-            ))}
-          </div>
+        <p className="role">{session.name}</p>
+        {role === 'vendor' && nav.map((item) => (
+          <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => setId(item.id)}>
+            {collapsed ? item.label.slice(0, 2) : item.label}
+          </button>
         ))}
-        {filtered.length === 0 && <p className="role">No screens match.</p>}
+        {role === 'admin' && list.filter((item) => item.kind === 'Screen').map((item) => (
+          <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => setId(item.id)}>
+            {collapsed ? item.title.slice(0, 2) : item.title}
+          </button>
+        ))}
+        <button className="nav sign-out" onClick={() => enter(null)}>Sign out</button>
       </aside>
       <div className="workspace">
         <header className="topbar">
           <div>
-            <p className="crumb"><button type="button" onClick={openModule}>{spec.module || 'Shared'}</button> / {spec.title}</p>
+            <p className="crumb">{role === 'vendor' ? 'Kitchen' : 'Administration'}</p>
             <p className="page-title" onPointerDown={() => {
               const timer = window.setTimeout(() => setDevTools((value) => !value), 700)
               const clear = () => window.clearTimeout(timer)
               window.addEventListener('pointerup', clear, { once: true })
               window.addEventListener('pointercancel', clear, { once: true })
-            }}>{spec.title}</p>
+            }}>{navLabel}</p>
           </div>
         </header>
         <main>
           <ScreenBody spec={spec} role={actor} onOpen={setId} devTools={devTools} />
         </main>
       </div>
+    </div>
+  )
+}
+
+function SignIn({ appRole, onSuccess }: { appRole: 'vendor' | 'admin'; onSuccess: (session: Session) => void }) {
+  const [identifier, setIdentifier] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  async function submit(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError('')
+    try {
+      const result = await api('/v1/auth/login', { method: 'POST', body: { identifier, password } })
+      onSuccess({ token: result.token, role: result.user.role, name: result.user.name, identifier: result.user.identifier })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Those details do not match an account.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  return (
+    <SignInFrame title={appRole === 'admin' ? 'Admin portal' : 'Vendor portal'}>
+      <form onSubmit={submit}>
+        <label>Email or mobile
+          <input value={identifier} autoComplete="username" onChange={(event) => setIdentifier(event.target.value)} />
+        </label>
+        <label>Password
+          <input value={password} type="password" autoComplete="current-password" onChange={(event) => setPassword(event.target.value)} />
+        </label>
+        {error && <p role="alert">{error}</p>}
+        <button className="primary" type="submit" disabled={busy}>Sign in</button>
+      </form>
+    </SignInFrame>
+  )
+}
+
+function SignInFrame({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div className="signin">
+      <section>
+        <strong>Khaana<em>Go</em></strong>
+        <h1>{title}</h1>
+        {children}
+      </section>
     </div>
   )
 }
@@ -129,6 +214,9 @@ type DemoState = {
   vendors?: Array<Record<string, any>>
   capacity?: { intakePercent?: number; band?: string; ordersPerHour?: number }
   riders?: Array<Record<string, any>>
+  recipes?: Record<string, Array<Record<string, any>>> | null
+  offers?: Array<Record<string, any>>
+  team?: Array<Record<string, any>>
 }
 
 function money(value: number) {
@@ -178,7 +266,19 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
   const staffBlocked = role === 'vendor_staff' && staffDenied(spec)
 
   useEffect(() => {
-    api('/v1/state', { role }).then(setData).catch((err) => setNotice(err.message))
+    let stop = false
+    async function pull() {
+      try {
+        const next = await api('/v1/state', { role })
+        if (!stop) setData(next)
+      } catch (err) {
+        if (!stop) setNotice(err instanceof Error ? err.message : 'We could not load this page.')
+      }
+    }
+    void pull()
+    if (spec.id !== 'E7-US3-UI1') return () => { stop = true }
+    const timer = window.setInterval(() => void pull(), 3000)
+    return () => { stop = true; window.clearInterval(timer) }
   }, [role, spec.id])
 
   async function save() {
@@ -226,6 +326,16 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
   }
 
   const orders = data?.orders ?? []
+  if (spec.id === 'E7-US3-UI1') {
+    return (
+      <section className="page">
+        <h1>{spec.title}</h1>
+        {devTools && <StateSwitcher preview={preview} onChange={setPreview} />}
+        {notice && <p role="status">{notice}</p>}
+        <KitchenBoard orders={orders} onAdvance={advance} />
+      </section>
+    )
+  }
   return (
     <section className="page">
       <h1>{spec.title}</h1>
@@ -256,6 +366,10 @@ export function ScreenBody({ spec, role, onOpen, devTools = false }: { spec: Scr
         </div>
       )}
       {spec.family === 'finance' && <FinancePanel data={data} />}
+      {spec.id === 'E9-US4-UI1' && <InventoryPanel data={data} />}
+      {spec.id === 'E11-US1-UI1' && <OffersPanel data={data} />}
+      {spec.id === 'E1-US4-UI1' && <TeamPanel data={data} />}
+      {spec.id === 'E2-US1-UI1' && <SettingsPanel data={data} />}
       {spec.family === 'dashboard' && spec.id !== 'E20-US4-UI1' && <p>Orders {orders.length}. Kitchen {paceOf(Number(data?.capacity?.intakePercent ?? 0)).label}.</p>}
       {spec.family === 'list' && <RecordTable spec={spec} data={data} />}
       {spec.clauses.map((clause) => {
@@ -395,6 +509,84 @@ function FinancePanel({ data }: { data: DemoState | null }) {
           <tbody>{invoices.map((invoice) => <tr key={invoice.id}><td>{invoice.id}</td><td>{invoice.status}</td><td className="num">{money(Number(invoice.total || 0))}</td></tr>)}</tbody>
         </table>
       )}
+    </section>
+  )
+}
+
+function InventoryPanel({ data }: { data: DemoState | null }) {
+  const stock = data?.stock ?? []
+  const cake = data?.recipes?.cake ?? []
+  return (
+    <>
+      <section className="panel">
+        <h2>Stock</h2>
+        {stock.length === 0 ? <p className="empty">No ingredients yet.</p> : (
+          <table>
+            <thead><tr><th>Ingredient</th><th>On hand</th><th>Reorder at</th></tr></thead>
+            <tbody>{stock.map((item) => <tr key={item.id}><td>{item.name}</td><td>{item.quantity} {item.unit}</td><td>{item.reorderAt} {item.unit}</td></tr>)}</tbody>
+          </table>
+        )}
+      </section>
+      <section className="panel">
+        <h2>Bill of materials</h2>
+        {cake.length === 0 ? <p className="empty">No recipe is available for this account.</p> : (
+          <table>
+            <thead><tr><th>Cake ingredient</th><th className="num">Per cake</th></tr></thead>
+            <tbody>{cake.map((part) => <tr key={part.ingredientId}><td>{stock.find((item) => item.id === part.ingredientId)?.name || part.ingredientId}</td><td className="num">{part.quantity} {part.unit}</td></tr>)}</tbody>
+          </table>
+        )}
+      </section>
+      <section className="panel">
+        <h2>Material plan</h2>
+        {cake.map((part) => {
+          const item = stock.find((row) => row.id === part.ingredientId)
+          const onHand = Number(item?.quantity ?? 0)
+          const batches = part.quantity ? Math.floor(onHand / Number(part.quantity)) : 0
+          return <p key={part.ingredientId}>{item?.name || part.ingredientId}: {onHand} {part.unit} on hand, enough for {batches} cakes.</p>
+        })}
+      </section>
+    </>
+  )
+}
+
+function OffersPanel({ data }: { data: DemoState | null }) {
+  const offers = data?.offers ?? []
+  return (
+    <section className="panel">
+      <h2>Offers</h2>
+      {offers.length === 0 ? <p className="empty">No offers yet.</p> : (
+        <table>
+          <thead><tr><th>Offer</th><th>Status</th><th>Detail</th></tr></thead>
+          <tbody>{offers.map((offer) => <tr key={offer.id}><td>{offer.name}</td><td>{offer.status}</td><td>{offer.detail}</td></tr>)}</tbody>
+        </table>
+      )}
+    </section>
+  )
+}
+
+function TeamPanel({ data }: { data: DemoState | null }) {
+  const team = data?.team ?? []
+  return (
+    <section className="panel">
+      <h2>Staff</h2>
+      {team.length === 0 ? <p className="empty">No staff yet.</p> : (
+        <table>
+          <thead><tr><th>Name</th><th>Role</th></tr></thead>
+          <tbody>{team.map((person) => <tr key={person.name}><td>{person.name}</td><td>{person.role}</td></tr>)}</tbody>
+        </table>
+      )}
+    </section>
+  )
+}
+
+function SettingsPanel({ data }: { data: DemoState | null }) {
+  const vendor = (data?.vendors ?? []).find((item) => item.id === 'bakecharm') ?? data?.vendors?.[0]
+  if (!vendor) return null
+  return (
+    <section className="panel">
+      <h2>{vendor.name}</h2>
+      <p>{vendor.cuisine} · {vendor.area}</p>
+      <p>{vendor.open ? 'Open for orders' : `Closed${vendor.opensAt ? ` · opens ${vendor.opensAt}` : ''}`}</p>
     </section>
   )
 }

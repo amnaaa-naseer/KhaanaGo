@@ -36,6 +36,7 @@ class _ScreenPageState extends State<ScreenPage> {
   String _slot = '1830';
   String _payment = 'Cash on delivery';
   var _qty = 1;
+  final _deliveryCode = TextEditingController();
   late final CheckoutSession _ownedSession = CheckoutSession();
   CheckoutSession get _session => widget.session ?? _ownedSession;
 
@@ -59,6 +60,7 @@ class _ScreenPageState extends State<ScreenPage> {
     for (final controller in _fields.values) {
       controller.dispose();
     }
+    _deliveryCode.dispose();
     super.dispose();
   }
 
@@ -226,6 +228,7 @@ class _ScreenPageState extends State<ScreenPage> {
     final orders = (data['orders'] as List?) ?? [];
     final finance = (data['finance'] as Map?) ?? {};
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      if (widget.spec.role == 'rider') ..._riderAlerts(data),
       Wrap(spacing: 8, runSpacing: 8, children: [
         _stat('Orders', '${orders.length}'),
         _stat('Revenue', 'Rs ${finance['revenue'] ?? 0}'),
@@ -237,22 +240,66 @@ class _ScreenPageState extends State<ScreenPage> {
     ]);
   }
 
+  List<Widget> _riderAlerts(Map<String, dynamic> data) {
+    final orders = ((data['orders'] as List?) ?? []).whereType<Map>().map(Map<String, dynamic>.from).where((order) {
+      final status = '${order['status']}';
+      return status == 'ready' || status == 'ready_for_pickup' || status == 'picked_up';
+    });
+    if (orders.isEmpty) return const [];
+    return [
+      for (final order in orders) _riderAlertCard(order),
+      const SizedBox(height: 12),
+    ];
+  }
+
+  Widget _riderAlertCard(Map<String, dynamic> order) {
+    final id = '${order['id']}';
+    final status = '${order['status']}';
+    final pickup = status == 'ready' || status == 'ready_for_pickup';
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Text(pickup ? 'Pickup alert' : 'Out for delivery', style: const TextStyle(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 8),
+          Text('$id · ${order['vendorName'] ?? 'Kitchen'} · ${order['slotLabel'] ?? ''}'),
+          if (pickup)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: FilledButton(onPressed: () => _advance(id, 'pickup', role: 'rider'), child: const Text('Pick up')),
+            ),
+          if (!pickup) ...[
+            TextField(
+              controller: _deliveryCode,
+              decoration: const InputDecoration(labelText: '6-digit delivery code'),
+              onSubmitted: (code) => _advance(id, 'deliver', role: 'rider', code: code),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: FilledButton(onPressed: () => _advance(id, 'deliver', role: 'rider', code: _deliveryCode.text), child: const Text('Deliver')),
+            ),
+          ],
+        ]),
+      ),
+    );
+  }
+
   Widget _board(Map<String, dynamic> data) {
     final orders = ((data['orders'] as List?) ?? []).cast<Map>();
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       for (final status in ['new', 'preparing', 'ready', 'picked_up', 'delivered'])
         _card(status, [
-          for (final order in orders.where((o) => o['status'] == status))
+          for (final order in orders.where((o) => o['status'] == status || (status == 'ready' && o['status'] == 'ready_for_pickup')))
             ListTile(
               title: Text('${order['id']}'),
               subtitle: Text('Code ${order['code'] ?? ''}'),
               trailing: Wrap(spacing: 4, children: [
                 if (status == 'new') TextButton(onPressed: () => _advance('${order['id']}', 'accept'), child: const Text('Accept')),
                 if (status == 'preparing') TextButton(onPressed: () => _advance('${order['id']}', 'ready'), child: const Text('Ready')),
-                if (status == 'ready') TextButton(onPressed: () => _advance('${order['id']}', 'pickup', role: 'rider'), child: const Text('Pick up')),
+                if (status == 'ready' && order['status'] != 'picked_up') TextButton(onPressed: () => _advance('${order['id']}', 'pickup', role: 'rider'), child: const Text('Pick up')),
               ]),
             ),
-          if (orders.every((o) => o['status'] != status)) const Text('No orders in this column.'),
+          if (orders.every((o) => o['status'] != status && !(status == 'ready' && o['status'] == 'ready_for_pickup'))) const Text('No orders in this column.'),
         ]),
       _primary('Refresh board', () => _load()),
     ]);
@@ -260,17 +307,37 @@ class _ScreenPageState extends State<ScreenPage> {
 
   Future<void> _advance(String id, String action, {String role = 'vendor_staff', String? code}) async {
     try {
-      await widget.api.advance(id, action, role: role, code: code);
+      final updated = await widget.api.advance(id, action, role: role, code: code);
       await _load();
-      setState(() => _notice = '$id is now $action.');
+      final status = '${updated['status']}';
+      final notice = switch (action) {
+        'pickup' => 'Picked up $id. Enter the delivery code when you arrive.',
+        'deliver' when status == 'delivered' => '$id is delivered.',
+        _ => '$id is now $action.',
+      };
+      setState(() => _notice = notice);
     } on ApiException catch (err) {
-      setState(() => _notice = err.message);
+      setState(() => _notice = _friendlyActionNotice(action, err.message));
     }
+  }
+
+  String _friendlyActionNotice(String action, String message) {
+    final lower = message.toLowerCase();
+    if (action == 'pickup' && (lower.contains('picked') || lower.contains('not ready'))) {
+      return lower.contains('not ready') ? 'This order is not ready for pickup yet.' : 'This order is already picked up. Enter the delivery code.';
+    }
+    if (action == 'deliver' && lower.contains('already delivered')) return 'This order is already delivered.';
+    return message;
   }
 
   Widget _map(Map<String, dynamic> data) {
     final orders = ((data['orders'] as List?) ?? []).cast<Map>();
     final current = orders.isEmpty ? null : orders.first;
+    final status = '${current?['status'] ?? ''}';
+    final riderScreen = widget.spec.role == 'rider';
+    final awaitingPickup = status == 'ready' || status == 'ready_for_pickup';
+    final outForDelivery = status == 'picked_up';
+    final id = '${current?['id'] ?? ''}';
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Container(
         height: 140,
@@ -279,14 +346,24 @@ class _ScreenPageState extends State<ScreenPage> {
         child: const Text('Delivery area', style: TextStyle(color: Color(0xFFFFF8EF))),
       ),
       const SizedBox(height: 8),
-      Text(current == null ? 'F-11 Markaz, Islamabad' : '${current['id']} · ${current['status']} · ${current['slotLabel'] ?? ''}'),
+      Text(current == null ? 'F-11 Markaz, Islamabad' : '$id · $status · ${current['slotLabel'] ?? ''}'),
       const SizedBox(height: 8),
-      if (current != null && widget.spec.role == 'rider')
+      if (current != null && riderScreen && outForDelivery)
         TextField(
+          controller: _deliveryCode,
           decoration: const InputDecoration(labelText: '6-digit delivery code'),
-          onSubmitted: (code) => _advance('${current['id']}', 'deliver', role: 'rider', code: code),
+          onSubmitted: (code) => _advance(id, 'deliver', role: 'rider', code: code),
         ),
-      _primary(current == null ? 'Waiting for an order' : 'Update ${current['id']}', current == null ? () { _load(); } : () => _advance('${current['id']}', 'pickup', role: 'rider')),
+      if (current == null)
+        _primary('Waiting for an order', () { _load(); })
+      else if (riderScreen && outForDelivery)
+        _primary('Deliver', () => _advance(id, 'deliver', role: 'rider', code: _deliveryCode.text))
+      else if (riderScreen && awaitingPickup)
+        _primary('Pick up', () => _advance(id, 'pickup', role: 'rider'))
+      else if (riderScreen && status == 'delivered')
+        _primary('Delivered', () {})
+      else
+        _primary('Update $id', () => _advance(id, 'pickup', role: 'rider')),
     ]);
   }
 

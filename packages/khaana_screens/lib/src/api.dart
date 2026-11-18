@@ -93,6 +93,7 @@ class MemoryKhaanaApi implements KhaanaApi {
   List<Map<String, dynamic>> menu = [];
   List<Map<String, dynamic>> slots = [];
   List<Map<String, dynamic>> orders = [];
+  List<Map<String, dynamic>> alerts = [];
   final Map<String, DateTime> holds = {};
   Map<String, dynamic> submissions = {};
   Map<String, dynamic> finance = {'revenue': 0, 'commission': 0, 'expenses': 1200};
@@ -114,6 +115,7 @@ class MemoryKhaanaApi implements KhaanaApi {
           {'name': 'Rain', 'percent': 15, 'area': 'Islamabad'},
         ],
         'submissions': submissions,
+        'alerts': alerts.where((alert) => alert['status'] == 'open').toList(),
         'demo': true,
       };
 
@@ -188,15 +190,31 @@ class MemoryKhaanaApi implements KhaanaApi {
   @override
   Future<Map<String, dynamic>> advance(String orderId, String action, {String role = 'vendor_staff', String? code}) async {
     final order = orders.firstWhere((o) => o['id'] == orderId, orElse: () => throw ApiException('Order not found.'));
+    if (action == 'pickup' && order['status'] == 'picked_up') return order;
+    if (action == 'deliver' && order['status'] == 'delivered') return order;
     if (action == 'deliver' && code != '482913' && code != order['code']) throw ApiException('That code does not match. The delivery stays incomplete.');
-    const next = {'accept': 'preparing', 'ready': 'ready', 'pickup': 'picked_up', 'deliver': 'delivered', 'cancel': 'cancelled'};
+    if (action == 'pickup' && order['status'] != 'ready' && order['status'] != 'ready_for_pickup') {
+      throw ApiException('This order is not ready for pickup yet.');
+    }
+    const next = {'accept': 'preparing', 'ready': 'ready', 'handoff': 'ready_for_pickup', 'pickup': 'picked_up', 'deliver': 'delivered', 'cancel': 'cancelled'};
     final now = DateTime.now().toUtc().toIso8601String();
     final events = Map<String, dynamic>.from((order['events'] as Map?) ?? {});
+    const rider = {'id': 'rider', 'name': 'Hamza Ali', 'vehicle': 'Motorbike'};
     if (action == 'accept') events['accepted'] = now;
-    if (action == 'ready') events['preparing'] = now;
+    if (action == 'ready' || action == 'handoff') {
+      if (action == 'ready') events['preparing'] = now;
+      order['rider'] = rider;
+      order['riderId'] = 'rider';
+      alerts.removeWhere((alert) => alert['orderId'] == orderId && alert['type'] == 'pickup');
+      alerts.add({'id': 'ALERT-$orderId', 'type': 'pickup', 'orderId': orderId, 'riderId': 'rider', 'status': 'open', 'vendorName': order['vendorName'] ?? 'BakeCharm', 'slotLabel': order['slotLabel']});
+    }
     if (action == 'pickup') {
       events['ready'] = now;
-      order['rider'] = {'name': 'Hamza Ali', 'vehicle': 'Motorbike'};
+      order['rider'] = rider;
+      order['riderId'] = 'rider';
+      for (final alert in alerts) {
+        if (alert['orderId'] == orderId) alert['status'] = 'closed';
+      }
     }
     if (action == 'deliver') {
       events['onTheWay'] = now;

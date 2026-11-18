@@ -92,4 +92,37 @@ void main() {
     await tester.pump();
     expect(find.text('Search kitchens'), findsOneWidget);
   });
+
+  testWidgets('tracking shows the rider as soon as the kitchen marks the order ready', (tester) async {
+    final api = MemoryKhaanaApi();
+    final session = CheckoutSession();
+    final placedAt = DateTime.utc(2026, 11, 17, 14).toIso8601String();
+    api.orders.add({
+      'id': 'KG-1042',
+      'status': 'preparing',
+      'slotLabel': '7:40 PM',
+      'total': 2030,
+      'payment': 'Cash on delivery',
+      'vendorName': 'BakeCharm',
+      'code': '482100',
+      'lines': [
+        {'name': 'Chocolate fudge cake', 'qty': 1},
+      ],
+      'events': {'placed': placedAt, 'accepted': placedAt},
+      'createdAt': placedAt,
+    });
+    session.rememberOrder(api.orders.first);
+
+    await tester.pumpWidget(KhaanaApp(role: 'customer', api: api, homeId: 'E17-US1-UI1', session: session));
+    await tester.pump();
+    await tester.pump();
+    expect(find.text('Hamza Ali'), findsNothing);
+
+    await api.advance('KG-1042', 'ready');
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pump();
+    expect(find.text('Ready now'), findsOneWidget);
+    expect(find.text('Hamza Ali'), findsOneWidget);
+    expect(find.text('Motorbike'), findsOneWidget);
+  });
 }

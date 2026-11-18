@@ -10,7 +10,7 @@
       "area": "F-11 Markaz, Islamabad",
       "rating": 4.7,
       "open": true,
-      "intakePercent": 80,
+      "intakePercent": 88,
       "etaMin": 40,
       "etaMax": 55,
       "fragile": true
@@ -100,7 +100,7 @@
       "id": "1900",
       "vendorId": "bakecharm",
       "label": "7:00 PM",
-      "booked": 7,
+      "booked": 8,
       "limit": 10
     },
     {
@@ -179,7 +179,7 @@
   },
   "orders": [
     {
-      "id": "KG-1042",
+      "id": "KG-1043",
       "vendorId": "bakecharm",
       "customerId": "cust",
       "lines": [
@@ -190,6 +190,47 @@
           "qty": 1,
           "fragile": true,
           "note": ""
+        }
+      ],
+      "slotId": "1900",
+      "slotLabel": "7:00 PM",
+      "delivery": "express",
+      "payment": "Cash on delivery",
+      "status": "picked_up",
+      "food": 1850,
+      "deliveryFee": 180,
+      "discount": 0,
+      "total": 2030,
+      "code": "259517",
+      "customer": "Ayesha Khan",
+      "vendorName": "BakeCharm",
+      "createdAt": "2026-11-18T14:04:15.726Z",
+      "events": {
+        "placed": "2026-11-18T14:04:15.726Z",
+        "accepted": "2026-11-18T14:04:15.732Z",
+        "preparing": "2026-11-18T14:04:15.736Z",
+        "handedToRider": "2026-11-18T14:04:15.741Z",
+        "ready": "2026-11-18T14:04:15.748Z"
+      },
+      "riderId": "rider",
+      "rider": {
+        "id": "rider",
+        "name": "Hamza Ali",
+        "vehicle": "Motorbike"
+      }
+    },
+    {
+      "id": "KG-1042",
+      "vendorId": "bakecharm",
+      "customerId": "cust",
+      "lines": [
+        {
+          "id": "cake",
+          "name": "Chocolate fudge cake",
+          "price": 1850,
+          "qty": 1,
+          "fragile": true,
+          "note": "No nuts"
         }
       ],
       "slotId": "2030",
@@ -204,28 +245,24 @@
       "code": "251598",
       "customer": "Ayesha Khan",
       "vendorName": "BakeCharm",
-      "createdAt": "2026-11-16T21:54:13.965Z",
+      "createdAt": "2026-11-18T14:04:15.660Z",
       "events": {
-        "placed": "2026-11-16T21:54:13.965Z",
-        "accepted": "2026-11-16T21:54:14.001Z",
-        "preparing": "2026-11-16T21:54:14.011Z",
-        "ready": "2026-11-16T21:54:14.018Z",
-        "onTheWay": "2026-11-16T21:54:14.029Z",
-        "delivered": "2026-11-16T21:54:14.029Z"
+        "placed": "2026-11-18T14:04:15.660Z",
+        "accepted": "2026-11-18T14:04:15.671Z",
+        "preparing": "2026-11-18T14:04:15.678Z",
+        "ready": "2026-11-18T14:04:15.691Z",
+        "onTheWay": "2026-11-18T14:04:15.710Z",
+        "delivered": "2026-11-18T14:04:15.710Z"
       },
+      "riderId": "rider",
       "rider": {
+        "id": "rider",
         "name": "Hamza Ali",
         "vehicle": "Motorbike"
       }
     }
   ],
-  "holds": [
-    {
-      "userId": "cust",
-      "slotId": "1830",
-      "expiresAt": "2026-11-16T21:59:13.984Z"
-    }
-  ],
+  "holds": [],
   "invoices": [
     {
       "id": "INV-KG-1042",
@@ -241,6 +278,14 @@
       "subject": "Late delivery",
       "status": "Open",
       "vendorId": "lazeez"
+    }
+  ],
+  "offers": [
+    {
+      "id": "weekday",
+      "name": "Weekday cake",
+      "status": "Active",
+      "detail": "10% off before 5 pm"
     }
   ],
   "buffers": [
@@ -262,25 +307,29 @@
       "id": "cust",
       "role": "customer",
       "name": "Ayesha Khan",
-      "identifier": "03001234567"
+      "identifier": "03001234567",
+      "password": "password12"
     },
     {
       "id": "owner",
       "role": "vendor_owner",
       "name": "BakeCharm owner",
-      "identifier": "owner@bakecharm.test"
+      "identifier": "owner@bakecharm.test",
+      "password": "password12"
     },
     {
       "id": "staff",
       "role": "vendor_staff",
       "name": "Kitchen staff",
-      "identifier": "staff@bakecharm.test"
+      "identifier": "staff@bakecharm.test",
+      "password": "password12"
     },
     {
       "id": "rider",
       "role": "rider",
       "name": "Hamza Ali",
       "identifier": "03007654321",
+      "password": "password12",
       "vehicle": "Motorbike",
       "approved": true
     },
@@ -288,40 +337,99 @@
       "id": "admin",
       "role": "admin",
       "name": "Platform admin",
-      "identifier": "admin@khaanago.test"
+      "identifier": "admin@khaanago.test",
+      "password": "password12"
     }
   ],
   "submissions": {},
   "audit": [
     {
-      "at": "2026-11-16T21:54:13.965Z",
+      "at": "2026-11-18T14:04:15.660Z",
       "actor": "customer",
       "action": "Placed KG-1042",
       "screen": "E3-US2-UI2"
     },
     {
-      "at": "2026-11-16T21:54:14.001Z",
-      "actor": "vendor_staff",
+      "at": "2026-11-18T14:04:15.671Z",
+      "actor": "vendor_owner",
       "action": "accept KG-1042",
-      "screen": "E7-US3-UI1"
+      "screen": ""
     },
     {
-      "at": "2026-11-16T21:54:14.011Z",
-      "actor": "vendor_staff",
+      "at": "2026-11-18T14:04:15.679Z",
+      "actor": "vendor_owner",
       "action": "ready KG-1042",
       "screen": ""
     },
     {
-      "at": "2026-11-16T21:54:14.018Z",
+      "at": "2026-11-18T14:04:15.691Z",
       "actor": "rider",
       "action": "pickup KG-1042",
       "screen": ""
     },
     {
-      "at": "2026-11-16T21:54:14.029Z",
+      "at": "2026-11-18T14:04:15.701Z",
+      "actor": "rider",
+      "action": "pickup KG-1042",
+      "screen": ""
+    },
+    {
+      "at": "2026-11-18T14:04:15.710Z",
       "actor": "rider",
       "action": "deliver KG-1042",
       "screen": ""
+    },
+    {
+      "at": "2026-11-18T14:04:15.726Z",
+      "actor": "customer",
+      "action": "Placed KG-1043",
+      "screen": "E3-US2-UI2"
+    },
+    {
+      "at": "2026-11-18T14:04:15.732Z",
+      "actor": "vendor_owner",
+      "action": "accept KG-1043",
+      "screen": ""
+    },
+    {
+      "at": "2026-11-18T14:04:15.737Z",
+      "actor": "vendor_owner",
+      "action": "ready KG-1043",
+      "screen": ""
+    },
+    {
+      "at": "2026-11-18T14:04:15.741Z",
+      "actor": "vendor_owner",
+      "action": "handoff KG-1043",
+      "screen": ""
+    },
+    {
+      "at": "2026-11-18T14:04:15.748Z",
+      "actor": "rider",
+      "action": "pickup KG-1043",
+      "screen": ""
+    }
+  ],
+  "alerts": [
+    {
+      "id": "ALERT-KG-1042",
+      "type": "pickup",
+      "orderId": "KG-1042",
+      "riderId": "rider",
+      "status": "closed",
+      "vendorName": "BakeCharm",
+      "slotLabel": "8:30 PM",
+      "createdAt": "2026-11-18T14:04:15.679Z"
+    },
+    {
+      "id": "ALERT-KG-1043",
+      "type": "pickup",
+      "orderId": "KG-1043",
+      "riderId": "rider",
+      "status": "closed",
+      "vendorName": "BakeCharm",
+      "slotLabel": "7:00 PM",
+      "createdAt": "2026-11-18T14:04:15.737Z"
     }
   ],
   "finance": {
@@ -329,6 +437,6 @@
     "commission": 278,
     "expenses": 1200
   },
-  "nextOrder": 1043,
+  "nextOrder": 1044,
   "demo": true
 }

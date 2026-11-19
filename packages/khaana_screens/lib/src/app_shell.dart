@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'api.dart';
@@ -130,6 +131,7 @@ class _KhaanaAppState extends State<KhaanaApp> {
       colorScheme: ColorScheme.fromSeed(seedColor: KhaanaColors.brand, brightness: dark ? Brightness.dark : Brightness.light),
     );
     final customer = widget.role == 'customer';
+    final checkout = customer && _checkoutIds.contains(_id);
     final bare = customer && (_id == 'E3-US1-UI1' || _id == 'E17-US1-UI1');
     final showBack = _stack.length > 1;
     final tabIndex = _customerTabs.indexOf(_id);
@@ -138,7 +140,8 @@ class _KhaanaAppState extends State<KhaanaApp> {
       debugShowCheckedModeBanner: false,
       theme: theme,
       home: Builder(builder: (context) {
-        return PopScope(
+        final wideWeb = kIsWeb && MediaQuery.sizeOf(context).width > 600;
+        final shell = PopScope(
           canPop: _stack.length <= 1,
           onPopInvokedWithResult: (didPop, _) {
             if (!didPop) _back();
@@ -162,7 +165,7 @@ class _KhaanaAppState extends State<KhaanaApp> {
                   ),
               ],
             ),
-            bottomNavigationBar: customer ? Column(
+            bottomNavigationBar: customer && !checkout ? Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (_trackBanner() case final banner?) banner,
@@ -231,6 +234,15 @@ class _KhaanaAppState extends State<KhaanaApp> {
               ),
             ),
           ),
+        );
+        if (!wideWeb) return shell;
+        return ColoredBox(
+          color: KhaanaColors.page(dark),
+          child: Row(children: [
+            const Spacer(),
+            SizedBox(width: 430, child: shell),
+            const Spacer(),
+          ]),
         );
       }),
     );

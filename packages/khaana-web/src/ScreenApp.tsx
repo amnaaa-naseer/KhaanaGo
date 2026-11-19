@@ -44,6 +44,23 @@ export function modulesFor(actor: string) {
   return vendorModules.filter((item) => actor === 'vendor_owner' || item.staff)
 }
 
+export function hiddenFromNav(spec: ScreenSpec) {
+  const title = spec.title.toLowerCase()
+  return title.includes('sign-in') || title.includes('sign in') || title.startsWith('something went wrong') || title.startsWith('page not found')
+}
+
+export const adminNav: { label: string; screens: string[] }[] = [
+  { label: 'Overview', screens: ['E20-US4-UI1'] },
+  { label: 'Vendors', screens: ['E20-US1-UI6', 'E20-US1-UI5'] },
+  { label: 'Riders and fleets', screens: ['E20-US1-UI7', 'E14-US4-UI1', 'E20-US1-UI9', 'E14-US4-UI2'] },
+  { label: 'Orders', screens: ['E20-US4-UI2'] },
+  { label: 'Finance', screens: ['E20-US2-UI1'] },
+  { label: 'Operations', screens: ['E6-US3-UI1', 'E19-US4-UI1'] },
+  { label: 'Complaints and ratings', screens: ['E20-US3-UI4', 'E20-US3-UI5', 'E18-US2-UI3'] },
+  { label: 'Audit log', screens: ['E21-US3-UI1'] },
+  { label: 'Users', screens: ['E20-US3-UI1', 'E20-US3-UI2'] },
+]
+
 type Session = { token: string; role: string; name: string; identifier: string }
 
 function readSession(appRole: string): Session | null {
@@ -83,7 +100,10 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
     try { return new URLSearchParams(window.location.search).get('dev') === '1' } catch { return false }
   })
   const actor = session?.role ?? (role === 'admin' ? 'admin' : 'vendor_owner')
-  const nav = role === 'vendor' ? modulesFor(actor) : []
+  const nav = role === 'vendor' ? modulesFor(actor).filter((item) => {
+    const target = screens.find((screen) => screen.id === item.id)
+    return !target || !hiddenFromNav(target)
+  }) : []
   const spec = list.find((item) => item.id === id) ?? list.find((item) => item.id === homeId) ?? list[0]
 
   useEffect(() => {
@@ -149,12 +169,28 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
             <span className="nav-label">{item.label}</span>
           </button>
         ))}
-        {role === 'admin' && list.filter((item) => item.kind === 'Screen').map((item) => (
-          <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => choose(item.id)}>
-            <NavIcon id="admin" />
-            <span className="nav-label">{item.title}</span>
-          </button>
-        ))}
+        {role === 'admin' && adminNav.map((group) => {
+          const items = group.screens.flatMap((screenId) => {
+            const item = list.find((screen) => screen.id === screenId && screen.kind === 'Screen' && !hiddenFromNav(screen))
+            return item ? [item] : []
+          })
+          if (items.length === 0) return null
+          const open = items.some((item) => item.id === spec.id)
+          return (
+            <div key={group.label}>
+              <button className="nav" aria-current={items[0].id === spec.id ? 'page' : undefined} aria-expanded={items.length > 1 ? open : undefined} onClick={() => choose(items[0].id)}>
+                <NavIcon id="admin" />
+                <span className="nav-label">{group.label}</span>
+              </button>
+              {open && items.slice(1).map((item) => (
+                <button key={item.id} className="nav" aria-current={item.id === spec.id ? 'page' : undefined} onClick={() => choose(item.id)}>
+                  <NavIcon id="admin" />
+                  <span className="nav-label">{item.title}</span>
+                </button>
+              ))}
+            </div>
+          )
+        })}
         <button className="nav sign-out" onClick={() => enter(null)}>
           <NavIcon id="sign-out" />
           <span className="nav-label">Sign out</span>

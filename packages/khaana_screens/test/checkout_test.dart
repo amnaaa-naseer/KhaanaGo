@@ -6,8 +6,11 @@ void main() {
   testWidgets('checkout selections survive screen changes and the placed order uses them', (tester) async {
     final api = MemoryKhaanaApi();
     final session = CheckoutSession();
+    session.rememberOrder({'id': 'KG-1', 'status': 'preparing', 'slotLabel': '7:40 PM'});
     await tester.pumpWidget(KhaanaApp(role: 'customer', api: api, homeId: 'E3-US1-UI3', session: session));
     await tester.pump();
+    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byKey(const Key('track-banner')), findsNothing);
 
     Future<void> tapLabel(String label) async {
       final finder = find.text(label);

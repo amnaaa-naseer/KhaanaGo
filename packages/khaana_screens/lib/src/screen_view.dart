@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'api.dart';
 import 'checkout_session.dart';
@@ -39,6 +40,8 @@ class _ScreenPageState extends State<ScreenPage> {
   String _payment = 'Cash on delivery';
   var _qty = 1;
   final _deliveryCode = TextEditingController();
+  final _identifier = TextEditingController();
+  final _password = TextEditingController();
   late final CheckoutSession _ownedSession = CheckoutSession();
   CheckoutSession get _session => widget.session ?? _ownedSession;
 
@@ -63,6 +66,8 @@ class _ScreenPageState extends State<ScreenPage> {
       controller.dispose();
     }
     _deliveryCode.dispose();
+    _identifier.dispose();
+    _password.dispose();
     super.dispose();
   }
 
@@ -210,7 +215,51 @@ class _ScreenPageState extends State<ScreenPage> {
     }
   }
 
+  bool get _isSignIn => widget.spec.id == 'E1-US1-UI3' || widget.spec.id == 'E1-US2-UI2';
+
+  Future<void> _submitSignIn() async {
+    try {
+      final signedIn = await widget.api.login(role: widget.spec.role == 'shared' ? widget.role : widget.spec.role, identifier: _identifier.text, password: _password.text);
+      TextInput.finishAutofillContext(shouldSave: true);
+      _session.signIn('${signedIn['token'] ?? ''}', '${(signedIn['user'] as Map?)?['name'] ?? ''}');
+      final home = switch (widget.spec.role) { 'rider' => 'E13-US2-UI2', 'vendor' => 'E1-US3-UI5', 'admin' => 'E20-US4-UI1', _ => 'E3-US1-UI1' };
+      widget.onOpen(home);
+    } on ApiException catch (err) {
+      _password.clear();
+      if (mounted) setState(() => _notice = err.message);
+    }
+  }
+
   Widget _auth() {
+    if (_isSignIn) {
+      return AutofillGroup(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          TextField(
+            key: const Key('sign-in-identifier'),
+            controller: _identifier,
+            keyboardType: widget.spec.role == 'rider' ? TextInputType.phone : TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            autofillHints: const [AutofillHints.username],
+            autocorrect: false,
+            decoration: const InputDecoration(labelText: 'Mobile or email'),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            key: const Key('sign-in-password'),
+            controller: _password,
+            obscureText: true,
+            textInputAction: TextInputAction.done,
+            autofillHints: const [AutofillHints.password],
+            autocorrect: false,
+            enableSuggestions: false,
+            onSubmitted: (_) => _submitSignIn(),
+            decoration: const InputDecoration(labelText: 'Password'),
+          ),
+          const SizedBox(height: 16),
+          _primary('Continue', _submitSignIn),
+        ]),
+      );
+    }
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       TextField(controller: _fields.values.first, decoration: const InputDecoration(labelText: 'Mobile or email')),
       const SizedBox(height: 8),

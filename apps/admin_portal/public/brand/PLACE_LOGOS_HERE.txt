@@ -1,0 +1,7 @@
+Wired files in this folder:
+
+khaanago-logo.png       stacked hat + pin + wordmark, centred on the primary sign-in and splash
+khaanago-wordmark.png   app bars and sidebars (its cream "Go" sits on the orange in the file)
+pin.svg                  favicon and Android app icon
+
+Both app copies and the Flutter package read this folder, so replacing a file here updates every app.

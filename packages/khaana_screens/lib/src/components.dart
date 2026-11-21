@@ -4,6 +4,69 @@ import 'tokens.dart';
 
 enum KhaanaButtonVariant { primary, secondary, ghost }
 
+enum BrandLogoVariant { stacked, onLight, onDark }
+
+class BrandLogo extends StatelessWidget {
+  const BrandLogo({super.key, this.variant = BrandLogoVariant.stacked});
+
+  final BrandLogoVariant variant;
+
+  @override
+  Widget build(BuildContext context) {
+    final file = switch (variant) {
+      BrandLogoVariant.stacked => 'assets/brand/khaanago-logo.png',
+      BrandLogoVariant.onLight => 'assets/brand/khaanago-wordmark.png',
+      BrandLogoVariant.onDark => 'assets/brand/khaanago-wordmark.png',
+    };
+    final height = variant == BrandLogoVariant.stacked ? 160.0 : 28.0;
+    return Image.asset(
+      file,
+      package: 'khaana_screens',
+      height: height,
+      fit: BoxFit.contain,
+      errorBuilder: (_, _, _) => _WordmarkFallback(variant: variant),
+    );
+  }
+}
+
+class _WordmarkFallback extends StatelessWidget {
+  const _WordmarkFallback({required this.variant});
+
+  final BrandLogoVariant variant;
+
+  @override
+  Widget build(BuildContext context) {
+    final onPrimary = variant == BrandLogoVariant.stacked;
+    final onDark = variant == BrandLogoVariant.onDark;
+    final base = onPrimary || onDark ? KhaanaColors.onBrand : KhaanaColors.ink;
+    final accent = onPrimary ? KhaanaColors.onBrand : KhaanaColors.brand;
+    final size = variant == BrandLogoVariant.stacked ? 28.0 : 20.0;
+    return Text.rich(TextSpan(style: TextStyle(fontSize: size, height: 1.2, fontWeight: FontWeight.w800, color: base), children: [
+      const TextSpan(text: 'Khaana'),
+      TextSpan(text: 'Go', style: TextStyle(color: accent)),
+    ]));
+  }
+}
+
+class BrandAppBarTitle extends StatelessWidget {
+  const BrandAppBarTitle({super.key, required this.title, this.onLongPress});
+
+  final String title;
+  final VoidCallback? onLongPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onLongPress: onLongPress,
+      child: Row(children: [
+        const BrandLogo(variant: BrandLogoVariant.onLight),
+        const SizedBox(width: KhaanaSpace.s2),
+        Flexible(child: Text(title, overflow: TextOverflow.ellipsis)),
+      ]),
+    );
+  }
+}
+
 class KhaanaButton extends StatelessWidget {
   const KhaanaButton({super.key, required this.label, required this.onPressed, this.variant = KhaanaButtonVariant.primary, this.loading = false, this.tall = false});
 
@@ -30,20 +93,24 @@ class KhaanaButton extends StatelessWidget {
           minimumSize: Size.fromHeight(height),
           textStyle: tall ? KhaanaType.riderButton : KhaanaType.button,
           shape: shape,
-        ),
+        ).copyWith(backgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.disabled)) return KhaanaColors.surface2;
+          if (states.contains(WidgetState.pressed)) return KhaanaColors.brandPress;
+          return KhaanaColors.brand;
+        })),
       KhaanaButtonVariant.secondary => OutlinedButton.styleFrom(
-          foregroundColor: KhaanaColors.charcoal,
+          foregroundColor: KhaanaColors.ink,
           disabledForegroundColor: KhaanaColors.muted,
-          side: const BorderSide(color: KhaanaColors.charcoal),
+          side: const BorderSide(color: KhaanaColors.ink),
           minimumSize: Size.fromHeight(height),
-          textStyle: KhaanaType.button.copyWith(color: KhaanaColors.charcoal),
+          textStyle: KhaanaType.button.copyWith(color: KhaanaColors.ink),
           shape: shape,
         ),
       KhaanaButtonVariant.ghost => TextButton.styleFrom(
-          foregroundColor: KhaanaColors.brandText,
+          foregroundColor: KhaanaColors.ink,
           disabledForegroundColor: KhaanaColors.muted,
           minimumSize: Size.fromHeight(height),
-          textStyle: KhaanaType.button.copyWith(color: KhaanaColors.brandText),
+          textStyle: KhaanaType.button.copyWith(color: KhaanaColors.ink),
           shape: shape,
         ),
     };
@@ -90,10 +157,11 @@ class KhaanaChip extends StatelessWidget {
       label: Text(label),
       selected: selected,
       showCheckmark: false,
-      selectedColor: KhaanaColors.brandTint,
-      backgroundColor: KhaanaColors.white,
+      selectedColor: KhaanaColors.brand,
+      backgroundColor: KhaanaColors.cream,
       side: BorderSide(color: selected ? KhaanaColors.brand : KhaanaColors.line),
-      labelStyle: KhaanaType.caption.copyWith(color: selected ? KhaanaColors.onBrandTint : KhaanaColors.muted, fontWeight: FontWeight.w700),
+      shape: StadiumBorder(side: BorderSide(color: selected ? KhaanaColors.brand : KhaanaColors.line)),
+      labelStyle: KhaanaType.caption.copyWith(color: selected ? KhaanaColors.onBrand : KhaanaColors.muted, fontWeight: FontWeight.w700),
       onSelected: onSelected,
     );
   }
@@ -130,8 +198,10 @@ class KhaanaEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: KhaanaSpace.s3),
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(KhaanaSpace.s4),
+      decoration: BoxDecoration(color: KhaanaColors.cream, borderRadius: BorderRadius.circular(KhaanaRadius.card)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(message, style: KhaanaType.body.copyWith(color: KhaanaColors.muted)),
         if (action != null) ...[const SizedBox(height: KhaanaSpace.s3), action!],

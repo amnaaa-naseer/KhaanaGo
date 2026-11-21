@@ -101,23 +101,17 @@ class _ScreenPageState extends State<ScreenPage> {
 
   @override
   Widget build(BuildContext context) {
-    final dark = widget.spec.role == 'rider';
-    final theme = ThemeData(
-      useMaterial3: true,
-      brightness: dark ? Brightness.dark : Brightness.light,
-      scaffoldBackgroundColor: KhaanaColors.page(dark),
-      colorScheme: ColorScheme.fromSeed(seedColor: KhaanaColors.brand, brightness: dark ? Brightness.dark : Brightness.light),
-    );
+    final splash = kBrandSplashIds.contains(widget.spec.id);
+    final theme = khaanaTheme();
     if (widget.embedded) {
       return Theme(data: theme, child: _body());
     }
     return Theme(
       data: theme,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: KhaanaColors.surface(dark),
-          foregroundColor: KhaanaColors.ink(dark),
-          title: Text(widget.spec.title),
+        backgroundColor: splash ? KhaanaColors.brand : KhaanaColors.background,
+        appBar: splash ? null : AppBar(
+          title: BrandAppBarTitle(title: widget.spec.title, onLongPress: widget.onDevToggle),
           actions: [
             IconButton(tooltip: 'Reload', onPressed: _load, icon: const Icon(Icons.refresh)),
           ],
@@ -142,7 +136,7 @@ class _ScreenPageState extends State<ScreenPage> {
     final Widget content;
     final trackingReady = widget.spec.id == 'E17-US1-UI1' && _session.activeOrder != null;
     if (_preview == 'loading' || (_loading && !trackingReady)) {
-      content = const Center(child: Column(mainAxisSize: MainAxisSize.min, children: [KhaanaSkeleton(), SizedBox(height: KhaanaSpace.s3), Text('Loading', style: KhaanaType.body)]));
+      content = Center(child: Column(mainAxisSize: MainAxisSize.min, children: [const KhaanaSkeleton(), const SizedBox(height: KhaanaSpace.s3), Text('Loading', style: KhaanaType.body.copyWith(color: kBrandSplashIds.contains(widget.spec.id) ? KhaanaColors.onBrand : null))]));
     } else if (_preview == 'error' || _error != null) {
       content = KhaanaErrorState(title: 'Something went wrong', message: 'We could not load this page. Please try again.', actionLabel: 'Try again', onRetry: _load);
     } else if (_preview == 'empty') {
@@ -156,7 +150,7 @@ class _ScreenPageState extends State<ScreenPage> {
       content = ListView(
         padding: KhaanaSpace.page,
         children: [
-          if (_notice != null) Padding(padding: const EdgeInsets.only(bottom: KhaanaSpace.s3), child: Text(_notice!, style: KhaanaType.body)),
+          if (_notice != null) Padding(padding: const EdgeInsets.only(bottom: KhaanaSpace.s3), child: Text(_notice!, style: KhaanaType.body.copyWith(color: kBrandSplashIds.contains(widget.spec.id) ? KhaanaColors.onBrand : null))),
           _familyBody(),
         ],
       );
@@ -231,8 +225,9 @@ class _ScreenPageState extends State<ScreenPage> {
   }
 
   Widget _auth() {
+    final Widget form;
     if (_isSignIn) {
-      return AutofillGroup(
+      form = AutofillGroup(
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           TextField(
             key: const Key('sign-in-identifier'),
@@ -259,8 +254,8 @@ class _ScreenPageState extends State<ScreenPage> {
           _primary('Continue', _submitSignIn),
         ]),
       );
-    }
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    } else {
+      form = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       TextField(controller: _fields.values.first, decoration: const InputDecoration(labelText: 'Mobile or email')),
       const SizedBox(height: 8),
       TextField(controller: _fields.values.elementAt(_fields.length > 1 ? 1 : 0), obscureText: true, decoration: const InputDecoration(labelText: 'Password')),
@@ -275,6 +270,17 @@ class _ScreenPageState extends State<ScreenPage> {
           setState(() => _notice = err.message);
         }
       }),
+    ]);
+    }
+    if (!kBrandSplashIds.contains(widget.spec.id)) return form;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      const Center(child: BrandLogo()),
+      const SizedBox(height: KhaanaSpace.s5),
+      KhaanaCard(child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text(widget.spec.title, style: KhaanaType.title),
+        const SizedBox(height: KhaanaSpace.s4),
+        form,
+      ])),
     ]);
   }
 
@@ -396,8 +402,8 @@ class _ScreenPageState extends State<ScreenPage> {
       Container(
         height: 140,
         alignment: Alignment.center,
-        decoration: BoxDecoration(color: KhaanaColors.charcoal, borderRadius: BorderRadius.circular(KhaanaRadius.card)),
-        child: Text('Delivery area', style: KhaanaType.body.copyWith(color: KhaanaColors.cream)),
+        decoration: BoxDecoration(color: KhaanaColors.cream, borderRadius: BorderRadius.circular(KhaanaRadius.card)),
+        child: Text('Delivery area', style: KhaanaType.body.copyWith(color: KhaanaColors.ink)),
       ),
       const SizedBox(height: 8),
       Text(current == null ? 'F-11 Markaz, Islamabad' : '$id · $status · ${current['slotLabel'] ?? ''}'),

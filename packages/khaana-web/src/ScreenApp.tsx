@@ -158,8 +158,8 @@ export function ScreenApp({ role, homeId }: { role: 'vendor' | 'admin'; homeId: 
       {drawerOpen && <button className="backdrop" aria-label="Close navigation" onClick={() => setDrawerOpen(false)} />}
       <aside>
         <div className="brand">
-          <strong>Khaana<em>Go</em></strong>
-          <span className="brand-mark" aria-hidden="true">K</span>
+          <Wordmark variant="on-dark" />
+          <img className="brand-mark" src="/brand/pin.svg" alt="" />
           <button className="icon-btn collapse-toggle" aria-expanded={!collapsed} aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'} onClick={() => setCollapsed((value) => !value)}>{collapsed ? '>' : '<'}</button>
         </div>
         <p className="role">{session.name}</p>
@@ -278,11 +278,21 @@ function SignIn({ appRole, onSuccess }: { appRole: 'vendor' | 'admin'; onSuccess
   )
 }
 
+function Wordmark({ variant }: { variant: 'on-dark' | 'on-light' }) {
+  const [failed, setFailed] = useState(false)
+  if (failed) return <strong className={variant}>Khaana<em>Go</em></strong>
+  return (
+    <strong className={variant}>
+      <img src="/brand/khaanago-wordmark.png" alt="KhaanaGo" onError={() => setFailed(true)} />
+    </strong>
+  )
+}
+
 function SignInFrame({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="signin">
       <Card>
-        <strong>Khaana<em>Go</em></strong>
+        <Wordmark variant="on-light" />
         <h1>{title}</h1>
         {children}
       </Card>

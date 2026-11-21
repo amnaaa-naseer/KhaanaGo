@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'api.dart';
 import 'catalog.g.dart';
 import 'checkout_session.dart';
+import 'components.dart';
 import 'customer_experience.dart';
 import 'screen_spec.dart';
 import 'screen_view.dart';
@@ -124,20 +125,17 @@ class _KhaanaAppState extends State<KhaanaApp> {
     for (final item in visible) {
       groups.putIfAbsent(item.module.isEmpty ? 'Shared' : item.module, () => []).add(item);
     }
-    final theme = ThemeData(
-      useMaterial3: true,
-      brightness: dark ? Brightness.dark : Brightness.light,
-      scaffoldBackgroundColor: KhaanaColors.page(dark),
-      colorScheme: ColorScheme.fromSeed(seedColor: KhaanaColors.brand, brightness: dark ? Brightness.dark : Brightness.light),
-    );
+    final theme = khaanaTheme();
     final customer = widget.role == 'customer';
     final checkout = customer && _checkoutIds.contains(_id);
+    final splash = kBrandSplashIds.contains(_id);
     final bare = customer && (_id == 'E3-US1-UI1' || _id == 'E17-US1-UI1');
     final showBack = _stack.length > 1;
     final tabIndex = _customerTabs.indexOf(_id);
     return MaterialApp(
       title: 'KhaanaGo',
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.light,
       theme: theme,
       home: Builder(builder: (context) {
         final wideWeb = kIsWeb && MediaQuery.sizeOf(context).width > 600;
@@ -147,15 +145,11 @@ class _KhaanaAppState extends State<KhaanaApp> {
             if (!didPop) _back();
           },
           child: Scaffold(
-            appBar: bare ? null : AppBar(
-              backgroundColor: KhaanaColors.surface(dark),
-              foregroundColor: KhaanaColors.ink(dark),
+            backgroundColor: splash ? KhaanaColors.brand : KhaanaColors.background,
+            appBar: bare || splash ? null : AppBar(
               automaticallyImplyLeading: _showCatalog && !showBack,
               leading: showBack ? IconButton(tooltip: 'Back', onPressed: _back, icon: const Icon(Icons.arrow_back)) : null,
-              title: GestureDetector(
-                onLongPress: () => setState(() => _devTools = !_devTools),
-                child: Text(spec.title),
-              ),
+              title: BrandAppBarTitle(title: spec.title, onLongPress: () => setState(() => _devTools = !_devTools)),
               actions: [
                 if (_devTools)
                   IconButton(
